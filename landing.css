@@ -1,0 +1,21 @@
+.flex-container {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+
+#username {
+    font-family: 'Helvetica Neue', monospace;
+    flex-basis: auto;
+}
+
+#password {
+    font-family: 'Helvetica Neue', monospace;
+    flex-basis: auto;
+}
+
+input {
+    width: 40%;
+}
