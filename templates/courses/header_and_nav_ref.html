@@ -1,14 +1,14 @@
 {% extends "layout.html" %}
 
-{% block title %}
-
+{% block styles %}
+<link href="static/css/courses.css" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
 
 <div id="courses_sidenav" class="sidenav">
     <!-- <a> Date published </a>  may not use this -->
-    <a href="#">Home</a>
+    <a href="/courses/home">Home</a>
     <a href="#">Announcements</a>
     <a href="#">Syllabus</a>
     <a href="#">Modules</a>
@@ -24,3 +24,5 @@
 </div>
 
 {% endblock %}
+
+<div id="section_content">{% block section_content %}{% endblock %}</div>
