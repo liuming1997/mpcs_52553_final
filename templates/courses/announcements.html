@@ -1,7 +1,9 @@
 {% extends "layout.html" %}
 
 {% block content %}
+<script>
 
+</script>
 <div id="courses_sidenav" class="sidenav">
     <!-- <a> Date published </a>  may not use this -->
     <a href="/courses/home">Home</a>
@@ -18,7 +20,6 @@
         <a href="#"> My Course</a>  <div id="courses_breadcrumbs"></div> Current Section </span>
     </span>
 </div>
+<div onload="navOpen()"></div>
 
 {% endblock %}
-
-<div id="section_content">{% block section_content %}{% endblock %}</div>

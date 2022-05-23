@@ -1,7 +1,6 @@
 {% extends "layout.html" %}
 
 {% block content %}
-
 <div id="courses_sidenav" class="sidenav">
     <!-- <a> Date published </a>  may not use this -->
     <a href="/courses/home">Home</a>
@@ -16,9 +15,6 @@
     <span>
     <span style="cursor:pointer" onclick="toggleNav()"> &#9776; </span>
         <a href="#"> My Course</a>  <div id="courses_breadcrumbs"></div> Current Section </span>
-    </span>
 </div>
 
 {% endblock %}
-
-<div id="section_content">{% block section_content %}{% endblock %}</div>
