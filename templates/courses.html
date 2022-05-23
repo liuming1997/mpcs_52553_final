@@ -1,9 +1,26 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    Courses
+
 {% endblock %}
 
 {% block content %}
-<h1>HERE ARE ALL OF YOUR COURSES</h1>
+
+<div id="courses_sidenav" class="sidenav">
+    <!-- <a> Date published </a>  may not use this -->
+    <a href="#">Home</a>
+    <a href="#">Announcements</a>
+    <a href="#">Syllabus</a>
+    <a href="#">Modules</a>
+    <a href="#">Assignments</a>
+    <a href="#">Grades</a>
+</div>
+
+<div id="courses_header">
+    <span>
+    <span style="cursor:pointer" onclick="toggleNav()"> &#9776; </span>
+        <a href="#"> My Course</a>  <div id="courses_breadcrumbs"></div> Current Section </span>
+    </span>
+</div>
+
 {% endblock %}
