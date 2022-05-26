@@ -17,10 +17,6 @@ def dashboard():
 def profile():
     return render_template("profile.html")
 
-@app.route('/courses')
-def courses():
-    return render_template("courses.html")
-
 @app.route('/settings')
 def settings():
     return render_template("settings.html")
@@ -28,6 +24,37 @@ def settings():
 @app.route('/logout')
 def logout():
     return render_template("landing.html")
+
+
+# course routes
+@app.route('/courses/home')
+def courses():
+    return render_template("courses/home.html")
+
+@app.route('/courses/announcements')
+def course_announcements():
+    return render_template("courses/announcements.html")
+
+@app.route('/courses/assignments')
+def course_assignments():
+    return render_template("courses/assignments.html")
+
+@app.route('/courses/grades')
+def course_grades():
+    return render_template("courses/grades.html")
+
+@app.route('/courses/home')
+def course_home():
+    return render_template("courses/home.html")
+
+@app.route('/courses/modules')
+def course_modules():
+    return render_template("courses/modules.html")
+
+@app.route('/courses/syllabus')
+def course_syllabus():
+    return render_template("courses/syllabus.html")
+
 
 # IGNORE FOR NOW. Just pulling in some authorization management stuff from my other project
 # Store authmanager here
