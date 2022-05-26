@@ -6,5 +6,20 @@
 {% endblock %}
 
 {% block content %}
-
+<div class='flex-container' id='settings'>
+    <form action='changepassword.js' method='post'>
+        <div class="container">
+            <div id="password">
+                <label for="pass"><b>Change Password</b></label>
+                <input type="password" placeholder="Current Password" name="pass" required> <br>
+                <input type="newpassword" placeholder="New Password" name="newpass" required> <br>
+            </div>
+            <button type="submit">Submit</button><br>
+        </div>
+    </form>
+</div>
 {% endblock %}
+
+<!-- Backend shit
+Allows the user to change their current password by providing their existing password and a new one.
+Ideally, should reject the user's action if the old and new passwords are the same.-->
