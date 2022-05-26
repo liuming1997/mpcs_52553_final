@@ -1,40 +1,118 @@
+/*
+* {
+    outline: solid 1px red;
+}
+*/
+
 .sidenav {
     height: 100%;
     width: 0;
     position: fixed;
     z-index: 1;
-    top: 30px;
+    top: 75px;
     left: auto;
     background-color: white;
     overflow-x: hidden;
-    /* transition: 0.3s; */
-    padding-top: 16px;
+    transition: 0.1s;
+    max-height: 100vh;
+    padding-left: 20px;
+    padding-top: 8px;
+    box-sizing: border-box;
+    overflow-y: auto;
+    overscroll-behavior-y: contain;
+
+    flex: 1 0 auto;
+    flex-grow: 1;
+    flex-shrink: 0;
+    flex-basis: auto;
+
+    border-right: 0px;
 }
 
 .sidenav a {
-    padding: 8px 8px 8px 32px;
+    padding: 8px 8px 8px 8px;
     text-decoration: none;
     /* font-size: 25px; */
     color:blue;
     display: block;
     transition: 0.3s;
+
 }
 
 .sidenav a:hover {
     text-decoration: underline;
 }
 
-#courses_header {
-    transition: margin-left .5s;
-    /* padding: 16px; */
-    left: auto;
-    z-index: 2;
-    position: sticky;
-    font-size: large;
 
-    padding: 8px 8px 8px 32px;
+#courses_header_and_right_of_header{
+    z-index: 0;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #c7cdd1;
+    margin-left: 0;
+    margin-bottom: 12px;
+    min-height: 4.5rem;
+    box-sizing: border-box;
+    padding-left: 0px;
+    padding-right: 12px;
+     /* position: absolute; */
+    position: relative;
+    width: 100%!important;
+    font-size: large;
+}
+
+#course_section_content_body {
+    display: flex;
+    align-self: center;
+    align-items: center;
+    margin-left: 24px;
+    padding-top: 1%;
+    padding-left: .5%;
+    padding-right: 5%;
+    padding-bottom: 1%;
+    box-sizing: border-box;
+    width: 80%;
+    position: absolute;
 
 }
+
+#courses_header {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    /* box-sizing: border-box; */
+    /* margin: 24px 12px 4.5rem 24px; */
+
+
+    max-height: 100vh;
+    padding: 12px 12px 4.5rem 24px;
+    padding-bottom: 0;
+
+    /* box-sizing: border-box; */
+    overflow-y: auto;
+    overscroll-behavior-y: contain;
+
+    flex: 1 0 auto;
+    flex-grow: 1;
+    flex-shrink: 0;
+    flex-basis: auto;
+
+
+
+}
+
+#courses_hamburger {
+    padding-right: 8px;
+}
+
+/*
+#right_of_header{
+    display: flex;
+    flex: 1;
+    flex-direction: row-reverse;
+    padding: 12px 12px 4.5rem 24px;
+}
+*/
 
 #courses_header a {
     color: blue;
@@ -59,3 +137,83 @@
     .sidenav {padding-top: 15px;}
     .sidenav a {font-size: 18px;}
 }
+
+/**
+MODULES CSS!
+ */
+
+#module_item {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+/* Style the button that is used to open and close the collapsible content */
+.modules_collapsible {
+    background-color: #eee;
+    color: #444;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+    width: 100%;
+    position: relative;
+    border: 1px solid #c7cdd1;
+
+
+
+}
+
+/*
+/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+/*.active, .collapsible:hover { */
+ /*   background-color: #ccc; */
+/* } */
+
+
+/* Style the collapsible content. Note: hidden by default */
+.modules_content {
+    background-color: white;
+    color: black;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: 1px solid #c7cdd1;
+    border-top: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+    width: 100%;
+    position: relative;
+    display: none;
+
+}
+
+
+
+.modules_collapsible:after {
+    content: '\003E'; /* Unicode character for "plus" sign (+) */
+    font-size: 20px;
+    color: black;
+    float: left;
+    margin-left: 5px;
+    padding: 3px;
+}
+
+
+
+.active:after {
+    content: "\2304"; /* Unicode character for "minus" sign (-) */
+    font-size: 20px;
+    color: black;
+    float: left;
+    margin-right: 5px;
+    padding: 3px;
+
+}
+
+
+
