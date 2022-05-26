@@ -7,5 +7,20 @@
 {% endblock %}
 
 {% block content %}
-
+<div class="flex-container" id="reset">
+    <form action="reset.js" method="post">
+        <div class="container">
+            <div id="username">
+                <label for="user"><b>Username</b></label>
+                <input type="text" placeholder="Enter Username" name="user" required> <br>
+            </div>
+            <button type="submit">Reset password</button><br>
+        </div>
+    </form>
+</div>
 {% endblock %}
+<!-- Backend shit 
+Basically, you ask them for their email. Then you query the .json using the email as a key; if you don't find a match, say "Invalid input; please check your email".
+If you do find it, ask them for the new password, and then update the .json accordingly.
+
+-->
