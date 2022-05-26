@@ -1,7 +1,6 @@
 {% extends "layout.html" %}
 
 {% block content %}
-
 <div id="courses_sidenav" class="sidenav">
     <!-- <a> Date published </a>  may not use this -->
     <a href="/courses/home">Home</a>
@@ -12,18 +11,17 @@
     <a href="/courses/grades">Grades</a>
 </div>
 
+
 <div id="courses_header_and_right_of_header">
     <div id="courses_header">
         <div id="courses_hamburger" style="cursor:pointer" onclick="toggleNav()"> &#9776; </div>
-        <a href="#"> My Course</a>  <div id="courses_breadcrumbs"></div> section </span>
+        <a href="#"> My Course</a>  <div id="courses_breadcrumbs"></div> Home </span>
     </div>
     <!-- <div id = "right_of_header"></div> -->
 </div>
 
 <div id="course_section_content_body">
+    <h3>Your Section</h3>
 </div>
 
-
 {% endblock %}
-
-<div id="section_content">{% block section_content %}{% endblock %}</div>
