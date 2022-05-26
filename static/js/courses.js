@@ -37,7 +37,7 @@ function highlightCurrentSection(){
     // highlight the section on the nav bar where the user is currently located
 }
 
-var coll = document.getElementsByClassName("modules_collapsible");
+var coll = document.getElementsByClassName("collapsible_header");
 var i;
 
 for (i = 0; i < coll.length; i++) {

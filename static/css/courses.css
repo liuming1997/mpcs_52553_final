@@ -63,6 +63,7 @@
 
 #course_section_content_body {
     display: flex;
+    flex-direction: column;
     align-self: center;
     align-items: center;
     margin-left: 24px;
@@ -142,14 +143,15 @@
 MODULES CSS!
  */
 
-#module_item {
+.collapsible_item {
     display: flex;
     flex-direction: column;
     width: 100%;
+    margin-bottom: 20px;
 }
 
 /* Style the button that is used to open and close the collapsible content */
-.modules_collapsible {
+.collapsible_header {
     background-color: #eee;
     color: #444;
     cursor: pointer;
@@ -164,7 +166,6 @@ MODULES CSS!
     border: 1px solid #c7cdd1;
 
 
-
 }
 
 /*
@@ -175,7 +176,7 @@ MODULES CSS!
 
 
 /* Style the collapsible content. Note: hidden by default */
-.modules_content {
+.collapsible_content {
     background-color: white;
     color: black;
     cursor: pointer;
@@ -188,13 +189,17 @@ MODULES CSS!
     font-size: 15px;
     width: 100%;
     position: relative;
-    display: none;
+    /* display: none; */
 
+}
+
+.collapsible_content_all {
+    display: none;
 }
 
 
 
-.modules_collapsible:after {
+.collapsible_header:after {
     content: '\003E'; /* Unicode character for "plus" sign (+) */
     font-size: 20px;
     color: black;
