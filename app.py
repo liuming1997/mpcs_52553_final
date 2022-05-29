@@ -7,21 +7,25 @@ app = Flask(__name__)
 
 users = [];
 
-@app.before_request
-def before_request_check():
-    if not session.get('id'):
-        # Visitor is unknown, return to login
-        return redirect(url_for('login'))
+# @app.before_request
+# def before_request_check():
+#     if not session.get('id'):
+#         # Visitor is unknown, return to login
+#         return redirect(url_for('login'))
 
 @app.route('/login', methods=['GET', 'POST'])
-def logout():
-    if request.method == 'POST':
-        username = request.form['user']
-        password = request.form['pass']
-        if username in users and password == users[user].password:
-            session['user'] = username;
-            return(redirect(url_for('dashboard')))
+def login():
+    # if request.method == 'POST':
+    #     username = request.form['user']
+    #     password = request.form['pass']
+    #     if username in users and password == users[user].password:
+    #         session['user'] = username;
+    #         return(redirect(url_for('dashboard')))
     return render_template("login.html")  
+
+@app.route('/signup')
+def signup():
+    return render_template("signup.html")
 
 @app.route('/')
 def index():
@@ -77,46 +81,6 @@ def course_modules():
 def course_syllabus():
     return render_template("courses/syllabus.html")
 
-@app.route('/courses/<course>')
-def course_syllabus():
-    return render_template("courses/course.html", course_name=course_name, assignments=assignments, announcements=announcements)
-
-
-# IGNORE FOR NOW. Just pulling in some authorization management stuff from my other project
-
-
-
-# @app.route('/')
-# def index():
-#     if not session.get('uuid'):
-#         # Visitor is unknown, give random ID
-#         session['uuid'] = str(uuid.uuid4())
-#     return render_template("index.html")
-
-
-# @app.route('/login', methods=["GET", "POST"])
-# def login():
-#     global CLIENT_ID
-#     global CLIENT_SECRET
-#     global REDIRECT_URI
-#     global scope
-
-#     # Pull authorization manager from Spotify
-#     auth_manager = spotipy.oauth2.SpotifyOAuth(client_id=CLIENT_ID, client_secret=CLIENT_SECRET, redirect_uri=REDIRECT_URI, scope=scope,
-#                                                 cache_path=session_cache_path(), 
-#                                                 show_dialog=True)
-
-#     session['auth_manager'] = auth_manager
-
-#     if request.args.get("code"):
-#         # Being redirected from Spotify auth page
-#         auth_manager.get_access_token(request.args.get("code"))
-#         return redirect('/generate_festival')
-
-#     if not auth_manager.get_cached_token():
-#         # Display sign in link when no token is found
-#         auth_url = auth_manager.get_authorize_url()
-#         return redirect(auth_url)
-#     else:
-#         return redirect('/generate_festival')
-
+# @app.route('/courses/<course>')
+# def course_syllabus():
+#     return render_template("courses/course.html")
