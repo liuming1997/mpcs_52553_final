@@ -2,6 +2,7 @@ import os
 from flask import Flask, session, request, redirect, render_template, g, flash
 import uuid
 import json
+import database.db_queries
 
 app = Flask(__name__)
 
