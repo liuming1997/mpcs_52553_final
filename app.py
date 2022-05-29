@@ -1,9 +1,27 @@
 import os
-from flask import Flask, session, request, redirect, render_template, g, flash
-import uuid
+from flask import Flask, session, request, redirect, render_template, g, flash, url_for
 import json
+import sqlite3
 
 app = Flask(__name__)
+
+users = [];
+
+@app.before_request
+def before_request_check():
+    if not session.get('id'):
+        # Visitor is unknown, return to login
+        return redirect(url_for('login'))
+
+@app.route('/login', methods=['GET', 'POST'])
+def logout():
+    if request.method == 'POST':
+        username = request.form['user']
+        password = request.form['pass']
+        if username in users and password == users[user].password:
+            session['user'] = username;
+            return(redirect(url_for('dashboard')))
+    return render_template("login.html")  
 
 @app.route('/')
 def index():
@@ -19,11 +37,11 @@ def profile():
 
 @app.route('/settings')
 def settings():
-    return render_template("settings.html")
+    return render_template("settings.html") 
 
 @app.route('/logout')
 def logout():
-    return render_template("landing.html")
+    return render_template("login.html")
 
 
 # course routes
@@ -59,16 +77,13 @@ def course_modules():
 def course_syllabus():
     return render_template("courses/syllabus.html")
 
+@app.route('/courses/<course>')
+def course_syllabus():
+    return render_template("courses/course.html", course_name=course_name, assignments=assignments, announcements=announcements)
+
 
 # IGNORE FOR NOW. Just pulling in some authorization management stuff from my other project
-# Store authmanager here
-# caches_folder = './.canvas_caches/'
-# if not os.path.exists(caches_folder):
-#     os.makedirs(caches_folder)
 
-
-# def session_cache_path():
-#     return caches_folder + session.get('uuid')
 
 
 # @app.route('/')

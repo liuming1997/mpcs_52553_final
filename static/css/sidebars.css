@@ -17,6 +17,11 @@ main {
   overflow-y: hidden;
 }
 
+.dashboard {
+  display: flex;
+  flex-direction: column;
+}
+
 .b-example-divider {
   flex-shrink: 0;
   width: 0rem;
