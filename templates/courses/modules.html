@@ -15,18 +15,32 @@
 <div id="courses_header_and_right_of_header">
     <div id="courses_header">
         <div id="courses_hamburger" style="cursor:pointer" onclick="toggleNav()"> &#9776; </div>
-        <a href="#"> My Course</a>  <div id="courses_breadcrumbs"></div> Current Section </span>
+        <a href="/courses/home"> My Course</a>  <div id="courses_breadcrumbs"></div> Modules </span>
     </div>
     <!-- <div id = "right_of_header"></div> -->
 </div>
 
 <div id="course_section_content_body">
-    <div id="module_item">
-        <button type="button" class="modules_collapsible">Open Collapsible</button>
-        <div class="modules_content">
-            <p>Lorem ipsum...</p>
+    <div class="collapsible_item">
+        <button type="button" class="collapsible_header">Module 1</button>
+        <div class="collapsible_content_all">
+            <div class="collapsible_content">
+                <p>item 1</p> </div>
+            <div class="collapsible_content">
+                <p>item 2</p>
+            </div>
+        </div>
     </div>
-    </div>
+        <div class="collapsible_item">
+            <button type="button" class="collapsible_header">Module 2</button>
+            <div class="collapsible_content_all">
+                <div class="collapsible_content">
+                    <p>item 1</p> </div>
+                <div class="collapsible_content">
+                    <p>item 2</p>
+                </div>
+            </div>
+        </div>
 </div>
 
 {% endblock %}
