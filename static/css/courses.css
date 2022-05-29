@@ -1,5 +1,4 @@
-/*
-* {
+/* * {
     outline: solid 1px red;
 }
 */
@@ -231,6 +230,7 @@ MODULES CSS!
 /*
 Announcements row styling
  */
+/*
 .announcements_row {
     box-shadow: 0 -1px #c7cdd1, inset 0 -1px #c7cdd1;
     padding: 16px 0;
@@ -240,6 +240,7 @@ Announcements row styling
     position: relative;
     width: 100%;
 }
+*/
 
 h3 {
     position: relative;
@@ -278,6 +279,72 @@ th, td {
     border-bottom: 2px solid;
     border-color: #c7cdd1;
 }
+
+/*
+Announcements CSS
+ */
+
+.announcements_table_header {
+    border-bottom: 2px solid;
+    border-color: #a6afb5;
+}
+
+.announcements_table_date_header {
+    border-bottom: #c7cdd1;
+    border-bottom-width: 2px;
+}
+
+.announcements_table_date_header, .announcements_table_date_item {
+    text-align: right !important;
+}
+
+.announcements_table_body_row {
+    border-bottom: 2px solid;
+    border-color: #c7cdd1;
+}
+
+#announcement_date_posted {
+    color: #6b7780;
+}
+
+.announcements_table_details_item {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    width: 425px;
+
+
+
+}
+
+#announcement_details {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+@media only screen and (max-width: 850px) {
+    #announcement_details {
+        display: none;
+    }
+
+    .announcements_table_details_item {
+        width: 25px;
+        padding-right: 0px;
+    }
+
+    .announcements_table_date_item {
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+
+    .announcements_table_poster_item, .announcements_table_poster_header {
+        display: none;
+    }
+
+}
+
+
+
 
 
 
