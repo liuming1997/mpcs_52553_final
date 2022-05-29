@@ -88,3 +88,12 @@ main {
 
 .fw-semibold { font-weight: 1; }
 .lh-tight { line-height: 1.25; }
+
+@media only screen and (max-width: 850px) {
+    .sidenav_text{
+      display:none;
+    }
+    .d-flex.flex-column.flex-shrink-0.p-3.text-white.bg-dark{
+        width: min-content !important;
+    }
+}
