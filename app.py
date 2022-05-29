@@ -1,7 +1,7 @@
 import os
 from flask import Flask, session, request, redirect, render_template, g, flash, url_for
 import json
-import sqlite3
+import database.db_queries
 
 app = Flask(__name__)
 
