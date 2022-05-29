@@ -97,3 +97,7 @@ main {
         width: min-content !important;
     }
 }
+
+.bg-dark {
+  background-color: #767676 !important;
+}

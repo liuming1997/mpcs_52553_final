@@ -70,15 +70,16 @@
     display: flex;
     flex-direction: column;
     align-self: center;
-    align-items: center;
+    /* align-items: center; */
     margin-left: 24px;
     padding-top: 1%;
     padding-left: .5%;
-    padding-right: 5%;
+    padding-right: 3.5%;
     padding-bottom: 1%;
     box-sizing: border-box;
-    width: 80%;
+    width: 85%;
     position: absolute;
+    text-align: left;
 
 }
 
@@ -242,6 +243,40 @@ Announcements row styling
 
 h3 {
     position: relative;
+}
+
+/*
+   SYLLABUS STYLING
+ */
+
+.syllabus_assign_table_header {
+    border-bottom: 2px solid;
+    border-color: #a6afb5;
+}
+
+th, td {
+    padding: 10px;
+    padding-left: 6.5px;
+    padding-bottom: 15px;
+    padding-top: 15px;
+}
+
+.syllabus_assign_table_body {
+    background-color: #f5f5f5;
+}
+
+.syllabus_assign_table_due_header {
+    border-bottom: #c7cdd1;
+    border-bottom-width: 2px;
+}
+
+.syllabus_assign_table_due_header, .syllabus_assign_table_due_item {
+    text-align: right !important;
+}
+
+.syllabus_assign_table_body_row {
+    border-bottom: 2px solid;
+    border-color: #c7cdd1;
 }
 
 
