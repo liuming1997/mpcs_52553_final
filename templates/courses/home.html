@@ -15,13 +15,66 @@
 <div id="courses_header_and_right_of_header">
     <div id="courses_header">
     <div id="courses_hamburger" style="cursor:pointer" onclick="toggleNav()"> &#9776; </div>
-        <a href="#"> My Course</a>  <div id="courses_breadcrumbs"></div> Home </span>
+        <a href="/courses/home"> My Course</a>  <div id="courses_breadcrumbs"></div> Home </span>
     </div>
     <!-- <div id = "right_of_header"></div> -->
 </div>
 
 <div id="course_section_content_body">
-    <h3>Course Home</h3>
+    <h3>Recent Announcements</h3>
+    <h5>(List the most recent 4 announcements here.)</h5>
+    <table class="announcements_table">
+        <thead class="announcements_table_header">
+        <tr>
+            <th class="announcements_table_poster_header">Posted By</th>
+            <th class="announcements_table_details_header">Details</th>
+            <th class="announcements_table_date_header"></th>
+        </tr>
+        </thead>
+        <tbody class="announcements_table_body">
+        <tr class="announcements_table_body_row">
+            <td class="announcements_table_poster_item">Instructor Name Here</td>
+            <td class="announcements_table_details_item"><a href="/courses/announcements_view" style="text-decoration: none; color:black"><b>Announcement Title</b> </a>
+                <div id="announcement_details">Some announcement details here. OMG we have so much Work, work, work, work, work, work
+                    left to do on this project He said me haffi work, work, work, work, work, work
+                    He see me do mi dirt, dirt, dirt, dirt, dirt, dirt
+                    So me put in work, work, work, work, work, work
+                    When you ah gon' learn, learn, learn, learn, learn?
+                    Me nuh care if him hurt, hurt, hurt, hurt, hurting</div></td>
+            <td class="announcements_table_date_item"><b>Posted on:</b> <div id="announcement_date_posted">Date Posted</div></td>
+        </tr>
+        <tr class="announcements_table_body_row">
+            <td class="announcements_table_poster_item">Instructor Name Here</td>
+            <td class="announcements_table_details_item"><a href="/courses/announcements_view" style="text-decoration: none; color: black"><b>Announcement Title</b> </a>
+                <div id="announcement_details">Some announcement details here.You don't gotta go to work, work, work, work
+                    Work, work, work But you gotta put in work, work, work, work  Work, work, work  You don't gotta go to work, work, work, work  Work, work, work Let my body do the work, work, work, work
+                    Work, work, work
+                    We can work from home, oh, oh, oh-oh
+                    We can work from home, oh, oh, oh-oh</div></td>
+            <td class="announcements_table_date_item"><b>Posted on:</b> <div id="announcement_date_posted">Date Posted</div></td>
+        </tr>
+        <tr class="announcements_table_body_row">
+            <td class="announcements_table_poster_item">Instructor Name Here</td>
+            <td class="announcements_table_details_item"><a href="/courses/announcements_view" style="text-decoration: none; color: black"><b>Announcement Title</b> </a>
+                <div id="announcement_details">Some announcement details here.You don't gotta go to work, work, work, work
+                    Work, work, work But you gotta put in work, work, work, work  Work, work, work  You don't gotta go to work, work, work, work  Work, work, work Let my body do the work, work, work, work
+                    Work, work, work
+                    We can work from home, oh, oh, oh-oh
+                    We can work from home, oh, oh, oh-oh</div></td>
+            <td class="announcements_table_date_item"><b>Posted on:</b> <div id="announcement_date_posted">Date Posted</div></td>
+        </tr>
+        <tr class="announcements_table_body_row">
+            <td class="announcements_table_poster_item">Instructor Name Here</td>
+            <td class="announcements_table_details_item"><a href="/courses/announcements_view" style="text-decoration: none; color: black"><b>Announcement Title</b> </a>
+                <div id="announcement_details">Some announcement details here.You don't gotta go to work, work, work, work
+                    Work, work, work But you gotta put in work, work, work, work  Work, work, work  You don't gotta go to work, work, work, work  Work, work, work Let my body do the work, work, work, work
+                    Work, work, work
+                    We can work from home, oh, oh, oh-oh
+                    We can work from home, oh, oh, oh-oh</div></td>
+            <td class="announcements_table_date_item"><b>Posted on:</b> <div id="announcement_date_posted">Date Posted</div></td>
+        </tr>
+        </tbody>
+    </table>
 </div>
 
 {% endblock %}

@@ -35,6 +35,10 @@ def courses():
 def course_announcements():
     return render_template("courses/announcements.html")
 
+@app.route('/courses/announcements_view')
+def view_assignment():
+    return render_template("courses/announcements_view.html")
+
 @app.route('/courses/assignments')
 def course_assignments():
     return render_template("courses/assignments.html")

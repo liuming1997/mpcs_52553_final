@@ -79,6 +79,7 @@
     width: 85%;
     position: absolute;
     text-align: left;
+    z-index: 2;
 
 }
 
@@ -109,6 +110,9 @@
 
 #courses_hamburger {
     padding-right: 8px;
+    color: blue;
+    font-size: xx-large;
+    padding-bottom: 6px;
 }
 
 /*
@@ -341,6 +345,52 @@ Announcements CSS
         display: none;
     }
 
+}
+
+/*
+View Assignment CSS
+ */
+.dummy_content {
+    color: #eeeeee;
+}
+
+.announcement_container {
+    border: 1px solid #c7cdd1;
+}
+.announcement_content {
+    margin: 10px;
+    padding: 5px;
+}
+
+.grey_header {
+    background-color: #eee;
+    color: #444;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+    position: relative;
+    border-bottom: 1px solid #c7cdd1;
+}
+.grey_footer {
+    background-color: #eee;
+    color: #444;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+    position: relative;
+    border-top: 1px solid #c7cdd1;
+
+}
+
+.announcement_content_header {
+    margin-bottom: 10px;
+    padding: 5px;
 }
 
 
