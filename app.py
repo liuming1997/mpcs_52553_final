@@ -95,43 +95,37 @@ def settings():
 
 
 # course routes
-@app.route('/<course>/home')
-def course_home(course):
-    return render_template("courses/home.html", course_list=session['course_list'], course=course)
+@app.route('/<course_id>/home')
+def course_home(course_id):
+    return render_template("courses/home.html", course_list=session['course_list'], course_id=course_id, course_name=course_id)
 
-@app.route('/<course>/announcements')
-def course_announcements(course):
-    return render_template("courses/announcements.html", course_list=session['course_list'], course=course)
+@app.route('/<course_id>/announcements')
+def course_announcements(course_id):
+    return render_template("courses/announcements.html", course_list=session['course_list'], course_id=course_id, course_name=course_id)
 
-@app.route('/<course>/announcements_view')
-def view_announcement(course):
-    return render_template("courses/announcements_view.html", course_list=session['course_list'], course=course)
+@app.route('/<course_id>/announcements_view')
+def view_announcement(course_id):
+    return render_template("courses/announcements_view.html", course_list=session['course_list'], course_id=course_id, course_name=course_id)
 
-@app.route('/<course>/announcements_create')
-def create_announcement(course):
-    return render_template("courses/announcements_create.html", course=course)
+@app.route('/<course_id>/announcements_create')
+def create_announcement(course_id):
+    return render_template("courses/announcements_create.html", course_id=course_id, course_name=course_id)
 
-@app.route('/<course>/assignments_view')
-def view_assignment(course):
-    return render_template("courses/assignments_view.html", course_list=session['course_list'], course=course)
+@app.route('/<course_id>/assignments_view')
+def view_assignment(course_id):
+    return render_template("courses/assignments_view.html", course_list=session['course_list'], course_id=course_id, course_name=course_id)
 
-@app.route('/<course>/assignments')
-def course_assignments(course):
-    return render_template("courses/assignments.html", course_list=session['course_list'], course=course)
+@app.route('/<course_id>/assignments')
+def course_assignments(course_id):
+    return render_template("courses/assignments.html", course_list=session['course_list'], course_id=course_id, course_name=course_id)
 
-@app.route('/<course>/assignments_create')
-def create_assignment(course):
-    return render_template("courses/assignments_create.html", course=course)
+@app.route('/<course_id>/assignments_create')
+def create_assignment(course_id):
+    return render_template("courses/assignments_create.html", course_id=course_id, course_name=course_id)
 
-@app.route('/<course>/grades')
-def course_grades(course):
-    return render_template("courses/grades.html", course_list=session['course_list'], course=course)
+@app.route('/<course_id>/grades')
+def course_grades(course_id):
+    return render_template("courses/grades.html", course_list=session['course_list'], course_id=course_id, course_name=course_id)
 
-@app.route('/<course>/modules')
-def course_modules(course):
-    return render_template("courses/modules.html", course_list=session['course_list'], course=course)
 
-@app.route('/<course>/syllabus')
-def course_syllabus(course):
-    return render_template("courses/syllabus.html", course_list=session['course_list'], course=course)
 
