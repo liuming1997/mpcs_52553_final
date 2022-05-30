@@ -100,7 +100,7 @@ def edit_account():
         return(redirect(url_for('dashboard')))
 
 
-    return render_template("edit.html", course_list=session['course_list'])
+    return render_template("edit.html")
 
 @app.route('/dashboard')
 def dashboard():
@@ -118,6 +118,9 @@ def settings():
 # course routes
 @app.route('/<course_id>/home')
 def course_home(course_id):
+    course_announcements = json.loads(
+                        database.db_queries.get_announcements_course_id(course_id))
+    print(course_announcements)
     return render_template("courses/home.html", course_list=session['course_list'], course_id=course_id, course_name=course_id)
 
 @app.route('/<course_id>/announcements')
