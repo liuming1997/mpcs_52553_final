@@ -1,17 +1,17 @@
-<!-- Signup page -->
-
-{% extends "layout.html" %}
-
-{% block title %}
-    Signup
-{% endblock %}
-
-{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
 <script>
 
 </script>     
 <div class="flex-container" id="login">
-    <form action="login.js" method="post">
+    <form method="post">
         <div class="imgcontainer">
             <img src="https://www.w3schools.com/howto/img_avatar2.png">
         </div>
@@ -28,12 +28,17 @@
                 <label for="pass"><b>Password</b></label>
                 <input type="password" placeholder="Enter Password" name="pass" required> <br>
             </div>
-            <button type="submit">Login</button><br>
-            <label>
-                <input type="checkbox" checked="checked" name="remember"> Remember me
-            </label><br>
-            <span class="pass"><a href="reset.html">Reset password</a></span>
+            <div id="type">
+                <input type="radio" id="student" name="account_type" value="Student" required>
+                <label for="html">Student</label><br>
+                <input type="radio" id="teacher" name="account_type" value="Teacher">
+                <label for="css">Teacher</label><br>
+                <input type="radio" id="admin" name="account_type" value="Admin">
+                <label for="javascript">Admin</label>
+            </div>
+            <button type="submit">Create account</button><br>
         </div>
     </form>
 </div>
-{% endblock %}
+</body>
+</html>

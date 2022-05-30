@@ -2,10 +2,11 @@ import os
 from flask import Flask, session, request, redirect, render_template, g, flash, url_for
 import json
 import database.db_queries
+import uuid
 
 app = Flask(__name__)
+app.secret_key = uuid.uuid4().hex
 
-users = [];
 
 # @app.before_request
 # def before_request_check():
@@ -15,21 +16,50 @@ users = [];
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    # if request.method == 'POST':
-    #     username = request.form['user']
-    #     password = request.form['pass']
-    #     if username in users and password == users[user].password:
-    #         session['user'] = username;
-    #         return(redirect(url_for('dashboard')))
+    if request.method == 'POST':
+        username = request.form['user']
+        password = request.form['pass']
+        user_grab = database.db_queries.get_users()
+
+        # check that username and password are correct
+        for user in user_grab:
+            if user[0] == username and user[2] == password:
+                session['username'] = username;
+                return(redirect(url_for('dashboard')))
+            else:
+                flash('Incorrect username or password')
     return render_template("login.html")  
 
-@app.route('/signup')
+@app.route('/logout')
+def logout():
+    [session.pop(key) for key in list(session.keys())]
+    return render_template("login.html")
+
+@app.route('/signup', methods=['GET', 'POST'])
 def signup():
+    if request.method == 'POST':
+        fullname = request.form['name']
+        username = request.form['user']
+        password = request.form['pass']
+        account_type = request.form['account_type']
+
+        # check if username already exists
+        user_grab = database.db_queries.get_users()
+        for user in user_grab:
+            if user[0] == username:
+                flash('Username already exists!')
+                return(redirect(url_for('signup')))
+
+        # add user
+        database.db_queries.insert_new_user(fullname, username, password, account_type)
+        session['username'] = username
+        return(redirect(url_for('dashboard')))
+
     return render_template("signup.html")
 
 @app.route('/')
 def index():
-    return render_template("dashboard.html")
+    return redirect(url_for("login"))
 
 @app.route('/dashboard')
 def dashboard():
@@ -42,10 +72,6 @@ def profile():
 @app.route('/settings')
 def settings():
     return render_template("settings.html") 
-
-@app.route('/logout')
-def logout():
-    return render_template("login.html")
 
 
 # course routes
