@@ -121,6 +121,10 @@ def course_home(course_id):
     course_announcements = json.loads(
                         database.db_queries.get_announcements_course_id(course_id)[0][0])
     print(course_announcements)
+    for announcement in course_announcements:
+        if user[0] == username:
+            flash('Username already exists!')
+            return(redirect(url_for('signup')))
     return render_template("courses/home.html", course_list=session['course_list'], course_id=course_id, course_name=course_id)
 
 @app.route('/<course_id>/announcements')
