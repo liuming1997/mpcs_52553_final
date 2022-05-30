@@ -9,7 +9,13 @@ c.execute('''
              username character varying(50) NOT NULL PRIMARY KEY ,
              role character NOT NULL,
              password TEXT NOT NULL,
-             name character NOT NULL
+             name character NOT NULL,
+             sq1 character varying(50) NOT NULL,
+             sq1_answer character varying(50) NOT NULL,
+             sq2 character varying(50) NOT NULL,
+             sq2_answer character varying(50) NOT NULL,
+             sq3 character varying(50) NOT NULL,
+             sq3_answer character varying(50) NOT NULL,
          )
           ''')
 
@@ -51,9 +57,30 @@ c.execute('''
 
 # assignments table
 # todo: construct assignments table
+c.execute('''
+          CREATE TABLE assignments (
+              assignment_id INTEGER PRIMARY KEY AUTOINCREMENT,
+              course_id INTEGER,
+              title character NOT NULL,
+              content TEXT NOT NULL,
+              FOREIGN KEY (course_id) REFERENCES courses(course_id)
+          )
+          ''')
 
 # grades table
 # todo: construct grades table
+c.execute('''
+          CREATE TABLE assignments (
+              grade_id INTEGER PRIMARY KEY AUTOINCREMENT,
+              assignment_id INTEGER,
+              course_id INTEGER,
+              student character NOT NULL,
+              grade character NOT NULL,
+              FOREIGN KEY (course_id) REFERENCES courses(course_id),
+              FOREIGN KEY (student) REFERENCES users(name),
+              FOREIGN KEY (assignment_id) REFERENCES assignments(assignment_id)
+          )
+          ''')
 
 # add users to db
 c.executescript('''
