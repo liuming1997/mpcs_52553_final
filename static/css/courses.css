@@ -496,6 +496,22 @@ Announcements CSS
     border-top: 0px;
 }
 
+.grey_center {
+    background-color: #eee;
+    color: #444;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+    position: relative;
+    border: 1px solid #c7cdd1;
+    border-left: 0px;
+    border-right: 0px;
+
+}
+
 /*
 Create post CSS
  */
