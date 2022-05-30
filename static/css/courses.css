@@ -209,7 +209,6 @@ MODULES CSS!
 }
 
 
-
 .collapsible_header:after {
     content: '\003E'; /* Unicode character for "plus" sign (+) */
     font-size: 20px;
@@ -348,7 +347,7 @@ Announcements CSS
 }
 
 /*
-View Assignment CSS
+View Announcement  CSS
  */
 .dummy_content {
     color: #eeeeee;
@@ -391,6 +390,82 @@ View Assignment CSS
 .announcement_content_header {
     margin-bottom: 10px;
     padding: 5px;
+}
+
+/**
+Assignments CSS
+ */
+/*
+Announcements CSS
+ */
+
+.assignments_table {
+    width: 100%;
+    margin: 0px;
+    border: solid 1px;
+    border-color: #c7cdd1;
+}
+
+
+.assignments_table_header {
+    border-bottom: 1px solid;
+    border-color: #a6afb5;
+}
+.assignments_table_assign_item, .assignments_table_class_item, .assignments_table_points_item, .assignments_table_date_item {
+    padding: 20px;
+}
+
+.assignments_table_assign_header, .assignments_table_class_header, .assignments_table_points_header, .assignments_table_date_header{
+    padding: 20px;
+}
+
+.assignments_table_date_header {
+    border-bottom: #c7cdd1;
+    border-bottom-width: 2px;
+}
+
+.assignments_table_date_header, .assignments_table_date_item {
+    text-align: right !important;
+}
+
+.assignments_table_body_row {
+    border-bottom: 1px solid;
+    border-color: #c7cdd1;
+}
+
+
+.collapsible_content_assign {
+    margin: 0px;
+}
+
+#assignments_date_posted {
+    color: #6b7780;
+}
+
+#assignment_details {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+@media only screen and (max-width: 850px) {
+    #announcement_details {
+        display: none;
+    }
+
+    .assignments_table_details_item {
+        width: 25px;
+        padding-right: 0px;
+    }
+
+    .assignments_table_date_item {
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+
+    .assignments_table_poster_item, .assignments_table_poster_header {
+        display: none;
+    }
+
 }
 
 
