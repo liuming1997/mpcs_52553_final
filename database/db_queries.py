@@ -64,11 +64,12 @@ def get_announcements_course_id():
 
 # get all grades
 def get_grades():
-    pass
-
-# get all grades by course_id
-def get_grades_course_id():
-    pass
+    conn = create_connection('canvas.db')
+    cur = conn.cursor()
+    cur.execute(
+        "SELECT json_group_array( json_object( 'assignment_id', assignment_id, 'student_username', student_username, 'grade', grade) ) FROM grades")
+    rows = cur.fetchall()
+    return rows
 
 # get all grades by username
 def get_grades_username():
@@ -120,8 +121,8 @@ def get_students_courses(username):
 
 # print('GERRY TEACHES COURSE:' + str(get_teachers_courses('gerry1954'))+'\n')
 # print('Kat Takes COURSE:' + str(get_students_courses('patrick_whalen') )+'\n')
-# print("ASSIGNMENTS:" + str(get_assignments()) + '\n')
-
+print("ASSIGNMENTS:" + str(get_assignments()) + '\n')
+print("GRADES:" + str(get_grades()) + '\n')
 
 # INSERTING DATA
 def add_user():
