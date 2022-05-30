@@ -164,7 +164,7 @@ MODULES CSS!
     display: flex;
     flex-direction: column;
     width: 100%;
-    margin-bottom: 20px;
+
     padding-top: 20px;
 }
 
@@ -530,6 +530,16 @@ Create post CSS
 
 .form_button {
     text-align: center;
+}
+
+
+/**
+Profile CSS
+ */
+.collapsible_content_profile {
+    border: 1px solid #c7cdd1;
+    padding: 20px;
+    padding-bottom: 10px;
 }
 
 
