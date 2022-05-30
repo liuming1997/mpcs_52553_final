@@ -15,7 +15,7 @@ c.execute('''
              sq2 character varying(50) NOT NULL,
              sq2_answer character varying(50) NOT NULL,
              sq3 character varying(50) NOT NULL,
-             sq3_answer character varying(50) NOT NULL,
+             sq3_answer character varying(50) NOT NULL
          )
           ''')
 
@@ -33,7 +33,7 @@ c.execute('''
 # announcements table
 c.execute('''
           CREATE TABLE announcements (
-                announcement_id INTEGER PRIMARY KEY AUTOINCREMENT ,
+                announcement_id INTEGER PRIMARY KEY AUTOINCREMENT,
                 course_id INTEGER,
                 title character NOT NULL,
                 content TEXT NOT NULL,
