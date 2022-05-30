@@ -59,8 +59,13 @@ def get_announcements():
     return rows
 
 # get announcements by course_id
-def get_announcements_course_id():
-    pass
+def get_announcements_course_id(course_id):
+    conn = create_connection('canvas.db')
+    cur = conn.cursor()
+    cur.execute(
+        "SELECT json_group_array( json_object( 'announcement_id', announcement_id, 'course_id', course_id, 'title', title, 'content', content, 'date_posted', date_posted) ) FROM announcements where course_id=" + str(course_id))
+    rows = cur.fetchall()
+    return rows
 
 # get all grades
 def get_grades():
@@ -85,6 +90,13 @@ def get_assignments():
     return rows
 
 # get assignments by course_id
+def get_assignments_course_id(course_id):
+    conn = create_connection('canvas.db')
+    cur = conn.cursor()
+    cur.execute(
+        "SELECT json_group_array( json_object( 'assignment_id', assignment_id, 'course_id', course_id, 'title', title, 'content', content, 'points', points, 'due_date', due_date) ) FROM assignments where course_id=" + str(course_id))
+    rows = cur.fetchall()
+    return rows
 
 # get all takes_course
 def get_takes_course():
@@ -123,6 +135,8 @@ def get_students_courses(username):
 # print('Kat Takes COURSE:' + str(get_students_courses('patrick_whalen') )+'\n')
 # print("ASSIGNMENTS:" + str(get_assignments()) + '\n')
 # print("GRADES:" + str(get_grades()) + '\n')
+# print("COURSE_ID 1 ANNOUNCEMENTS:" + str(get_announcements_course_id(1)) + '\n')
+# print("COURSE_ID 1 ASSIGNMENTS:" + str(get_assignments_course_id(1)))
 
 # INSERTING DATA
 def add_user():
