@@ -61,6 +61,7 @@ c.execute('''
               course_id INTEGER,
               title character NOT NULL,
               content TEXT NOT NULL,
+              points character NOT NULL,
               due_date DATETIME NOT NULL,
               FOREIGN KEY (course_id) REFERENCES courses(course_id)
           )
@@ -70,12 +71,9 @@ c.execute('''
 # todo: construct grades table
 c.execute('''
           CREATE TABLE grades (
-              grade_id INTEGER PRIMARY KEY AUTOINCREMENT,
               assignment_id INTEGER,
-              course_id INTEGER,
               student character NOT NULL,
-              grade character NOT NULL,
-              FOREIGN KEY (course_id) REFERENCES courses(course_id),
+              points character NOT NULL,
               FOREIGN KEY (student) REFERENCES users(name),
               FOREIGN KEY (assignment_id) REFERENCES assignments(assignment_id)
           )
@@ -193,8 +191,34 @@ c.executescript('''
           INSERT INTO announcements VALUES(null, 7, 'Announcement 15',  'Final grades are posted', (SELECT datetime('now')));
           ''')
 
-# add data to grade
-
 # add data to assignments - algorithms
+# null, course_id, title, content, points, due_date
+c.executescript('''
+          INSERT INTO assignments VALUES(null, 1, 'Assignment 1',  'HW 1 ', '100', (SELECT datetime('now')));
+          INSERT INTO assignments VALUES(null, 1, 'Assignment 2',  'HW 2 ', '100', (SELECT datetime('now')));
+          INSERT INTO assignments VALUES(null, 1, 'Assignment 3',  'HW 3 ','100',  (SELECT datetime('now')));
+          INSERT INTO assignments VALUES(null, 1, 'Assignment 4',  'HW 4 ','100',  (SELECT datetime('now')));
+          INSERT INTO assignments VALUES(null, 1, 'Assignment 5',  'Midterm ','100',  (SELECT datetime('now')));
+          INSERT INTO assignments VALUES(null, 1, 'Assignment 6',  'HW 7 ','100',  (SELECT datetime('now')));
+          ''')
+c.executescript('''
+          INSERT INTO assignments VALUES(null, 4, 'Assignment 1',  'HW 1 ', '100', (SELECT datetime('now')));
+          INSERT INTO assignments VALUES(null, 4, 'Assignment 2',  'HW 2 ', '100', (SELECT datetime('now')));
+          INSERT INTO assignments VALUES(null, 4, 'Assignment 3',  'HW 3 ','100',  (SELECT datetime('now')));
+          INSERT INTO assignments VALUES(null, 4, 'Assignment 4',  'HW 4 ','100',  (SELECT datetime('now')));
+          INSERT INTO assignments VALUES(null, 4, 'Assignment 5',  'Midterm ','100',  (SELECT datetime('now')));
+          INSERT INTO assignments VALUES(null, 4, 'Assignment 6',  'HW 7 ','100',  (SELECT datetime('now')));
+          ''')
+
+c.executescript('''
+          INSERT INTO assignments VALUES(null, 1, 'Assignment 7',  'HW 1 ', '100', (SELECT datetime('now')));
+          INSERT INTO assignments VALUES(null, 1, 'Assignment 7',  'HW 2 ', '100', (SELECT datetime('now')));
+          INSERT INTO assignments VALUES(null, 1, 'Assignment 7',  'HW 3 ','100',  (SELECT datetime('now')));
+          INSERT INTO assignments VALUES(null, 1, 'Assignment 7',  'HW 4 ','100',  (SELECT datetime('now')));
+          INSERT INTO assignments VALUES(null, 1, 'Assignment 7',  'Midterm ','100',  (SELECT datetime('now')));
+          INSERT INTO assignments VALUES(null, 1, 'Assignment 7',  'HW 7 ','100',  (SELECT datetime('now')));
+          ''')
+
+# add data to grades
 
 conn.commit()
