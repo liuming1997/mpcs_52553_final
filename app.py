@@ -41,6 +41,7 @@ def logout():
     [session.pop(key) for key in list(session.keys())]
     return render_template("logout.html")
 
+
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     if request.method == 'POST':

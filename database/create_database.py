@@ -37,6 +37,7 @@ c.execute('''
                 course_id INTEGER,
                 title character NOT NULL,
                 content TEXT NOT NULL,
+                date_posted DATETIME,
                 FOREIGN KEY (course_id) REFERENCES courses(course_id)
           )
           ''')
@@ -60,6 +61,7 @@ c.execute('''
               course_id INTEGER,
               title character NOT NULL,
               content TEXT NOT NULL,
+              due_date DATETIME NOT NULL,
               FOREIGN KEY (course_id) REFERENCES courses(course_id)
           )
           ''')
@@ -67,7 +69,7 @@ c.execute('''
 # grades table
 # todo: construct grades table
 c.execute('''
-          CREATE TABLE assignments (
+          CREATE TABLE grades (
               grade_id INTEGER PRIMARY KEY AUTOINCREMENT,
               assignment_id INTEGER,
               course_id INTEGER,
@@ -81,16 +83,18 @@ c.execute('''
 
 # add users to db
 c.executescript('''
-          INSERT INTO users VALUES('klh875', 'student', '12345', 'Katharine Hedlund');
-          INSERT INTO users VALUES('ming_liu', 'student', '12345', 'Ming Liu');
-          INSERT INTO users VALUES('patrick_whalen', 'student', '12345', 'Patrick Whalen');
-          INSERT INTO users VALUES('gerry1954', 'instructor', '12345', 'Gerry Brady');
-          INSERT INTO users VALUES('chelsea_troy', 'instructor', '12345', 'Chelsea Troy');
-          INSERT INTO users VALUES('y_terry', 'instructor', '12345', 'Yosvany Terry');
-          INSERT INTO users VALUES('rafi_a', 'instructor', '12345', 'Rafi Almhana');
-          INSERT INTO users VALUES('z_shang', 'instructor', '12345', 'Zechao Shang');
+          INSERT INTO users VALUES('klh875', 'student', '12345', 'Katharine Hedlund', 'Yes', 'No', 'One', 'Two', 'Red', 'Blue');
+          INSERT INTO users VALUES('ming_liu', 'student', '12345', 'Ming Liu', 'Yes', 'No', 'One', 'Two', 'Red', 'Blue');
+          INSERT INTO users VALUES('patrick_whalen', 'student', '12345', 'Patrick Whalen', 'Yes', 'No', 'One', 'Two', 'Red', 'Blue');
+          INSERT INTO users VALUES('gerry1954', 'instructor', '12345', 'Gerry Brady', 'Yes', 'No', 'One', 'Two', 'Red', 'Blue');
+          INSERT INTO users VALUES('chelsea_troy', 'instructor', '12345', 'Chelsea Troy', 'Yes', 'No', 'One', 'Two', 'Red', 'Blue');
+          INSERT INTO users VALUES('y_terry', 'instructor', '12345', 'Yosvany Terry', 'Yes', 'No', 'One', 'Two', 'Red', 'Blue');
+          INSERT INTO users VALUES('rafi_a', 'instructor', '12345', 'Rafi Almhana', 'Yes', 'No', 'One', 'Two', 'Red', 'Blue');
+          INSERT INTO users VALUES('z_shang', 'instructor', '12345', 'Zechao Shang', 'Yes', 'No', 'One', 'Two', 'Red', 'Blue');
           ''')
-
+# add admin user to db
+c.execute(
+    '''INSERT INTO users VALUES('molly', 'admin', '12345', 'Molly Stoner', 'Yes', 'No', 'One', 'Two', 'Red', 'Blue');''')
 
 # add courses to db
 conn.executescript('''
@@ -132,6 +136,8 @@ c.executescript('''
 
 
 # add data to announcements
+
+# course_id, title_ content, dateposted
 
 # add data to grade
 

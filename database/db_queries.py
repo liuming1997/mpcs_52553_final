@@ -26,6 +26,9 @@ def insert_new_user(name, username, password, account_type):
 def get_users():
     conn = create_connection('canvas.db')
     cur = conn.cursor()
+    # test user data
+    # cur.execute("SELECT * from users;")
+    # return cur.fetchall()
     cur.execute("SELECT json_group_array( json_object( 'username', username, 'role', role, 'password', password, 'name', name ) ) FROM users")
     rows = cur.fetchall()
 
@@ -75,7 +78,7 @@ def get_students_courses(username):
     return rows
 
 # TEST printing
-# print('USERS:' + str(get_users()) + '\n')
+print('USERS:' + str(get_users()) + '\n')
 # print('ANNOUNCEMENTS:' + str(get_announcements()) + '\n')
 # print('COURSES:' + str(get_courses() )+ '\n')
 # print('TAKES COURSE:' + str(get_takes_course()) + '\n')
