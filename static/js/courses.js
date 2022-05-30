@@ -17,7 +17,7 @@ function openNav() {
 
 function closeNav() {
     document.getElementById("courses_sidenav").style.width = "0";
-    document.getElementById("courses_sidenav").style.zIndex = "0";
+    document.getElementById("courses_sidenav").style.zIndex = "-1";
     document.getElementById("courses_header").style.marginLeft= "0";
     document.getElementById("courses_sidenav").style.borderRight = "0px";
     document.body.style.backgroundColor = "white";

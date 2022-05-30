@@ -1,4 +1,4 @@
-/* * {
+ /* * {
     outline: solid 1px red;
 }
 */
@@ -12,7 +12,7 @@
     height: 100%;
     width: 0;
     position: fixed;
-    z-index: 1;
+    z-index: -1;
     top: 75px;
     left: auto;
     background-color: white;
