@@ -1,4 +1,5 @@
 import sqlite3
+import datetime
 # HOW TO FORMAT SQLITE table rows as json: https://database.guide/format-sqlite-results-as-json/
 
 def create_connection(db_file):
@@ -117,7 +118,19 @@ def get_teachers_courses(username):
 
 # todo: get all of a teacher's assignments
 def get_teachers_assignments(username):
-    pass
+    conn = create_connection('canvas.db')
+    cur = conn.cursor()
+    cur.execute("SELECT json_group_array( json_object( 'course_name', course_name, 'title', title, 'content', content, 'due_date', due_date)) FROM assignments join courses using (course_id) where instructor_username=" + "'" + username + "'")
+    rows = cur.fetchall()
+    return rows
+
+# get all of a teacher's assignments for a particular course
+def get_teachers_assignments_for_course(username, course_id):
+    conn = create_connection('canvas.db')
+    cur = conn.cursor()
+    cur.execute("SELECT json_group_array( json_object( 'course_name', course_name, 'title', title, 'content', content, 'due_date', due_date)) FROM assignments join courses using (course_id) where (instructor_username=" + "'" + username + "' and course_id=" + str(course_id) + ")")
+    rows = cur.fetchall()
+    return rows    
 
 # get all of a student's courses
 def get_students_courses(username):
@@ -128,6 +141,15 @@ def get_students_courses(username):
     cur.execute("SELECT json_group_array( json_object( 'course_id', course_id, 'course_name', course_name, 'instructor_username', instructor_username)) FROM courses join takes_course using(course_id) where username=" + "'" + username + "'")
     rows = cur.fetchall()
     return rows
+
+# get all of a student's grades for a particular course id
+def get_students_grades_for_course(username, course_id):
+    conn = create_connection('canvas.db')
+    cur = conn.cursor()
+    cur.execute("SELECT json_group_array( json_object( 'course_name', course_name, 'title', title, 'content', content, 'points', points, 'due_date', due_date)) FROM assignments join courses using (course_id) join takes_course using(course_id) where (username=" + "'" + username + "' and course_id=" + str(course_id) + ")")
+    rows = cur.fetchall()
+    return rows
+
 
 # TEST printing
 # print('USERS:' + str(get_users()) + '\n')
@@ -141,12 +163,37 @@ def get_students_courses(username):
 # print("GRADES:" + str(get_grades()) + '\n')
 # print("COURSE_ID 1 ANNOUNCEMENTS:" + str(get_announcements_course_id(1)) + '\n')
 # print("COURSE_ID 1 ASSIGNMENTS:" + str(get_assignments_course_id(1)))
+# print("Patrick grades for Mobile Dev: " + str(get_students_grades_for_course('patrick_whalen', 1)))
+# print("Brady assignments for Algorithms: " + str(get_teachers_assignments_for_course('gerry1954', 4)))
+# print("Brady assignments: " + str(get_teachers_assignments('gerry1954')))
+
 
 # INSERTING DATA
-def add_user():
-    pass
+def add_user(username, role, password, name, sq1, sq1_answer, sq2, sq2_answer, sq3, sq3_answer):
+    conn = create_connection('canvas.db')
+    cur = conn.cursor()
+    cmd = "INSERT INTO users VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+    cur.execute(cmd, (username, role, password, name, sq1, sq1_answer, sq2, sq2_answer, sq3, sq3_answer))
+    return str("Successfully added user " + username)
 
-def add_announcement():
-    pass
+# drop user (TESTING ONLY)
+def drop_user(username):
+    conn = create_connection('canvas.db')
+    cur = conn.cursor()
+    cmd = "DELETE FROM users WHERE username=?"
+    cur.execute(cmd, (username,))
+    return str("User " + username + " dropped")
+
+def add_announcement(course_id, title, content):
+    conn = create_connection('canvas.db')
+    cur = conn.cursor()
+    cmd = "INSERT INTO announcements (course_id, title, content, date_posted) VALUES(?, ?, ?, ?)"
+    now = datetime.datetime.now()
+    cur.execute(cmd, (str(course_id), title, content, now.strftime('%Y-%m-%d %H:%M:%S')))
+    return str("Successfully added an announcement")
+
+# print("Adding a test user: " + str(add_user('vmisham', 'student', 'apollo', 'Vera Misham', 'poison', 'atroquinine', 'art', 'forgery', 'guilty', 'no')))
+# print("Dropping user for debug: " + str(drop_user('vmisham')))
+# print("Test annoucement: ", add_announcement(1, "test", "lorem_ipsum"))
 
 # UPDATE DATA
