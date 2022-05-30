@@ -4,6 +4,7 @@ c = conn.cursor()
 
 
 # users table
+# todo: Add column for active or inactive! default is active
 c.execute('''
          CREATE TABLE users (
              username character varying(50) NOT NULL PRIMARY KEY ,
