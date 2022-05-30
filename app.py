@@ -119,7 +119,7 @@ def settings():
 @app.route('/<course_id>/home')
 def course_home(course_id):
     course_announcements = json.loads(
-                        database.db_queries.get_announcements_course_id(course_id))
+                        database.db_queries.get_announcements_course_id(course_id)[0][0])
     print(course_announcements)
     return render_template("courses/home.html", course_list=session['course_list'], course_id=course_id, course_name=course_id)
 
