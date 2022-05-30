@@ -1,4 +1,4 @@
-/* * {
+/* {
     outline: solid 1px red;
 }
 */
@@ -416,6 +416,10 @@ Announcements CSS
 .assignments_table_header {
     border-bottom: 1px solid;
     border-color: #a6afb5;
+}
+
+.assignments_table_grading_header, .assignments_table_grading_item {
+
 }
 .assignments_table_assign_item, .assignments_table_class_item, .assignments_table_points_item, .assignments_table_date_item {
     padding: 20px;
