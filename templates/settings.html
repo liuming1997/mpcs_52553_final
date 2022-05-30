@@ -1,7 +1,181 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<a href="/edit_profile">Edit profile</a>
-<a href="/change_password">Change password</a>
-<a href="/change_security">Change security questions</a>
+<div id="courses_sidenav" class="sidenav">
+    <!-- <a> Date published </a>  may not use this -->
+    <a href="/{{ course }}/announcements">Announcements</a>
+    <a href="/{{ course }}/assignments">Assignments</a>
+    <a href="/{{ course }}/grades">Grades</a>
+</div>
+
+<div id="courses_header_and_right_of_header">
+    <div id="courses_header">
+
+        <a href="/{{ course }}/home"> {{ course }}</a>  <div id="courses_breadcrumbs"></div> Settings </span>
+    </div>
+    <!-- <div id = "right_of_header"></div> -->
+</div>
+
+<div id="course_section_content_body">
+    <h3>User Management</h3>
+    <form style="margin-top: 12px; margin-bottom: 12px;">
+  <div class="form-row align-items-center">
+    <div class="col-auto">
+      <label class="sr-only" for="inlineFormInput">Search user by Name</label>
+      <input type="text" class="form-control mb-2" id="inlineFormInput" placeholder="First Last">
+    </div>
+    <div class="col-auto">
+      <label class="sr-only" for="inlineFormInputGroup">Search user by E-mail</label>
+      <div class="input-group mb-2">
+        <div class="input-group-prepend">
+          <div class="input-group-text">@</div>
+        </div>
+        <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="user@gmail.com">
+      </div>
+    </div>
+    <div class="col-auto">
+      <button type="submit" class="btn btn-primary mb-2" style="width: 100%;">Search</button>
+    </div>
+  </div>
+</form>
+
+    <div class="collapsible_item">
+        <button type="button" class="collapsible_header"><span style="margin-left: 20px; "><b>Search Results: </b> </span></button>
+        <div class="collapsible_content_all">
+            <div class="collapsible_content_assign">
+
+
+                <table class="assignments_table">
+            <thead class="assignments_table_header">
+            <tr>
+                <th class="assignments_table_assign_header">Username</th>
+                <th class="assignments_table_points_header">ID</th>
+                <th class="assignments_table_date_header">Other rows but I am too tired to finish</th>
+            </tr>
+            </thead>
+            <tbody class="assignments_table_body">
+            <tr class="assignments_table_body_row">
+                <td class="assignments_table_assign_item"><a href="/courses/assignments_view" style="text-decoration: none; color:black">Assignment Title</a> </td>
+                <td class="assignments_table_points_item"> Points Here </td>
+                <td class="assignments_table_date_item">Due Date Here</td>
+            </tr>
+            <tr class="assignments_table_body_row">
+                <td class="assignments_table_assign_item"><a href="/courses/assignments_view" style="text-decoration: none; color:black">Assignment Title</a> </td>
+                <td class="assignments_table_points_item"> Points Here </td>
+                <td class="assignments_table_date_item">Due Date Here</td>
+            </tr>
+            <tr class="assignments_table_body_row">
+                <td class="assignments_table_assign_item"><a href="/courses/assignments_view" style="text-decoration: none; color:black">Assignment Title</a> </td>
+                <td class="assignments_table_points_item"> Points Here </td>
+                <td class="assignments_table_date_item">Due Date Here</td>
+            </tr>
+            </tbody>
+                </table>
+        </div>
+    </div>
+
+
+    <div class="collapsible_item">
+        <button type="button" class="collapsible_header"><span style="margin-left: 20px; "><b>Active Users</b> </span></button>
+        <div class="collapsible_content_all">
+            <div class="collapsible_content_assign">
+
+
+                <table class="assignments_table">
+            <thead class="assignments_table_header">
+            <tr>
+                <th class="assignments_table_assign_header">TABLE TABLE TABLE</th>
+                <th class="assignments_table_points_header">Points</th>
+                <th class="assignments_table_date_header">Due </th>
+            </tr>
+            </thead>
+            <tbody class="assignments_table_body">
+            <tr class="assignments_table_body_row">
+                <td class="assignments_table_assign_item"><a href="/courses/assignments_view" style="text-decoration: none; color:black">Assignment Title</a> </td>
+                <td class="assignments_table_points_item"> Points Here </td>
+                <td class="assignments_table_date_item">Due Date Here</td>
+            </tr>
+            <tr class="assignments_table_body_row">
+                <td class="assignments_table_assign_item"><a href="/courses/assignments_view" style="text-decoration: none; color:black">Assignment Title</a> </td>
+                <td class="assignments_table_points_item"> Points Here </td>
+                <td class="assignments_table_date_item">Due Date Here</td>
+            </tr>
+            <tr class="assignments_table_body_row">
+                <td class="assignments_table_assign_item"><a href="/courses/assignments_view" style="text-decoration: none; color:black">Assignment Title</a> </td>
+                <td class="assignments_table_points_item"> Points Here </td>
+                <td class="assignments_table_date_item">Due Date Here</td>
+            </tr>
+            </tbody>
+                </table>
+        </div>
+    </div>
+
+        <div class="collapsible_item">
+        <button type="button" class="collapsible_header"><span style="margin-left: 20px; "><b>Inactive Users</b> </span></button>
+        <div class="collapsible_content_all">
+            <div class="collapsible_content_assign">
+
+
+                <table class="assignments_table">
+            <thead class="assignments_table_header">
+            <tr>
+                <th class="assignments_table_assign_header">Header</th>
+                <th class="assignments_table_points_header">Points</th>
+                <th class="assignments_table_date_header">Due </th>
+            </tr>
+            </thead>
+            <tbody class="assignments_table_body">
+            <tr class="assignments_table_body_row">
+                <td class="assignments_table_assign_item"><a href="/courses/assignments_view" style="text-decoration: none; color:black">Assignment Title</a> </td>
+                <td class="assignments_table_points_item"> Points Here </td>
+                <td class="assignments_table_date_item">Due Date Here</td>
+            </tr>
+            <tr class="assignments_table_body_row">
+                <td class="assignments_table_assign_item"><a href="/courses/assignments_view" style="text-decoration: none; color:black">Assignment Title</a> </td>
+                <td class="assignments_table_points_item"> Points Here </td>
+                <td class="assignments_table_date_item">Due Date Here</td>
+            </tr>
+            <tr class="assignments_table_body_row">
+                <td class="assignments_table_assign_item"><a href="/courses/assignments_view" style="text-decoration: none; color:black">Assignment Title</a> </td>
+                <td class="assignments_table_points_item"> Points Here </td>
+                <td class="assignments_table_date_item">Due Date Here</td>
+            </tr>
+            </tbody>
+                </table>
+        </div>
+    </div>
+    <div class="collapsible_item">
+        <button type="button" class="collapsible_header"><span style="margin-left: 20px; "><b>All Users</b> </span></button>
+        <div class="collapsible_content_all">
+            <div class="collapsible_content_assign">
+
+
+                <table class="assignments_table">
+            <thead class="assignments_table_header">
+            <tr>
+                <th class="assignments_table_assign_header">TABLE TABLE TABLE</th>
+                <th class="assignments_table_points_header">Points</th>
+                <th class="assignments_table_date_header">Due </th>
+            </tr>
+            </thead>
+            <tbody class="assignments_table_body">
+            <tr class="assignments_table_body_row">
+                <td class="assignments_table_assign_item"><a href="/courses/assignments_view" style="text-decoration: none; color:black">Assignment Title</a> </td>
+                <td class="assignments_table_points_item"> Points Here </td>
+                <td class="assignments_table_date_item">Due Date Here</td>
+            </tr>
+            <tr class="assignments_table_body_row">
+                <td class="assignments_table_assign_item"><a href="/courses/assignments_view" style="text-decoration: none; color:black">Assignment Title</a> </td>
+                <td class="assignments_table_points_item"> Points Here </td>
+                <td class="assignments_table_date_item">Due Date Here</td>
+            </tr>
+            <tr class="assignments_table_body_row">
+                <td class="assignments_table_assign_item"><a href="/courses/assignments_view" style="text-decoration: none; color:black">Assignment Title</a> </td>
+                <td class="assignments_table_points_item"> Points Here </td>
+                <td class="assignments_table_date_item">Due Date Here</td>
+            </tr>
+            </tbody>
+                </table>
+        </div>
+    </div>
 {% endblock %}
