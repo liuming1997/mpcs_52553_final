@@ -25,7 +25,6 @@ for _ in range(100):
     sq3.append(fake.sentence(nb_words=6))
     sq3_answer.append(fake.sentence(nb_words=6))
 
-c.execute('''INSERT INTO users VALUES('molly', 'admin', '12345', 'Molly Stoner', 'Yes', 'No', 'One', 'Two', 'Red', 'Blue');''')
 
 for i in range(len(people)):
     string = 'INSERT INTO users VALUES(\'' + usernames[i] + '\', \'student\', \'12345\', \'' +  people[i] + '\', \'' 

@@ -54,7 +54,7 @@ def get_courses():
 def get_announcements():
     conn = create_connection('canvas.db')
     cur = conn.cursor()
-    cur.execute("SELECT json_group_array( json_object( 'announcement_id', announcement_id, 'course_id', course_id, 'title', title, 'content', content) ) FROM announcements")
+    cur.execute("SELECT json_group_array( json_object( 'announcement_id', announcement_id, 'course_id', course_id, 'title', title, 'content', content, 'date_posted', date_posted) ) FROM announcements")
     rows = cur.fetchall()
     return rows
 
@@ -87,7 +87,7 @@ def get_students_courses(username):
 
 # TEST printing
 print('USERS:' + str(get_users()) + '\n')
-# print('ANNOUNCEMENTS:' + str(get_announcements()) + '\n')
+print('ANNOUNCEMENTS:' + str(get_announcements()) + '\n')
 # print('COURSES:' + str(get_courses() )+ '\n')
 # print('TAKES COURSE:' + str(get_takes_course()) + '\n')
 

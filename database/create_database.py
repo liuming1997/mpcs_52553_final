@@ -135,12 +135,66 @@ c.executescript('''
           ''')
 
 
-# add data to announcements
-
+# add data to announcements - algorithms
+# course id: 1 instructor: gerry1954
 # course_id, title_ content, dateposted
+c.executescript('''
+          INSERT INTO announcements VALUES(null, 1, 'Announcement 1',  'HW 1 grades are posted', (SELECT datetime('now')));
+          INSERT INTO announcements VALUES(null, 1, 'Announcement 2',  'HW 2 grades are posted', (SELECT datetime('now')));
+          INSERT INTO announcements VALUES(null, 1, 'Announcement 3',  'HW 3 grades are posted', (SELECT datetime('now')));
+          INSERT INTO announcements VALUES(null, 1, 'Announcement 4',  'HW 4 grades are posted', (SELECT datetime('now')));
+          INSERT INTO announcements VALUES(null, 1, 'Announcement 5',  'HW 5 grades are posted', (SELECT datetime('now')));
+          INSERT INTO announcements VALUES(null, 1, 'Announcement 6',  'Project 1 grades are posted', (SELECT datetime('now')));
+          INSERT INTO announcements VALUES(null, 1, 'Announcement 7',  'Midterm grades are posted', (SELECT datetime('now')));
+          INSERT INTO announcements VALUES(null, 1, 'Announcement 8',  'Midterm Part 2 grades are posted', (SELECT datetime('now')));
+          INSERT INTO announcements VALUES(null, 1, 'Announcement 9',  'HW 6 grades are posted', (SELECT datetime('now')));
+          INSERT INTO announcements VALUES(null, 1, 'Announcement 10',  'HW 7 grades are posted', (SELECT datetime('now')));
+          INSERT INTO announcements VALUES(null, 1, 'Announcement 11',  'HW 8 grades are posted', (SELECT datetime('now')));
+          INSERT INTO announcements VALUES(null, 1, 'Announcement 12',  'HW 9 grades are posted', (SELECT datetime('now')));
+          INSERT INTO announcements VALUES(null, 1, 'Announcement 13',  'HW 10 grades are posted', (SELECT datetime('now')));
+          INSERT INTO announcements VALUES(null, 1, 'Announcement 14',  'Final exam grades are posted', (SELECT datetime('now')));
+          INSERT INTO announcements VALUES(null, 1, 'Announcement 15',  'Final grades are posted', (SELECT datetime('now')));
+          ''')
+
+# add announcements to advanced algos
+c.executescript('''
+          INSERT INTO announcements VALUES(null, 4, 'Announcement 1',  'HW 1 grades are posted', (SELECT datetime('now')));
+          INSERT INTO announcements VALUES(null, 4, 'Announcement 2',  'HW 2 grades are posted', (SELECT datetime('now')));
+          INSERT INTO announcements VALUES(null, 4, 'Announcement 3',  'HW 3 grades are posted', (SELECT datetime('now')));
+          INSERT INTO announcements VALUES(null, 4, 'Announcement 4',  'HW 4 grades are posted', (SELECT datetime('now')));
+          INSERT INTO announcements VALUES(null, 4, 'Announcement 5',  'HW 5 grades are posted', (SELECT datetime('now')));
+          INSERT INTO announcements VALUES(null, 4, 'Announcement 6',  'Project 1 grades are posted', (SELECT datetime('now')));
+          INSERT INTO announcements VALUES(null, 4, 'Announcement 7',  'Midterm grades are posted', (SELECT datetime('now')));
+          INSERT INTO announcements VALUES(null, 4, 'Announcement 8',  'Midterm Part 2 grades are posted', (SELECT datetime('now')));
+          INSERT INTO announcements VALUES(null, 4, 'Announcement 9',  'HW 6 grades are posted', (SELECT datetime('now')));
+          INSERT INTO announcements VALUES(null, 4, 'Announcement 10',  'HW 7 grades are posted', (SELECT datetime('now')));
+          INSERT INTO announcements VALUES(null, 4, 'Announcement 11',  'HW 8 grades are posted', (SELECT datetime('now')));
+          INSERT INTO announcements VALUES(null, 4, 'Announcement 12',  'HW 9 grades are posted', (SELECT datetime('now')));
+          INSERT INTO announcements VALUES(null, 4, 'Announcement 13',  'HW 10 grades are posted', (SELECT datetime('now')));
+          INSERT INTO announcements VALUES(null, 4, 'Announcement 14',  'Final exam grades are posted', (SELECT datetime('now')));
+          INSERT INTO announcements VALUES(null, 4, 'Announcement 15',  'Final grades are posted', (SELECT datetime('now')));
+          ''')
+
+c.executescript('''
+          INSERT INTO announcements VALUES(null, 7, 'Announcement 1',  'HW 1 grades are posted', (SELECT datetime('now')));
+          INSERT INTO announcements VALUES(null, 7, 'Announcement 2',  'HW 2 grades are posted', (SELECT datetime('now')));
+          INSERT INTO announcements VALUES(null, 7, 'Announcement 3',  'HW 3 grades are posted', (SELECT datetime('now')));
+          INSERT INTO announcements VALUES(null, 7, 'Announcement 4',  'HW 4 grades are posted', (SELECT datetime('now')));
+          INSERT INTO announcements VALUES(null, 7, 'Announcement 5',  'HW 5 grades are posted', (SELECT datetime('now')));
+          INSERT INTO announcements VALUES(null, 7, 'Announcement 6',  'Project 1 grades are posted', (SELECT datetime('now')));
+          INSERT INTO announcements VALUES(null, 7, 'Announcement 7',  'Midterm grades are posted', (SELECT datetime('now')));
+          INSERT INTO announcements VALUES(null, 7, 'Announcement 8',  'Midterm Part 2 grades are posted', (SELECT datetime('now')));
+          INSERT INTO announcements VALUES(null, 7, 'Announcement 9',  'HW 6 grades are posted', (SELECT datetime('now')));
+          INSERT INTO announcements VALUES(null, 7, 'Announcement 10',  'HW 7 grades are posted', (SELECT datetime('now')));
+          INSERT INTO announcements VALUES(null, 7, 'Announcement 11',  'HW 8 grades are posted', (SELECT datetime('now')));
+          INSERT INTO announcements VALUES(null, 7, 'Announcement 12',  'HW 9 grades are posted', (SELECT datetime('now')));
+          INSERT INTO announcements VALUES(null, 7, 'Announcement 13',  'HW 10 grades are posted', (SELECT datetime('now')));
+          INSERT INTO announcements VALUES(null, 7, 'Announcement 14',  'Final exam grades are posted', (SELECT datetime('now')));
+          INSERT INTO announcements VALUES(null, 7, 'Announcement 15',  'Final grades are posted', (SELECT datetime('now')));
+          ''')
 
 # add data to grade
 
-# add data to assignments
+# add data to assignments - algorithms
 
 conn.commit()
