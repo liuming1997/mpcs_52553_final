@@ -76,7 +76,7 @@ def get_grades():
     rows = cur.fetchall()
     return rows
 
-# get all grades by username
+# todo: get all grades by username
 def get_grades_username():
     pass
 
@@ -114,6 +114,10 @@ def get_teachers_courses(username):
     cur.execute("SELECT json_group_array( json_object( 'course_id', course_id, 'course_name', course_name, 'instructor_username', instructor_username)) FROM courses where instructor_username=" + "'" + username + "'")
     rows = cur.fetchall()
     return rows
+
+# todo: get all of a teacher's assignments
+def get_teachers_assignments(username):
+    pass
 
 # get all of a student's courses
 def get_students_courses(username):
