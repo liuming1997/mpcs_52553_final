@@ -89,7 +89,7 @@ def index():
         return redirect(url_for('login'))
     return redirect(url_for("dashboard"))
 
-@app.route('/edit_account', methods['GET', 'POST'])
+@app.route('/edit_account', methods=['GET', 'POST'])
 def edit_account():
     if request.method == 'POST':
         new_name = request.form['name']
