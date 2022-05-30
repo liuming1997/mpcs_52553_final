@@ -28,7 +28,14 @@ def login():
             print(username + " : " + user['username'])
             if user['username'] == username and user['password'] == password:
                 session['username'] = username;
-                session['course_list'] = json.loads(database.db_queries.get_students_courses(session['username'])[0][0])
+                session['role'] = database.db_queries.get_user_role(username)[0][0]
+                if session['role'] == 'instructor':
+                    session['course_list'] = json.loads(
+                        database.db_queries.get_teachers_courses(session['username'])[0][0])
+                else:
+                    session['course_list'] = json.loads(database.db_queries.get_students_courses(session['username'])[0][0])
+                print(json.loads(database.db_queries.get_teachers_courses(session['username'])[0][0]))
+
                 return(redirect(url_for('dashboard')))
             else:
                 flash('Incorrect username or password')
@@ -37,7 +44,8 @@ def login():
 @app.route('/logout')
 def logout():
     [session.pop(key) for key in list(session.keys())]
-    return render_template("login.html")
+    return render_template("logout.html")
+
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
@@ -108,39 +116,37 @@ def settings():
 
 
 # course routes
-@app.route('/<course>/home')
-def course_home(course):
-    return render_template("courses/home.html", course_list=session['course_list'], course=course)
+@app.route('/<course_id>/home')
+def course_home(course_id):
+    return render_template("courses/home.html", course_list=session['course_list'], course_id=course_id, course_name=course_id)
 
-@app.route('/<course>/announcements')
-def course_announcements(course):
-    return render_template("courses/announcements.html", course_list=session['course_list'], course=course)
+@app.route('/<course_id>/announcements')
+def course_announcements(course_id):
+    return render_template("courses/announcements.html", course_list=session['course_list'], course_id=course_id, course_name=course_id)
 
-@app.route('/<course>/announcements_view')
-def view_assignment(course):
-    return render_template("courses/announcements_view.html", course_list=session['course_list'], course=course)
+@app.route('/<course_id>/announcements_view')
+def view_announcement(course_id):
+    return render_template("courses/announcements_view.html", course_list=session['course_list'], course_id=course_id, course_name=course_id)
 
-@app.route('/<course>/assignments_view')
-def view_assignment(course):
-    return render_template("courses/assignments_view.html", course_list=session['course_list'], course=course)
+@app.route('/<course_id>/announcements_create')
+def create_announcement(course_id):
+    return render_template("courses/announcements_create.html", course_id=course_id, course_name=course_id)
 
-@app.route('/<course>/assignments')
-def course_assignments(course):
-    return render_template("courses/assignments.html", course_list=session['course_list'], course=course)
+@app.route('/<course_id>/assignments_view')
+def view_assignment(course_id):
+    return render_template("courses/assignments_view.html", course_list=session['course_list'], course_id=course_id, course_name=course_id)
 
-@app.route('/<course>/grades')
-def course_grades(course):
-    return render_template("courses/grades.html", course_list=session['course_list'], course=course)
+@app.route('/<course_id>/assignments')
+def course_assignments(course_id):
+    return render_template("courses/assignments.html", course_list=session['course_list'], course_id=course_id, course_name=course_id)
 
-@app.route('/<course>/announcements_create')
-def create_announcement():
-    return render_template("courses/announcements_create.html")
+@app.route('/<course_id>/assignments_create')
+def create_assignment(course_id):
+    return render_template("courses/assignments_create.html", course_id=course_id, course_name=course_id)
 
-@app.route('/<course>/modules')
-def course_modules(course):
-    return render_template("courses/modules.html", course_list=session['course_list'], course=course)
+@app.route('/<course_id>/grades')
+def course_grades(course_id):
+    return render_template("courses/grades.html", course_list=session['course_list'], course_id=course_id, course_name=course_id)
 
-@app.route('/<course>/syllabus')
-def course_syllabus(course):
-    return render_template("courses/syllabus.html", course_list=session['course_list'], course=course)
+
 

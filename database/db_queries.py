@@ -26,10 +26,21 @@ def insert_new_user(name, username, password, account_type):
 def get_users():
     conn = create_connection('canvas.db')
     cur = conn.cursor()
+    # test user data
+    # cur.execute("SELECT * from users;")
+    # return cur.fetchall()
     cur.execute("SELECT json_group_array( json_object( 'username', username, 'role', role, 'password', password, 'name', name ) ) FROM users")
     rows = cur.fetchall()
-
     return rows
+
+def get_user_role(username):
+    conn = create_connection('canvas.db')
+    cur = conn.cursor()
+    cur.execute(
+        "SELECT role FROM users where username=" + "'" + username + "'")
+    rows = cur.fetchall()
+    return rows
+
 
 # get all courses
 def get_courses():
@@ -43,9 +54,37 @@ def get_courses():
 def get_announcements():
     conn = create_connection('canvas.db')
     cur = conn.cursor()
-    cur.execute("SELECT json_group_array( json_object( 'announcement_id', announcement_id, 'course_id', course_id, 'title', title, 'content', content) ) FROM announcements")
+    cur.execute("SELECT json_group_array( json_object( 'announcement_id', announcement_id, 'course_id', course_id, 'title', title, 'content', content, 'date_posted', date_posted) ) FROM announcements")
     rows = cur.fetchall()
     return rows
+
+# get announcements by course_id
+def get_announcements_course_id():
+    pass
+
+# get all grades
+def get_grades():
+    conn = create_connection('canvas.db')
+    cur = conn.cursor()
+    cur.execute(
+        "SELECT json_group_array( json_object( 'assignment_id', assignment_id, 'student_username', student_username, 'grade', grade) ) FROM grades")
+    rows = cur.fetchall()
+    return rows
+
+# get all grades by username
+def get_grades_username():
+    pass
+
+# get assignments
+def get_assignments():
+    conn = create_connection('canvas.db')
+    cur = conn.cursor()
+    cur.execute(
+        "SELECT json_group_array( json_object( 'assignment_id', assignment_id, 'course_id', course_id, 'title', title, 'content', content, 'points', points, 'due_date', due_date) ) FROM assignments")
+    rows = cur.fetchall()
+    return rows
+
+# get assignments by course_id
 
 # get all takes_course
 def get_takes_course():
@@ -82,6 +121,8 @@ def get_students_courses(username):
 
 # print('GERRY TEACHES COURSE:' + str(get_teachers_courses('gerry1954'))+'\n')
 # print('Kat Takes COURSE:' + str(get_students_courses('patrick_whalen') )+'\n')
+# print("ASSIGNMENTS:" + str(get_assignments()) + '\n')
+# print("GRADES:" + str(get_grades()) + '\n')
 
 # INSERTING DATA
 def add_user():
