@@ -15,6 +15,15 @@
         <div class="imgcontainer">
             <img src="https://www.w3schools.com/howto/img_avatar2.png">
         </div>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul style="color: red; list-style-type:none;">
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
         <div class="container">
             <div id="name">
                 <label for="name"><b>First and last name</b></label>

@@ -121,10 +121,9 @@
         </button>
         <div class="collapse" id="dashboard-collapse">
           <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-            <li><a href="/courses/home" class="link-dark rounded text-white">C++</a></li>
-            <li><a href="/courses/home" class="link-dark rounded text-white">Web Development</a></li>
-            <li><a href="/courses/home" class="link-dark rounded text-white">Mobile Development</a></li>
-            <li><a href="/courses/home" class="link-dark rounded text-white">Algorithms</a></li>
+            {% for course in course_list %}
+                <li><a class="link-dark rounded text-white" href="/{{ course['course_name'] }}/home">{{ course['course_name'] }}</a></li>
+            {% endfor %}
           </ul>
         </div>
       </li>

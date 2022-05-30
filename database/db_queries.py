@@ -20,7 +20,7 @@ def insert_new_user(name, username, password, account_type):
     conn = create_connection('canvas.db')
     cur = conn.cursor()
     cur.execute("INSERT INTO users (username, role, password, name) VALUES(?, ?, ?, ?)", (username, account_type, password, name))
-    print("insert called")
+    conn.commit()
 
 # get all users
 def get_users():
