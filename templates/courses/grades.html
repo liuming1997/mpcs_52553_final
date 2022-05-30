@@ -1,7 +1,6 @@
 {% extends "layout.html" %}
 
 {% block content %}
-
 <div id="courses_sidenav" class="sidenav">
     <!-- <a> Date published </a>  may not use this -->
     <a href="/{{ course }}/announcements">Announcements</a>
@@ -17,7 +16,54 @@
     <!-- <div id = "right_of_header"></div> -->
 </div>
 <div id="course_section_content_body">
-    <h3>Course Grades</h3>
+    <div class="grey_header_table">
+    <div class="dummy_content"> dummy content  </div>
+  </div>
+
+            <div class="collapsible_content_assign">
+
+
+                <table class="assignments_table">
+            <thead class="assignments_table_header">
+            <tr>
+                <th class="assignments_table_assign_header">Assignment</th>
+                <th class="assignments_table_points_header">Points Received</th>
+                <th class="assignments_table_points_header">Points Total</th>
+                <th class="assignments_table_date_header">Submitted </th>
+            </tr>
+            </thead>
+            <tbody class="assignments_table_body">
+            <tr class="assignments_table_body_row">
+                <td class="assignments_table_assign_item"><a href="/courses/assignments_view" style="text-decoration: none; color:black">Assignment Title</a> </td>
+                <td class="assignments_table_points_item"> Points Received </td>
+                <td class="assignments_table_points_item"> Points total </td>
+                <td class="assignments_table_date_item">Date Here</td>
+            </tr>
+            <tr class="assignments_table_body_row">
+                <td class="assignments_table_assign_item"><a href="/courses/assignments_view" style="text-decoration: none; color:black">Assignment Title</a> </td>
+                <td class="assignments_table_points_item"> Points received </td>
+                <td class="assignments_table_points_item"> Points total </td>
+                <td class="assignments_table_date_item">Date Here</td>
+            </tr>
+            <tr class="assignments_table_body_row">
+                <td class="assignments_table_assign_item"><a href="/courses/assignments_view" style="text-decoration: none; color:black">Assignment Title</a> </td>
+                <td class="assignments_table_points_item"> Points received </td>
+                <td class="assignments_table_points_item"> Points total </td>
+                <td class="assignments_table_date_item">Date Here</td>
+            </tr>
+            <tr class="assignments_table_body_row">
+                <td class="assignments_table_assign_item"><a href="/courses/assignments_view" style="text-decoration: none; color:black">Assignment Title</a> </td>
+                <td class="assignments_table_points_item"> Points received </td>
+                <td class="assignments_table_points_item"> Points total </td>
+                <td class="assignments_table_date_item">Date Here</td>
+            </tr>
+            </tbody>
+
+        </table></div>
+
+<div class="grey_footer_table">
+    <div class="dummy_content"> dummy content  </div>
+  </div>
 </div>
 
 {% endblock %}
