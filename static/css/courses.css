@@ -496,6 +496,21 @@ Announcements CSS
     border-top: 0px;
 }
 
+/*
+Create post CSS
+ */
+
+.create_post {
+    width: 100%;
+    background: #767676;
+    border: #767676;
+}
+
+.form_button {
+    text-align: center;
+}
+
+
 
 
 

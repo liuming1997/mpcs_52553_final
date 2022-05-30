@@ -28,7 +28,7 @@ def login():
                 return(redirect(url_for('dashboard')))
             else:
                 flash('Incorrect username or password')
-    return render_template("login.html")  
+    return render_template("login.html")
 
 @app.route('/logout')
 def logout():
@@ -84,12 +84,20 @@ def course_announcements():
     return render_template("courses/announcements.html")
 
 @app.route('/courses/announcements_view')
-def view_assignment():
+def view_announcement():
     return render_template("courses/announcements_view.html")
+
+@app.route('/courses/announcements_create')
+def create_announcement():
+    return render_template("courses/announcements_create.html")
 
 @app.route('/courses/assignments')
 def course_assignments():
     return render_template("courses/assignments.html")
+
+@app.route('/courses/assignments_view')
+def view_assignment():
+    return render_template("courses/assignments_view.html")
 
 @app.route('/courses/grades')
 def course_grades():
