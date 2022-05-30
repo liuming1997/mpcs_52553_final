@@ -121,8 +121,8 @@ def get_students_courses(username):
 
 # print('GERRY TEACHES COURSE:' + str(get_teachers_courses('gerry1954'))+'\n')
 # print('Kat Takes COURSE:' + str(get_students_courses('patrick_whalen') )+'\n')
-print("ASSIGNMENTS:" + str(get_assignments()) + '\n')
-print("GRADES:" + str(get_grades()) + '\n')
+# print("ASSIGNMENTS:" + str(get_assignments()) + '\n')
+# print("GRADES:" + str(get_grades()) + '\n')
 
 # INSERTING DATA
 def add_user():
