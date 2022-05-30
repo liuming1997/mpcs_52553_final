@@ -29,6 +29,8 @@ def login():
             if user['username'] == username and user['password'] == password:
                 session['username'] = username;
                 session['course_list'] = json.loads(database.db_queries.get_students_courses(session['username'])[0][0])
+                print(json.loads(database.db_queries.get_students_courses(session['username'])[0][0]))
+
                 return(redirect(url_for('dashboard')))
             else:
                 flash('Incorrect username or password')
@@ -96,8 +98,12 @@ def course_announcements(course):
     return render_template("courses/announcements.html", course_list=session['course_list'], course=course)
 
 @app.route('/<course>/announcements_view')
-def view_assignment(course):
+def view_announcement(course):
     return render_template("courses/announcements_view.html", course_list=session['course_list'], course=course)
+
+@app.route('/<course>/announcements_create')
+def create_announcement(course):
+    return render_template("courses/announcements_create.html", course=course)
 
 @app.route('/<course>/assignments_view')
 def view_assignment(course):
@@ -107,13 +113,13 @@ def view_assignment(course):
 def course_assignments(course):
     return render_template("courses/assignments.html", course_list=session['course_list'], course=course)
 
+@app.route('/<course>/assignments_create')
+def create_assignment(course):
+    return render_template("courses/assignments_create.html", course=course)
+
 @app.route('/<course>/grades')
 def course_grades(course):
     return render_template("courses/grades.html", course_list=session['course_list'], course=course)
-
-@app.route('/<course>/announcements_create')
-def create_announcement():
-    return render_template("courses/announcements_create.html")
 
 @app.route('/<course>/modules')
 def course_modules(course):
