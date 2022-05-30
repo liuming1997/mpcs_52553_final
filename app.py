@@ -64,6 +64,14 @@ def signup():
 
 @app.route('/reset')
 def reset():
+    username = request.form['user']
+
+    # check if username already exists
+    user_grab = database.db_queries.get_users()
+    for user in user_grab:
+        if user[0] == username:
+            flash('Username already exists!')
+            return(redirect(url_for('signup')))
     return render_template("reset.html")
 
 @app.route('/')
@@ -72,6 +80,19 @@ def index():
         # Visitor is unknown, return to login
         return redirect(url_for('login'))
     return redirect(url_for("dashboard"))
+
+@app.route('/edit_account', methods['GET', 'POST'])
+def edit_account():
+    if request.method == 'POST':
+        new_name = request.form['name']
+        new_username = request.form['username']
+
+        # update user information here
+
+        return(redirect(url_for('dashboard')))
+
+
+    return render_template("edit.html", course_list=session['course_list'])
 
 @app.route('/dashboard')
 def dashboard():
