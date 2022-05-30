@@ -31,8 +31,16 @@ def get_users():
     # return cur.fetchall()
     cur.execute("SELECT json_group_array( json_object( 'username', username, 'role', role, 'password', password, 'name', name ) ) FROM users")
     rows = cur.fetchall()
-
     return rows
+
+def get_user_role(username):
+    conn = create_connection('canvas.db')
+    cur = conn.cursor()
+    cur.execute(
+        "SELECT role FROM users where username=" + "'" + username + "'")
+    rows = cur.fetchall()
+    return rows
+
 
 # get all courses
 def get_courses():

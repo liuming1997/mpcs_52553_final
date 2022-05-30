@@ -28,8 +28,13 @@ def login():
             print(username + " : " + user['username'])
             if user['username'] == username and user['password'] == password:
                 session['username'] = username;
-                session['course_list'] = json.loads(database.db_queries.get_students_courses(session['username'])[0][0])
-                print(json.loads(database.db_queries.get_students_courses(session['username'])[0][0]))
+                session['role'] = database.db_queries.get_user_role(username)[0][0]
+                if session['role'] == 'instructor':
+                    session['course_list'] = json.loads(
+                        database.db_queries.get_teachers_courses(session['username'])[0][0])
+                else:
+                    session['course_list'] = json.loads(database.db_queries.get_students_courses(session['username'])[0][0])
+                print(json.loads(database.db_queries.get_teachers_courses(session['username'])[0][0]))
 
                 return(redirect(url_for('dashboard')))
             else:
