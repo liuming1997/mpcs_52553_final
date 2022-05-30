@@ -5,7 +5,7 @@
 
 #content {
     width: 100%;
-
+    overflow-y: scroll;
 }
 
 .sidenav {
@@ -65,6 +65,12 @@
     font-size: large;
 }
 
+@media only screen and (max-width: 850px) {
+    #courses_header a {
+        display: none;
+    }
+}
+
 #course_section_content_body {
     display: flex;
     flex-direction: column;
@@ -76,8 +82,8 @@
     padding-right: 3.5%;
     padding-bottom: 1%;
     box-sizing: border-box;
-    width: 85%;
-    position: absolute;
+    width: 98%;
+
     text-align: left;
     z-index: 2;
 
@@ -436,6 +442,7 @@ Announcements CSS
 
 .collapsible_content_assign {
     margin: 0px;
+    position: relative;
 }
 
 #assignments_date_posted {
@@ -448,21 +455,15 @@ Announcements CSS
 }
 
 @media only screen and (max-width: 850px) {
-    #announcement_details {
-        display: none;
+    .assignments_table_assign_item, .assignments_table_class_item, .assignments_table_points_item, .assignments_table_date_item {
+        padding: 2.5px;
     }
 
-    .assignments_table_details_item {
-        width: 25px;
-        padding-right: 0px;
+    .assignments_table_assign_header, .assignments_table_class_header, .assignments_table_points_header, .assignments_table_date_header{
+        padding: 2.5px;
     }
 
-    .assignments_table_date_item {
-        padding-left: 0px;
-        padding-right: 0px;
-    }
-
-    .assignments_table_poster_item, .assignments_table_poster_header {
+    .assignments_table_date_item, .assignments_table_date_header {
         display: none;
     }
 
