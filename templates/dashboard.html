@@ -1,9 +1,19 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<div>
-    <h2 style="padding-left: 20px; padding-top: 10px;">Dashboard</h2>
-    <hr>
+<div id="courses_sidenav" class="sidenav">
+    <!-- <a> Date published </a>  may not use this -->
+    <a href="/{{ course }}/announcements">Announcements</a>
+    <a href="/{{ course }}/assignments">Assignments</a>
+    <a href="/{{ course }}/grades">Grades</a>
+</div>
+
+<div id="courses_header_and_right_of_header">
+    <div id="courses_header">
+
+        <a href="/{{ course }}/home"> {{ course }}</a>  <div id="courses_breadcrumbs"></div> Dashboard </span>
+    </div>
+    <!-- <div id = "right_of_header"></div> -->
 </div>
 <div id="course_section_content_body">
     <div class="collapsible_item">

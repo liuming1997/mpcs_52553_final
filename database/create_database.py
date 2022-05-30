@@ -52,9 +52,6 @@ c.execute('''
           )
           ''')
 
-
-
-
 # assignments table
 # todo: construct assignments table
 c.execute('''
@@ -135,5 +132,9 @@ c.executescript('''
 
 
 # add data to announcements
+
+# add data to grade
+
+# add data to assignments
 
 conn.commit()
