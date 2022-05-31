@@ -2,10 +2,49 @@
 
 {% block content %}
 <div>
-    <h2 style="padding-left: 20px; padding-top: 10px;">Dashboard</h2>
-    <hr style="padding-left: 20px; ">
+    <div id="courses_sidenav" class="sidenav">
+    <!-- <a> Date published </a>  may not use this -->
+    <a href="/{{ course }}/announcements">Announcements</a>
+    <a href="/{{ course }}/assignments">Assignments</a>
+    <a href="/{{ course }}/grades">Grades</a>
+</div>
+
+<div id="courses_header_and_right_of_header">
+    <div id="courses_header">
+
+        <a href="/{{ course }}/home"> {{ course }}</a>  <div id="courses_breadcrumbs"></div> Dashboard </span>
+    </div>
+    <!-- <div id = "right_of_header"></div> -->
+</div>
 </div>
 <div id="course_section_content_body">
+    {% if role == 'admin' %}
+    <h3 style="padding-bottom: 6px;">System Overview</h3>
+    <table class="announcements_table">
+        <thead class="announcements_table_header">
+        <tr>
+            <th class="announcements_table_poster_header">Entity</th>
+            <th class="announcements_table_details_header">Number in System</th>
+        </tr>
+        </thead>
+        <tbody class="announcements_table_body">
+            <tr class="announcements_table_body_row">
+                <td class="announcements_table_poster_item">Students </td>
+                <td class="announcements_table_details_item">Num Students </td>
+            </tr>
+            <tr class="announcements_table_body_row">
+                <td class="announcements_table_poster_item">Teachers</td>
+                <td class="announcements_table_details_item">Num Teachers </td>
+            </tr>
+        <tr class="announcements_table_body_row">
+                <td class="announcements_table_poster_item">Courses </td>
+                <td class="announcements_table_details_item">Num Courses </td>
+            </tr>
+
+        </tbody>
+    </table>
+    {% endif %}
+    {% if role == 'instructor' or role =='student' %}
     <div class="collapsible_item">
         <button type="button" class="collapsible_header"><span style="margin-left: 20px; "><b>To Do</b> </span></button>
         <div class="collapsible_content_all">
@@ -122,7 +161,7 @@
         </table></div>
         </div>
     </div>
-
+    {% endif %}
 </div>
 
 

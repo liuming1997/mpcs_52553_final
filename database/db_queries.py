@@ -30,8 +30,9 @@ def get_users():
     # test user data
     # cur.execute("SELECT * from users;")
     # return cur.fetchall()
-    cur.execute("SELECT json_group_array( json_object( 'username', username, 'role', role, 'password', password, 'name', name ) ) FROM users")
+    cur.execute("SELECT json_group_array( json_object( 'username', username, 'role', role, 'password', password, 'name', name, 'status', status ) ) FROM users")
     rows = cur.fetchall()
+    print(rows)
     return rows
 
 def get_user_role(username):
@@ -180,7 +181,7 @@ def get_all_students_grades_for_course(course_id):
 # print(str(get_all_students_grades_for_course(1)))
 
 # TEST printing
-# print('USERS:' + str(get_users()) + '\n')
+print('USERS:' + str(get_users()) + '\n')
 # print('ANNOUNCEMENTS:' + str(get_announcements()) + '\n')
 # print('COURSES:' + str(get_courses() )+ '\n')
 # print('TAKES COURSE:' + str(get_takes_course()) + '\n')
@@ -191,7 +192,7 @@ def get_all_students_grades_for_course(course_id):
 # print("GRADES:" + str(get_grades()) + '\n')
 # print("COURSE_ID 1 ANNOUNCEMENTS:" + str(get_announcements_course_id(1)) + '\n')
 # print("COURSE_ID 1 ASSIGNMENTS:" + str(get_assignments_course_id(1)))
-print("Patrick grades for Mobile Dev: " + str(get_students_grades_for_course('patrick_whalen', 1)))
+# print("Patrick grades for Mobile Dev: " + str(get_students_grades_for_course('patrick_whalen', 1)))
 # print("Brady assignments for Algorithms: " + str(get_teachers_assignments_for_course('gerry1954', 4)))
 # print("Brady assignments: " + str(get_teachers_assignments('gerry1954')))
 

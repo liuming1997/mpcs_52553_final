@@ -9,7 +9,7 @@ app = Flask(__name__)
 app.secret_key = uuid.uuid4().hex
 
 # LINK THAT SHOWS HOW TO USE AJAX w/ flask: https://www.youtube.com/watch?v=UmC26YXExJ4
-
+# or this one: https://joseph-dougal.medium.com/flask-ajax-bootstrap-tables-9036410cbc8
 
 # @app.before_request
 # def before_request_check():
@@ -102,16 +102,24 @@ def edit_account():
 
 @app.route('/dashboard')
 def dashboard():
-    return render_template("dashboard.html", course_list=session['course_list'])
+    return render_template("dashboard.html", course_list=session['course_list'], role=session['role'])
 
 @app.route('/profile')
 def profile():
-    return render_template("profile.html", course_list=session['course_list'])
+    return render_template("profile.html", course_list=session['course_list'], role=session['role'])
 
 @app.route('/settings')
 def settings():
-    return render_template("settings.html", course_list=session['course_list']) 
+    users = json.loads(database.db_queries.get_users()[0][0])
+    print(users)
+    return render_template("settings.html", course_list=session['course_list'], users=users, role=session['role'])
 
+@app.route('/course_admin')
+def course_admin():
+    return render_template("course_admin.html", role=session['role'])
+@app.route('/create_course')
+def create_course():
+    return render_template("create_course.html", role=session['role'])
 
 # course routes
 @app.route('/<course_id>/home')

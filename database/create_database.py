@@ -11,6 +11,7 @@ c.execute('''
              role character NOT NULL,
              password TEXT NOT NULL,
              name character NOT NULL,
+             status character NOT NULL, 
              sq1 character varying(50) NOT NULL,
              sq1_answer character varying(50) NOT NULL,
              sq2 character varying(50) NOT NULL,
@@ -26,6 +27,8 @@ c.execute('''
               course_id INTEGER PRIMARY KEY AUTOINCREMENT,
               course_name character varying(50),
               instructor_username character,
+               description character, 
+            capacity INTEGER,
               FOREIGN KEY (instructor_username) REFERENCES users(username)
           )
           ''')
@@ -83,29 +86,29 @@ c.execute('''
 
 # add users to db
 c.executescript('''
-          INSERT INTO users VALUES('klh875', 'student', '12345', 'Katharine Hedlund', 'Yes', 'No', 'One', 'Two', 'Red', 'Blue');
-          INSERT INTO users VALUES('ming_liu', 'student', '12345', 'Ming Liu', 'Yes', 'No', 'One', 'Two', 'Red', 'Blue');
-          INSERT INTO users VALUES('patrick_whalen', 'student', '12345', 'Patrick Whalen', 'Yes', 'No', 'One', 'Two', 'Red', 'Blue');
-          INSERT INTO users VALUES('gerry1954', 'instructor', '12345', 'Gerry Brady', 'Yes', 'No', 'One', 'Two', 'Red', 'Blue');
-          INSERT INTO users VALUES('chelsea_troy', 'instructor', '12345', 'Chelsea Troy', 'Yes', 'No', 'One', 'Two', 'Red', 'Blue');
-          INSERT INTO users VALUES('y_terry', 'instructor', '12345', 'Yosvany Terry', 'Yes', 'No', 'One', 'Two', 'Red', 'Blue');
-          INSERT INTO users VALUES('rafi_a', 'instructor', '12345', 'Rafi Almhana', 'Yes', 'No', 'One', 'Two', 'Red', 'Blue');
-          INSERT INTO users VALUES('z_shang', 'instructor', '12345', 'Zechao Shang', 'Yes', 'No', 'One', 'Two', 'Red', 'Blue');
+          INSERT INTO users VALUES('klh875', 'student', '12345', 'Katharine Hedlund', 'inactive', 'Yes', 'No', 'One', 'Two', 'Red', 'Blue');
+          INSERT INTO users VALUES('ming_liu', 'student', '12345', 'Ming Liu', 'inactive', 'Yes', 'No', 'One', 'Two', 'Red', 'Blue');
+          INSERT INTO users VALUES('patrick_whalen', 'student', '12345', 'Patrick Whalen', 'inactive', 'Yes', 'No', 'One', 'Two', 'Red', 'Blue');
+          INSERT INTO users VALUES('gerry1954', 'instructor', '12345', 'Gerry Brady', 'inactive', 'Yes', 'No', 'One', 'Two', 'Red', 'Blue');
+          INSERT INTO users VALUES('chelsea_troy', 'instructor', '12345', 'Chelsea Troy', 'inactive', 'Yes', 'No', 'One', 'Two', 'Red', 'Blue');
+          INSERT INTO users VALUES('y_terry', 'instructor', '12345', 'Yosvany Terry', 'inactive', 'Yes', 'No', 'One', 'Two', 'Red', 'Blue');
+          INSERT INTO users VALUES('rafi_a', 'instructor', '12345', 'Rafi Almhana', 'inactive', 'Yes', 'No', 'One', 'Two', 'Red', 'Blue');
+          INSERT INTO users VALUES('z_shang', 'instructor', '12345', 'Zechao Shang', 'inactive', 'Yes', 'No', 'One', 'Two', 'Red', 'Blue');
           ''')
 # add admin user to db
 c.execute(
-    '''INSERT INTO users VALUES('molly', 'admin', '12345', 'Molly Stoner', 'Yes', 'No', 'One', 'Two', 'Red', 'Blue');''')
+    '''INSERT INTO users VALUES('molly', 'admin', '12345', 'Molly Stoner', 'inactive', 'Yes', 'No', 'One', 'Two', 'Red', 'Blue');''')
 
 # add courses to db
 conn.executescript('''
-        INSERT INTO courses VALUES(null, 'Intro to Mobile Dev', 'chelsea_troy');
-         INSERT INTO courses VALUES(null, 'Algorithms', 'gerry1954');
-         INSERT INTO courses VALUES(null, 'Web Dev', 'rafi_a');
-         INSERT INTO courses VALUES(null, 'Advanced Algorithms', 'gerry1954');
-         INSERT INTO courses VALUES(null, 'Intro to Python Programming', 'chelsea_troy');
-         INSERT INTO courses VALUES(null, 'Databases', 'z_shang');
-         INSERT INTO courses VALUES(null, 'Discrete Mathematics', 'gerry1954');
-         INSERT INTO courses VALUES(null, 'Afro Cuban Rhythms', 'y_terry');
+        INSERT INTO courses VALUES(null, 'Intro to Mobile Dev', 'chelsea_troy', 'description', 20);
+         INSERT INTO courses VALUES(null, 'Algorithms', 'gerry1954', 'description', 20);
+         INSERT INTO courses VALUES(null, 'Web Dev', 'rafi_a', 'description', 20);
+         INSERT INTO courses VALUES(null, 'Advanced Algorithms', 'gerry1954', 'description', 20);
+         INSERT INTO courses VALUES(null, 'Intro to Python Programming', 'chelsea_troy', 'description', 20);
+         INSERT INTO courses VALUES(null, 'Databases', 'z_shang', 'description', 20);
+         INSERT INTO courses VALUES(null, 'Discrete Mathematics', 'gerry1954', 'description', 20);
+         INSERT INTO courses VALUES(null, 'Afro Cuban Rhythms', 'y_terry', 'description', 20);
 ''')
 
 # associate students with courses
