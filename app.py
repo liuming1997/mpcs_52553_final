@@ -175,9 +175,12 @@ def course_assignments(course_id):
     if session['role'] ==  'student':
         assignments = json.loads(
                     database.db_queries.get_students_grades_for_course(session['username'], course_id)[0][0])
+    elif session['role'] ==  'teacher':
+        assignments = json.loads(
+                    database.db_queries.get_teachers_assignments_for_course(session['username'], course_id)[0][0])
 
     print(assignments)
-    return render_template("courses/assignments.html", course_list=session['course_list'], course_id=course_id, course_name=course_id, assignments=assignments)
+    return render_template("courses/assignments.html", course_list=session['course_list'], course_id=course_id, course_name=course_id, assignments=assignments, role=session['role'])
 
 @app.route('/<course_id>/assignments_create')
 def create_assignment(course_id):
@@ -185,7 +188,13 @@ def create_assignment(course_id):
 
 @app.route('/<course_id>/grades')
 def course_grades(course_id):
-    return render_template("courses/grades.html", course_list=session['course_list'], course_id=course_id, course_name=course_id)
+    if session['role'] ==  'student':
+        assignments = json.loads(
+                    database.db_queries.get_students_grades_for_course(session['username'], course_id)[0][0])
+    elif session['role'] ==  'teacher':
+        assignments = json.loads(
+                    database.db_queries.get_teachers_assignments_for_course(session['username'], course_id)[0][0])
+    return render_template("courses/grades.html", course_list=session['course_list'], course_id=course_id, course_name=course_id, role=session['role'])
 
 
 
