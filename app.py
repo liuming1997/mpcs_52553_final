@@ -202,19 +202,29 @@ def course_assignments(course_id):
     if session['role'] ==  'student':
         assignments = json.loads(
                     database.db_queries.get_students_grades_for_course(session['username'], course_id)[0][0])
-        updated_assignments = [x for x in assignments if x['date_submitted'] == None]
-
+        #updated_assignments = [x for x in assignments if x['date_submitted'] == None]
+        updated_assignments = assignments
     elif session['role'] ==  'instructor':
         assignments = json.loads(
-                    database.db_queries.get_teachers_assignments_for_course(session['username'], course_id)[0][0])
-        updated_assignments = [x for x in assignments if x['date_submitted'] == None]
+                    # this query loads the appropriate data w/ new assignments
+                    database.db_queries.get_assignments_course_id(course_id)[0][0])
+        # updated_assignments = [x for x in assignments if x['date_submitted'] == None]
+        updated_assignments = assignments
+
         print(assignments)
         print(updated_assignments)
     course_name = get_course_name(course_id)
     return render_template("courses/assignments.html", course_list=session['course_list'], course_id=course_id, course_name=course_name['course_name'], assignments=updated_assignments, role=session['role'])
 
-@app.route('/<course_id>/assignments_create')
+@app.route('/<course_id>/assignments_create', methods=['POST', 'GET'])
 def create_assignment(course_id):
+    if request.method == 'POST':
+        title = request.form['title']
+        content = request.form['content']
+        points = request.form['points']
+        due_date = request.form['due_date']
+        database.db_queries.add_assignment(course_id, title, content, points, due_date)
+
     course_name = get_course_name(course_id)
     return render_template("courses/assignments_create.html", course_list=session['course_list'], course_id=course_id, course_name=course_name['course_name'])
 
@@ -231,11 +241,12 @@ def course_grades(course_id):
         assignments = json.loads(
                     database.db_queries.get_students_grades_for_course(session['username'], course_id)[0][0])
         updated_assignments = [x for x in assignments if x['date_submitted'] != None]
+        # updated_assignments = assignments
     elif session['role'] ==  'instructor':
         assignments = json.loads(
                     database.db_queries.get_all_students_grades_for_course(course_id)[0][0])
         updated_assignments = [x for x in assignments if x['date_submitted'] != None]
-
+        # updated_assignments = assignments
     course_name = get_course_name(course_id)
     return render_template("courses/grades.html", course_list=session['course_list'], course_id=course_id, course_name=course_name['course_name'], role=session['role'], assignments=updated_assignments)
 

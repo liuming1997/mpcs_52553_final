@@ -30,28 +30,28 @@
     <div class="announcement_content_header"><h4>New Assignment: {{ course_name }}</h4></div>
 
     <!-- Textarea without sizing class -->
-<form>
+<form method="post">
   <!-- Assignment Title -->
   <div class="form-outline mb-4">
     <label class="form-label" for="form6Example3">Assignment Name</label>
-    <input type="text" id="form6Example3" class="form-control" />
+    <input type="text" id="form6Example3" class="form-control" name="title" />
   </div>
     <!-- Number of Points -->
     <div class="form-outline mb-4">
     <label class="form-label" for="form6Example3">Number of Points</label>
-    <input type="text" id="form6Example3" class="form-control" />
+    <input type="text" id="form6Example3" class="form-control" name="points" />
   </div>
    <!-- datetime picker -->
-  <div class="form_button" style="padding: 20px;">
-    <label for="meeting-time">Choose a time for your appointment:</label>
+  <label for="meeting-time">Due Date</label>
+  <div class="form_button" style="padding-bottom: 25px; padding-top: 7px; text-align: left;">
       <input type="datetime-local" id="meeting-time"
-       name="meeting-time" value="2022-06-12T19:30"
+       name="due_date" value="2022-06-12T19:30"
        min="2022-06-01T00:00" max="2023-06-14T00:00">
   </div>
   <!-- Assignment Description -->
   <div class="form-outline mb-4">
     <label class="form-label" for="form6Example7">Assignment Description</label>
-    <textarea class="form-control" id="form6Example7" rows="4"></textarea>
+    <textarea class="form-control" id="form6Example7" rows="4" name="content"></textarea>
   </div>
   <!-- Submit button -->
   <div class="form_button">

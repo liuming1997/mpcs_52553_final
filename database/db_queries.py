@@ -236,4 +236,15 @@ def grade_assignment(student, assignment_id, grade):
     cmd = "UPDATE grades SET grade=? WHERE (student_username=? and assignment_id=?)"
     cur.execute(cmd, (grade, student, assignment_id))
     conn.commit()
+
+# add assignment
+def add_assignment(course_id, title, content, points, due_date):
+    conn = create_connection('canvas.db')
+    cur = conn.cursor()
+    cmd = "INSERT INTO assignments VALUES(null, ?,?,?,?,?)"
+    cur.execute(cmd, (course_id, title, content, points, due_date))
+    conn.commit()
+    cur.execute("SELECT assignment_id from assignments order by assignment_id desc limit 1")
+    print(cur.fetchall())
+    return str("Successfully added assignment ")
     
