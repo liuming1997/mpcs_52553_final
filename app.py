@@ -124,7 +124,9 @@ def course_home(course_id):
     instructor = json.loads(
                         database.db_queries.get_instructor_course_id(course_id)[0][0])
 
-    return render_template("courses/home.html", course_list=session['course_list'], course_id=course_id, course_name=course_id, recent_announcements=recent_announcements, instructor=instructor[0])
+    course_name = get_course_name(course_id)
+
+    return render_template("courses/home.html", course_list=session['course_list'], course_id=course_id, course_name=course_name['course_name'], recent_announcements=recent_announcements, instructor=instructor[0])
 
 @app.route('/<course_id>/announcements')
 def course_announcements(course_id):
@@ -134,7 +136,10 @@ def course_announcements(course_id):
     # get instructor for announcements
     instructor = json.loads(
                     database.db_queries.get_instructor_course_id(course_id)[0][0])
-    return render_template("courses/announcements.html", course_list=session['course_list'], course_id=course_id, course_name=course_id, course_announcements=course_announcements, instructor=instructor[0])
+
+    course_name = get_course_name(course_id)
+
+    return render_template("courses/announcements.html", course_list=session['course_list'], course_id=course_id, course_name=course_name['course_name'], course_announcements=course_announcements, instructor=instructor[0])
 
 @app.route('/<course_id>/announcements_view/<announcement_id>')
 def view_announcement(course_id, announcement_id):
@@ -149,27 +154,32 @@ def view_announcement(course_id, announcement_id):
     # get instructor for announcements
     instructor = json.loads(
                     database.db_queries.get_instructor_course_id(course_id)[0][0])
-    return render_template("courses/announcements_view.html", course_list=session['course_list'], course_id=course_id, course_name=course_id, announcement=single_announcement, instructor=instructor[0])
+    
+    course_name = get_course_name(course_id)
+
+    return render_template("courses/announcements_view.html", course_list=session['course_list'], course_id=course_id, course_name=course_name['course_name'], announcement=single_announcement, instructor=instructor[0])
 
 @app.route('/<course_id>/announcements_create')
 def create_announcement(course_id):
-    return render_template("courses/announcements_create.html", course_id=course_id, course_name=course_id)
+    course_name = get_course_name(course_id)
+    return render_template("courses/announcements_create.html", course_id=course_id, course_name=course_name['course_name'])
 
-@app.route('/<course_id>/assignments_view/<assignment_title>')
-def view_assignment(course_id, assignment_title):
+@app.route('/<course_id>/assignments_view/<assignment_id>')
+def view_assignment(course_id, assignment_id):
     assignments = json.loads(
                     database.db_queries.get_students_grades_for_course(session['username'], course_id)[0][0])
     single_assignment = {}
     for assignment in assignments:
-        if assignment['title'] == assignment_title:
+        if assignment['assignment_id'] == int(assignment_id):
             single_assignment = assignment
             break
-    
     
     # get instructor for announcements
     instructor = json.loads(
                     database.db_queries.get_instructor_course_id(course_id)[0][0])
-    return render_template("courses/assignments_view.html", course_list=session['course_list'], course_id=course_id, course_name=course_id, assignment=single_assignment, instructor=instructor[0])
+
+    course_name = get_course_name(course_id)
+    return render_template("courses/assignments_view.html", course_list=session['course_list'], course_id=course_id, course_name=course_name['course_name'], assignment=single_assignment, instructor=instructor[0])
 
 @app.route('/<course_id>/assignments')
 def course_assignments(course_id):
@@ -177,38 +187,34 @@ def course_assignments(course_id):
     if session['role'] ==  'student':
         assignments = json.loads(
                     database.db_queries.get_students_grades_for_course(session['username'], course_id)[0][0])
-        for assignment in assignments:
-            current = datetime.now()
-            due_date = datetime.strptime(assignment['due_date'], '%Y-%m-%d %H:%M:%S')
-            if due_date > current:
-                assignments.remove(assignment)
+        print(assignments)
+        updated_assignments = [x for x in assignments if x['date_submitted'] == None]
+
     elif session['role'] ==  'teacher':
         assignments = json.loads(
                     database.db_queries.get_teachers_assignments_for_course(session['username'], course_id)[0][0])
-
-    print(assignments)
-    return render_template("courses/assignments.html", course_list=session['course_list'], course_id=course_id, course_name=course_id, assignments=assignments, role=session['role'])
+    course_name = get_course_name(course_id)
+    return render_template("courses/assignments.html", course_list=session['course_list'], course_id=course_id, course_name=course_name['course_name'], assignments=updated_assignments, role=session['role'])
 
 @app.route('/<course_id>/assignments_create')
 def create_assignment(course_id):
-    return render_template("courses/assignments_create.html", course_id=course_id, course_name=course_id)
+    course_name = get_course_name(course_id)
+    return render_template("courses/assignments_create.html", course_id=course_id, course_name=course_name['course_name'])
 
 @app.route('/<course_id>/grades')
 def course_grades(course_id):
     if session['role'] ==  'student':
         assignments = json.loads(
                     database.db_queries.get_students_grades_for_course(session['username'], course_id)[0][0])
-        print(assignments)
-        for assignment in assignments:
-            current = datetime.now()
-            due_date = datetime.strptime(assignment['due_date'], '%Y-%m-%d %H:%M:%S')
-            if due_date < current:
-                assignments.remove(assignment)
-        print(assignments)
+        updated_assignments = [x for x in assignments if x['date_submitted'] != None]
     elif session['role'] ==  'teacher':
         assignments = json.loads(
                     database.db_queries.get_teachers_assignments_for_course(session['username'], course_id)[0][0])
-    return render_template("courses/grades.html", course_list=session['course_list'], course_id=course_id, course_name=course_id, role=session['role'], assignments=assignments)
+    course_name = get_course_name(course_id)
+    return render_template("courses/grades.html", course_list=session['course_list'], course_id=course_id, course_name=course_name['course_name'], role=session['role'], assignments=updated_assignments)
 
-
+def get_course_name(course_id):
+    course_name = json.loads(
+                    database.db_queries.get_coursename_course_id(course_id)[0][0])
+    return course_name[0]
 

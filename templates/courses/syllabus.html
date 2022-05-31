@@ -4,15 +4,15 @@
 
 <div id="courses_sidenav" class="sidenav">
     <!-- <a> Date published </a>  may not use this -->
-    <a href="/{{ course }}/announcements">Announcements</a>
-    <a href="/{{ course }}/assignments">Assignments</a>
-    <a href="/{{ course }}/grades">Grades</a>
+    <a href="/{{ course_id }}/announcements">Announcements</a>
+    <a href="/{{ course_id }}/assignments">Assignments</a>
+    <a href="/{{ course_id }}/grades">Grades</a>
 </div>
 
 <div id="courses_header_and_right_of_header">
     <div id="courses_header">
         <div id="courses_hamburger" style="cursor:pointer" onclick="toggleNav()"> &#9776; </div>
-        <a href="/{{ course }}/home"> {{ course }}</a>  <div id="courses_breadcrumbs"></div> Syllabus </span>
+        <a href="/{{ course_id }}/home"> {{ course_name }}</a>  <div id="courses_breadcrumbs"></div> Syllabus </span>
     </div>
     <!-- <div id = "right_of_header"></div> -->
 </div>

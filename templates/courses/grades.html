@@ -35,12 +35,17 @@
             </tr>
             </thead>
             <tbody class="assignments_table_body">
+            {% if assignments|length == 0 %}
+            <tr class="assignments_table_body_row">
+                <td class="assignments_table_points_item" colspan="3"> No submitted assignments </td>
+            </tr>
+            {% endif %}
             {% for assignment in assignments %}
             <tr class="assignments_table_body_row">
-                <td class="assignments_table_assign_item"><a href="/{{ course_id }}/assignments_view/{{ assignment['title'] }}" style="text-decoration: none; color:black">{{ assignment['title'] }}</a> </td>
+                <td class="assignments_table_assign_item"><a href="/{{ course_id }}/assignments_view/{{ assignment['assignment_id'] }}" style="text-decoration: none; color:black">{{ assignment['title'] }}</a> </td>
                 <td class="assignments_table_points_item"> {{ assignment['points_received']}} </td>
                 <td class="assignments_table_points_item"> {{ assignment['total_points']}} </td>
-                <td class="assignments_table_date_item">{{ assignment['due_date']}}</td>
+                <td class="assignments_table_date_item">{{ assignment['date_submitted']}}</td>
             </tr>
             {% endfor %}
             </tbody>
@@ -73,7 +78,7 @@
             <tbody class="assignments_table_body">
                 
              <tr class="assignments_table_body_row">
-                <td class="assignments_table_assign_item"><a href="/{{ course_id }}/assignments_view/{{ assignment['title'] }}" style="text-decoration: none; color:black">Assignment Title</a> </td>
+                <td class="assignments_table_assign_item"><a href="/{{ course_id }}/assignments_view/{{ assignment['assignment_id'] }}" style="text-decoration: none; color:black">Assignment Title</a> </td>
                 <td class="assignments_table_points_item"> Points </td>
                 <td class="assignments_table_grading_item"><form class="form-inline" action="/action_page.php" style="display: flex; max-width: 150px;">
     <label for="email2" class="mb-2 mr-sm-2"></label>
@@ -84,7 +89,7 @@
                 <td class="assignments_table_date_item">Date Here</td>
             </tr>
             <tr class="assignments_table_body_row">
-                <td class="assignments_table_assign_item"><a href="/{{ course_id }}/assignments_view/{{ assignment['title'] }}" style="text-decoration: none; color:black">Assignment Title</a> </td>
+                <td class="assignments_table_assign_item"><a href="/{{ course_id }}/assignments_view/{{ assignment['assignment_id'] }}" style="text-decoration: none; color:black">Assignment Title</a> </td>
                 <td class="assignments_table_points_item"> Points </td>
                 <td class="assignments_table_grading_item"><form class="form-inline" action="/action_page.php" style="display: flex; max-width: 150px;">
     <label for="email2" class="mb-2 mr-sm-2"></label>
@@ -95,7 +100,7 @@
                 <td class="assignments_table_date_item">Date Here</td>
             </tr>
              <tr class="assignments_table_body_row">
-                <td class="assignments_table_assign_item"><a href="/{{ course_id }}/assignments_view/{{ assignment['title'] }}" style="text-decoration: none; color:black">Assignment Title</a> </td>
+                <td class="assignments_table_assign_item"><a href="/{{ course_id }}/assignments_view/{{ assignment['assignment_id'] }}" style="text-decoration: none; color:black">Assignment Title</a> </td>
                 <td class="assignments_table_points_item"> Points </td>
                 <td class="assignments_table_grading_item"><form class="form-inline" action="/action_page.php" style="display: flex; max-width: 150px;">
     <label for="email2" class="mb-2 mr-sm-2"></label>
@@ -106,7 +111,7 @@
                 <td class="assignments_table_date_item">Date Here</td>
             </tr>
              <tr class="assignments_table_body_row">
-                <td class="assignments_table_assign_item"><a href="/{{ course_id }}/assignments_view/{{ assignment['title'] }}" style="text-decoration: none; color:black">Assignment Title</a> </td>
+                <td class="assignments_table_assign_item"><a href="/{{ course_id }}/assignments_view/{{ assignment['assignment_id'] }}" style="text-decoration: none; color:black">Assignment Title</a> </td>
                 <td class="assignments_table_points_item"> Points </td>
                 <td class="assignments_table_grading_item"><form class="form-inline" action="/action_page.php" style="display: flex; max-width: 150px;">
     <label for="email2" class="mb-2 mr-sm-2"></label>

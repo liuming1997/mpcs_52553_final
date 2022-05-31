@@ -30,6 +30,11 @@
             </tr>
             </thead>
             <tbody class="announcements_table_body">
+            {% if announcements|length == 0 %}
+            <tr class="assignments_table_body_row">
+                <td class="assignments_table_points_item" colspan="3"> No announcements </td>
+            </tr>
+            {% endif %}
             {% for announcement in course_announcements %}
             <tr class="announcements_table_body_row">
                 <td class="announcements_table_poster_item">{{ instructor['instructor_username'] }}</td>
