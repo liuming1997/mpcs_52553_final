@@ -14,7 +14,7 @@
 <div id="courses_header_and_right_of_header">
   <div id="courses_header">
     <div id="courses_hamburger" style="cursor:pointer" onclick="toggleNav()"> &#9776; </div>
-    <a href="/{{ course_id }}/home"> {{ course }}</a>  <div id="courses_breadcrumbs"></div> <a href="/courses/announcements">Assignments</a> <div id="courses_breadcrumbs"></div> Announcement Title
+    <a href="/{{ course_id }}/home"> {{ course }}</a>  <div id="courses_breadcrumbs"></div> <a href="/{{ course_id }}/announcements">Assignments</a> <div id="courses_breadcrumbs"></div> Announcement Title
   </div>
   <!-- <div id = "right_of_header"></div> -->
 </div>
@@ -27,21 +27,10 @@
   </div>
   <div class="announcement_content">
 
-    <div class="announcement_content_header"><h4>Assignment title</h4>
-      <h7>instructor name</h7></div>
+    <div class="announcement_content_header"><h4>{{ assignment['title'] }}</h4>
+      <h7>{{ instructor['instructor_username'] }}</h7></div>
 
-    <p>For graduating students, you must submit the following by Friday the 27th :
-
-      Github link to the repository (group submission)
-      Status report to show completed / uncompleted functionalities and percentage of completion (template provided, group submission)
-      15-minutes video to demonstrate the software, 5 minutes for each student to show their accomplishment/challenges (group submission)
-      An individual report to show each team member's contribution to the project (template provided, individual submission)
-      For non-graduating students, you must submit the following by Friday the 3rd :
-
-      Github link to the repository (group submission)
-      Status report to show completed / uncompleted functionalities and percentage of completion (template provided, group submission)
-      15-minutes in-class demo, 5 minutes for each student to show their accomplishment/challenges  (group submission)
-      An individual report to show each team member's contribution to the project (template provided, individual submission)  </p>
+    <p>{{ assignment['content'] }}  </p>
   </div>
 
 <div class="grey_center">

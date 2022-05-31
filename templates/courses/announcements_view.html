@@ -26,21 +26,10 @@
   </div>
   <div class="announcement_content">
 
-    <div class="announcement_content_header"><h4>Announcement title</h4>
-      <h7>instructor name</h7></div>
+    <div class="announcement_content_header"><h4>{{ announcement['title'] }}</h4>
+      <h7>{{ instructor['instructor_username'] }}</h7></div>
 
-    <p>For graduating students, you must submit the following by Friday the 27th :
-
-      Github link to the repository (group submission)
-      Status report to show completed / uncompleted functionalities and percentage of completion (template provided, group submission)
-      15-minutes video to demonstrate the software, 5 minutes for each student to show their accomplishment/challenges (group submission)
-      An individual report to show each team member's contribution to the project (template provided, individual submission)
-      For non-graduating students, you must submit the following by Friday the 3rd :
-
-      Github link to the repository (group submission)
-      Status report to show completed / uncompleted functionalities and percentage of completion (template provided, group submission)
-      15-minutes in-class demo, 5 minutes for each student to show their accomplishment/challenges  (group submission)
-      An individual report to show each team member's contribution to the project (template provided, individual submission)  </p>
+    <p>{{ announcement['content'] }}</p>
   </div>
 
   <div class="grey_footer">

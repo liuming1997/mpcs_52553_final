@@ -99,6 +99,15 @@ def get_assignments_course_id(course_id):
     rows = cur.fetchall()
     return rows
 
+# get instructor by course_id
+def get_instructor_course_id(course_id):
+    conn = create_connection('canvas.db')
+    cur = conn.cursor()
+    cur.execute(
+        "SELECT json_group_array( json_object( 'instructor_username', instructor_username) ) FROM courses where course_id=" + str(course_id))
+    rows = cur.fetchall()
+    return rows
+
 # get all takes_course
 def get_takes_course():
     conn = create_connection('canvas.db')
