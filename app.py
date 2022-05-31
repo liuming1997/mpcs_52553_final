@@ -119,7 +119,9 @@ def course_home(course_id):
     course_announcements = json.loads(
                         database.db_queries.get_announcements_course_id(course_id)[0][0])
     # print(course_announcements)
-    recent_announcements = sorted(course_announcements, key=lambda d: d['date_posted'])
+    recent_announcements = sorted(course_announcements, key=lambda d: datetime.strptime(d['date_posted'], '%Y-%m-%d %H:%M:%S'), reverse=True)
+    # sorted(data.items(), key = lambda x:datetime.strptime(x[0], '%d-%m-%Y'), reverse=True)
+
     del recent_announcements[4:]
 
     # get instructor for announcements
@@ -141,7 +143,9 @@ def course_announcements(course_id):
 
     course_name = get_course_name(course_id)
 
-    return render_template("courses/announcements.html", course_list=session['course_list'], course_id=course_id, course_name=course_name['course_name'], course_announcements=course_announcements, instructor=instructor[0], role=session['role'])
+    sorted_announcements = sorted(course_announcements, key=lambda d: datetime.strptime(d['date_posted'], '%Y-%m-%d %H:%M:%S'), reverse=True)
+
+    return render_template("courses/announcements.html", course_list=session['course_list'], course_id=course_id, course_name=course_name['course_name'], course_announcements=sorted_announcements, instructor=instructor[0], role=session['role'])
 
 @app.route('/<course_id>/announcements_view/<announcement_id>')
 def view_announcement(course_id, announcement_id):
@@ -164,12 +168,12 @@ def view_announcement(course_id, announcement_id):
 @app.route('/<course_id>/announcements_create', methods=['GET', 'POST'])
 def create_announcement(course_id):
     course_name = get_course_name(course_id)
-    # if request.method == 'POST':
-    #     title = request.form['title']
-    #     content = request.form['content']
-    #     print(title)
-    #     print(content)
-    #     database.db_queries.add_announcement(course_id, title, content)
+    if request.method == 'POST':
+        title = request.form['title']
+        content = request.form['content']
+        print(title)
+        print(content)
+        database.db_queries.add_announcement(course_id, title, content)
 
     return render_template("courses/announcements_create.html", course_id=course_id, course_name=course_name['course_name'])
 
@@ -213,8 +217,18 @@ def create_assignment(course_id):
     course_name = get_course_name(course_id)
     return render_template("courses/assignments_create.html", course_id=course_id, course_name=course_name['course_name'])
 
-@app.route('/<course_id>/grades')
+@app.route('/<course_id>/grades', methods=['GET', 'POST'])
 def course_grades(course_id):
+    if request.method == 'POST':
+        grade = request.form['grade']
+        student = request.form['student']
+        id = request.form['id']
+        print(grade)
+        print(student)
+        print(id)
+        database.db_queries.grade_assignment(student, id, grade)
+
+
     if session['role'] ==  'student':
         assignments = json.loads(
                     database.db_queries.get_students_grades_for_course(session['username'], course_id)[0][0])
@@ -223,8 +237,7 @@ def course_grades(course_id):
         assignments = json.loads(
                     database.db_queries.get_all_students_grades_for_course(course_id)[0][0])
         updated_assignments = [x for x in assignments if x['date_submitted'] != None]
-        print(assignments)
-        print(updated_assignments)
+
     course_name = get_course_name(course_id)
     return render_template("courses/grades.html", course_list=session['course_list'], course_id=course_id, course_name=course_name['course_name'], role=session['role'], assignments=updated_assignments)
 
