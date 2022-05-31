@@ -176,7 +176,7 @@ def create_announcement(course_id):
         database.db_queries.add_announcement(course_id, title, content)
         return redirect(url_for('course_home', course_id=course_id))
 
-    return render_template("courses/announcements_create.html", course_id=course_id, course_name=course_name['course_name'])
+    return render_template("courses/announcements_create.html", course_list=session['course_list'], course_id=course_id, course_name=course_name['course_name'])
 
 @app.route('/<course_id>/assignments_view/<assignment_id>')
 def view_assignment(course_id, assignment_id):
@@ -216,7 +216,7 @@ def course_assignments(course_id):
 @app.route('/<course_id>/assignments_create')
 def create_assignment(course_id):
     course_name = get_course_name(course_id)
-    return render_template("courses/assignments_create.html", course_id=course_id, course_name=course_name['course_name'])
+    return render_template("courses/assignments_create.html", course_list=session['course_list'], course_id=course_id, course_name=course_name['course_name'])
 
 @app.route('/<course_id>/grades', methods=['GET', 'POST'])
 def course_grades(course_id):
