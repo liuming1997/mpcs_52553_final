@@ -174,6 +174,7 @@ def create_announcement(course_id):
         print(title)
         print(content)
         database.db_queries.add_announcement(course_id, title, content)
+        return redirect(url_for('course_home', course_id=course_id))
 
     return render_template("courses/announcements_create.html", course_id=course_id, course_name=course_name['course_name'])
 
@@ -223,11 +224,8 @@ def course_grades(course_id):
         grade = request.form['grade']
         student = request.form['student']
         id = request.form['id']
-        print(grade)
-        print(student)
-        print(id)
         database.db_queries.grade_assignment(student, id, grade)
-
+        return redirect(url_for('course_grades', course_id=course_id))
 
     if session['role'] ==  'student':
         assignments = json.loads(
