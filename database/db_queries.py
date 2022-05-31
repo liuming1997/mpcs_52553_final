@@ -234,6 +234,6 @@ def grade_assignment(student, assignment_id, grade):
     conn = create_connection('canvas.db')
     cur = conn.cursor()
     cmd = "UPDATE grades SET grade=? WHERE (student_username=? and assignment_id=?)"
-    cur.execute(cmd, (student, assignment_id, grade))
+    cur.execute(cmd, (grade, student, assignment_id))
     conn.commit()
     
