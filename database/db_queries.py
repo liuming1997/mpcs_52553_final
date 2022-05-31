@@ -172,7 +172,7 @@ def get_students_grades_for_course(username, course_id):
 def get_all_students_grades_for_course(course_id):
     conn = create_connection('canvas.db')
     cur = conn.cursor()
-    cur.execute("SELECT json_group_array( json_object('student', student_username, 'title', title, 'content', content, 'points_received', grade, 'total_points', points, 'due_date', due_date)) FROM assignments join grades using (assignment_id) where course_id=" + str(course_id))
+    cur.execute("SELECT json_group_array( json_object('student', student_username, 'title', title, 'content', content, 'points_received', grade, 'total_points', points, 'due_date', due_date, 'date_submitted', date_submitted)) FROM assignments join grades using (assignment_id) where course_id=" + str(course_id))
     rows = cur.fetchall()
     return rows
 

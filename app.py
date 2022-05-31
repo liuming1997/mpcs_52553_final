@@ -221,7 +221,7 @@ def course_grades(course_id):
         updated_assignments = [x for x in assignments if x['date_submitted'] != None]
     elif session['role'] ==  'instructor':
         assignments = json.loads(
-                    database.db_queries.get_teachers_assignments_for_course(session['username'], course_id)[0][0])
+                    database.db_queries.get_all_students_grades_for_course(course_id)[0][0])
         updated_assignments = [x for x in assignments if x['date_submitted'] != None]
         print(assignments)
         print(updated_assignments)
