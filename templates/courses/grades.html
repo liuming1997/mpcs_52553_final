@@ -16,8 +16,8 @@
     <!-- <div id = "right_of_header"></div> -->
 </div>
 
-{% if role == 'student' %}
 <div id="course_section_content_body">
+    {% if role == 'student' %}
     <div class="grey_header_table">
     <div class="dummy_content"> dummy content  </div>
   </div>
@@ -57,7 +57,6 @@
   </div>
   {% endif %}
   {% if role == 'instructor' %}
-    <div><h1>Teacher's Grading Section</h1></div>
         <div class="grey_header_table">
     <div class="dummy_content"> dummy content  </div>
   </div>
