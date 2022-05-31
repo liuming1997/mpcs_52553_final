@@ -146,7 +146,7 @@ def get_teachers_assignments(username):
 def get_teachers_assignments_for_course(username, course_id):
     conn = create_connection('canvas.db')
     cur = conn.cursor()
-    cur.execute("SELECT json_group_array( json_object( 'course_name', course_name, 'title', title, 'content', content, 'due_date', due_date, 'date_submitted', date_submitted)) FROM assignments join courses using (course_id) join grades using(assignment_id) where (instructor_username=" + "'" + username + "' and course_id=" + str(course_id) + ")")
+    cur.execute("SELECT json_group_array( json_object( 'course_name', course_name, 'title', title, 'content', content, 'points_received', grade, 'total_points', points, 'due_date', due_date, 'date_submitted', date_submitted)) FROM assignments join courses using (course_id) join grades using(assignment_id) where (instructor_username=" + "'" + username + "' and course_id=" + str(course_id) + ")")
     rows = cur.fetchall()
     return rows    
 
