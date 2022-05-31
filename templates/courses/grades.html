@@ -16,6 +16,7 @@
     <!-- <div id = "right_of_header"></div> -->
 </div>
 
+{% if role == 'student' %}
 <div id="course_section_content_body">
     <div class="grey_header_table">
     <div class="dummy_content"> dummy content  </div>
@@ -34,30 +35,14 @@
             </tr>
             </thead>
             <tbody class="assignments_table_body">
+            {% for assignment in assignments %}
             <tr class="assignments_table_body_row">
-                <td class="assignments_table_assign_item"><a href="/{{ course_id }}/assignments_view/{{ assignment['title'] }}" style="text-decoration: none; color:black">Assignment Title</a> </td>
-                <td class="assignments_table_points_item"> Points Received </td>
-                <td class="assignments_table_points_item"> Points total </td>
-                <td class="assignments_table_date_item">Date Here</td>
+                <td class="assignments_table_assign_item"><a href="/{{ course_id }}/assignments_view/{{ assignment['title'] }}" style="text-decoration: none; color:black">{{ assignment['title'] }}</a> </td>
+                <td class="assignments_table_points_item"> {{ assignment['points_recieved']}} </td>
+                <td class="assignments_table_points_item"> {{ assignment['total_points']}} </td>
+                <td class="assignments_table_date_item">{{ assignment['due_date']}}</td>
             </tr>
-            <tr class="assignments_table_body_row">
-                <td class="assignments_table_assign_item"><a href="/{{ course_id }}/assignments_view/{{ assignment['title'] }}" style="text-decoration: none; color:black">Assignment Title</a> </td>
-                <td class="assignments_table_points_item"> Points received </td>
-                <td class="assignments_table_points_item"> Points total </td>
-                <td class="assignments_table_date_item">Date Here</td>
-            </tr>
-            <tr class="assignments_table_body_row">
-                <td class="assignments_table_assign_item"><a href="/{{ course_id }}/assignments_view/{{ assignment['title'] }}" style="text-decoration: none; color:black">Assignment Title</a> </td>
-                <td class="assignments_table_points_item"> Points received </td>
-                <td class="assignments_table_points_item"> Points total </td>
-                <td class="assignments_table_date_item">Date Here</td>
-            </tr>
-            <tr class="assignments_table_body_row">
-                <td class="assignments_table_assign_item"><a href="/{{ course_id }}/assignments_view/{{ assignment['title'] }}" style="text-decoration: none; color:black">Assignment Title</a> </td>
-                <td class="assignments_table_points_item"> Points received </td>
-                <td class="assignments_table_points_item"> Points total </td>
-                <td class="assignments_table_date_item">Date Here</td>
-            </tr>
+            {% endfor %}
             </tbody>
 
         </table></div>
@@ -65,6 +50,8 @@
 <div class="grey_footer_table">
     <div class="dummy_content"> dummy content  </div>
   </div>
+  {% endif %}
+  {% if role == 'teacher' %}
     <div><h1>Teacher's Grading Section</h1></div>
         <div class="grey_header_table">
     <div class="dummy_content"> dummy content  </div>
@@ -84,6 +71,7 @@
             </tr>
             </thead>
             <tbody class="assignments_table_body">
+                
              <tr class="assignments_table_body_row">
                 <td class="assignments_table_assign_item"><a href="/{{ course_id }}/assignments_view/{{ assignment['title'] }}" style="text-decoration: none; color:black">Assignment Title</a> </td>
                 <td class="assignments_table_points_item"> Points </td>
@@ -131,12 +119,12 @@
             </tbody>
 
         </table></div>
-
+      
 <div class="grey_footer_table">
     <div class="dummy_content"> dummy content  </div>
 
   </div>
-
+  {% endif %}  
 
 
 </div>

@@ -3,6 +3,7 @@ from flask import Flask, session, request, redirect, render_template, g, flash, 
 import json
 import database.db_queries
 import uuid
+from datetime import datetime
 
 app = Flask(__name__)
 app.secret_key = uuid.uuid4().hex
@@ -175,6 +176,11 @@ def course_assignments(course_id):
     if session['role'] ==  'student':
         assignments = json.loads(
                     database.db_queries.get_students_grades_for_course(session['username'], course_id)[0][0])
+        for assignment in assignments:
+            current = datetime.now()
+            due_date = datetime.strptime(assignment['due_date'], '%Y-%m-%d %H:%M:%S')
+            if due_date > current:
+                assignments.remove(assignment)
     elif session['role'] ==  'teacher':
         assignments = json.loads(
                     database.db_queries.get_teachers_assignments_for_course(session['username'], course_id)[0][0])
@@ -191,10 +197,17 @@ def course_grades(course_id):
     if session['role'] ==  'student':
         assignments = json.loads(
                     database.db_queries.get_students_grades_for_course(session['username'], course_id)[0][0])
+        print(assignments)
+        for assignment in assignments:
+            current = datetime.now()
+            due_date = datetime.strptime(assignment['due_date'], '%Y-%m-%d %H:%M:%S')
+            if due_date < current:
+                assignments.remove(assignment)
+        print(assignments)
     elif session['role'] ==  'teacher':
         assignments = json.loads(
                     database.db_queries.get_teachers_assignments_for_course(session['username'], course_id)[0][0])
-    return render_template("courses/grades.html", course_list=session['course_list'], course_id=course_id, course_name=course_id, role=session['role'])
+    return render_template("courses/grades.html", course_list=session['course_list'], course_id=course_id, course_name=course_id, role=session['role'], assignments=assignments)
 
 
 
