@@ -75,6 +75,7 @@ c.execute('''
               assignment_id INTEGER,
               student_username character NOT NULL,
               grade character NOT NULL,
+              date_submitted DATETIME,
               FOREIGN KEY (student_username) REFERENCES users(username),
               FOREIGN KEY (assignment_id) REFERENCES assignments(assignment_id)
           )
@@ -223,24 +224,24 @@ c.executescript('''
 # add data to grades
 # patrick_whalen account
 c.executescript('''
-          INSERT INTO grades VALUES(1, 'patrick_whalen', 5);
-          INSERT INTO grades VALUES(2, 'patrick_whalen', 90);
-          INSERT INTO grades VALUES(3, 'patrick_whalen', 80);
-          INSERT INTO grades VALUES(4, 'patrick_whalen', 90);
-          INSERT INTO grades VALUES(5, 'patrick_whalen', 50);
-          INSERT INTO grades VALUES(6, 'patrick_whalen', 0);
-          INSERT INTO grades VALUES(7, 'patrick_whalen', 5);
-          INSERT INTO grades VALUES(8, 'patrick_whalen', 90);
-          INSERT INTO grades VALUES(9, 'patrick_whalen', 80);
-          INSERT INTO grades VALUES(10, 'patrick_whalen', 90);
-          INSERT INTO grades VALUES(11, 'patrick_whalen', 50);
-          INSERT INTO grades VALUES(12, 'patrick_whalen', 0);
-          INSERT INTO grades VALUES(13, 'patrick_whalen', 5);
-          INSERT INTO grades VALUES(14, 'patrick_whalen', 90);
-          INSERT INTO grades VALUES(15, 'patrick_whalen', 80);
-          INSERT INTO grades VALUES(16, 'patrick_whalen', 90);
-          INSERT INTO grades VALUES(17, 'patrick_whalen', 50);
-          INSERT INTO grades VALUES(18, 'patrick_whalen', 0);
+          INSERT INTO grades VALUES(1, 'patrick_whalen', 5, (SELECT datetime('now')));
+          INSERT INTO grades VALUES(2, 'patrick_whalen', 90, (SELECT datetime('now')));
+          INSERT INTO grades VALUES(3, 'patrick_whalen', 80, (SELECT datetime('now')));
+          INSERT INTO grades VALUES(4, 'patrick_whalen', 90, (SELECT datetime('now')));
+          INSERT INTO grades VALUES(5, 'patrick_whalen', 50, (SELECT datetime('now')));
+          INSERT INTO grades VALUES(6, 'patrick_whalen', 0, (SELECT datetime('now')));
+          INSERT INTO grades VALUES(7, 'patrick_whalen', 5, (SELECT datetime('now')));
+          INSERT INTO grades VALUES(8, 'patrick_whalen', 90, (SELECT datetime('now')));
+          INSERT INTO grades VALUES(9, 'patrick_whalen', 80, (SELECT datetime('now')));
+          INSERT INTO grades VALUES(10, 'patrick_whalen', 90, (SELECT datetime('now')));
+          INSERT INTO grades VALUES(11, 'patrick_whalen', 50, (SELECT datetime('now')));
+          INSERT INTO grades VALUES(12, 'patrick_whalen', 0, (SELECT datetime('now')));
+          INSERT INTO grades VALUES(13, 'patrick_whalen', 5, (SELECT datetime('now')));
+          INSERT INTO grades VALUES(14, 'patrick_whalen', 90, (SELECT datetime('now')));
+          INSERT INTO grades VALUES(15, 'patrick_whalen', 80, (SELECT datetime('now')));
+          INSERT INTO grades VALUES(16, 'patrick_whalen', 90, (SELECT datetime('now')));
+          INSERT INTO grades VALUES(17, 'patrick_whalen', 50, (SELECT datetime('now')));
+          INSERT INTO grades VALUES(18, 'patrick_whalen', 0, (SELECT datetime('now')));
           ''')
 
 conn.commit()
