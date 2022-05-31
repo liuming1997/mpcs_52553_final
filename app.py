@@ -8,6 +8,8 @@ from datetime import datetime
 app = Flask(__name__)
 app.secret_key = uuid.uuid4().hex
 
+# LINK THAT SHOWS HOW TO USE AJAX w/ flask: https://www.youtube.com/watch?v=UmC26YXExJ4
+
 
 # @app.before_request
 # def before_request_check():
