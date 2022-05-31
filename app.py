@@ -165,6 +165,7 @@ def view_assignment(course_id, assignment_title):
             single_assignment = assignment
             break
     
+    
     # get instructor for announcements
     instructor = json.loads(
                     database.db_queries.get_instructor_course_id(course_id)[0][0])
