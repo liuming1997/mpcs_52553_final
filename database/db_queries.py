@@ -155,10 +155,20 @@ def get_students_courses(username):
 def get_students_grades_for_course(username, course_id):
     conn = create_connection('canvas.db')
     cur = conn.cursor()
-    cur.execute("SELECT json_group_array( json_object( 'course_name', course_name, 'title', title, 'content', content, 'points', points, 'due_date', due_date)) FROM assignments join courses using (course_id) join takes_course using(course_id) where (username=" + "'" + username + "' and course_id=" + str(course_id) + ")")
+    cur.execute("SELECT json_group_array( json_object('title', title, 'content', content, 'points_received', grade, 'total_points', points, 'due_date', due_date)) FROM assignments join grades using (assignment_id) where (student_username=" + "'" + username + "' and course_id=" + str(course_id) + ")")
     rows = cur.fetchall()
     return rows
 
+# get all grades for a course
+def get_all_students_grades_for_course(course_id):
+    conn = create_connection('canvas.db')
+    cur = conn.cursor()
+    cur.execute("SELECT json_group_array( json_object('student', student_username, 'title', title, 'content', content, 'points_received', grade, 'total_points', points, 'due_date', due_date)) FROM assignments join grades using (assignment_id) where course_id=" + str(course_id))
+    rows = cur.fetchall()
+    return rows
+
+# print(str(get_students_grades_for_course('patrick_whalen', 1)))
+# print(str(get_all_students_grades_for_course(1)))
 
 # TEST printing
 # print('USERS:' + str(get_users()) + '\n')
