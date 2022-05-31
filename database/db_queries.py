@@ -146,7 +146,7 @@ def get_teachers_assignments(username):
 def get_teachers_assignments_for_course(username, course_id):
     conn = create_connection('canvas.db')
     cur = conn.cursor()
-    cur.execute("SELECT json_group_array( json_object( 'course_name', course_name, 'title', title, 'content', content, 'due_date', due_date)) FROM assignments join courses using (course_id) where (instructor_username=" + "'" + username + "' and course_id=" + str(course_id) + ")")
+    cur.execute("SELECT json_group_array( json_object( 'course_name', course_name, 'title', title, 'content', content, 'due_date', due_date, 'date_submitted', date_submitted)) FROM assignments join courses using (course_id) where (instructor_username=" + "'" + username + "' and course_id=" + str(course_id) + ")")
     rows = cur.fetchall()
     return rows    
 
@@ -202,6 +202,7 @@ def add_user(username, role, password, name, sq1, sq1_answer, sq2, sq2_answer, s
     cur = conn.cursor()
     cmd = "INSERT INTO users VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
     cur.execute(cmd, (username, role, password, name, sq1, sq1_answer, sq2, sq2_answer, sq3, sq3_answer))
+    conn.commit()
     return str("Successfully added user " + username)
 
 # drop user (TESTING ONLY)
@@ -210,6 +211,7 @@ def drop_user(username):
     cur = conn.cursor()
     cmd = "DELETE FROM users WHERE username=?"
     cur.execute(cmd, (username,))
+    conn.commit()
     return str("User " + username + " dropped")
 
 def add_announcement(course_id, title, content):
@@ -218,6 +220,7 @@ def add_announcement(course_id, title, content):
     cmd = "INSERT INTO announcements (course_id, title, content, date_posted) VALUES(?, ?, ?, ?)"
     now = datetime.datetime.now()
     cur.execute(cmd, (str(course_id), title, content, now.strftime('%Y-%m-%d %H:%M:%S')))
+    conn.commit()
     return str("Successfully added an announcement")
 
 # print("Adding a test user: " + str(add_user('vmisham', 'student', 'apollo', 'Vera Misham', 'poison', 'atroquinine', 'art', 'forgery', 'guilty', 'no')))
@@ -225,3 +228,11 @@ def add_announcement(course_id, title, content):
 # print("Test annoucement: ", add_announcement(1, "test", "lorem_ipsum"))
 
 # UPDATE DATA
+
+# assign a student a grade
+def grade_assignment(student, assignment_id, grade):
+    conn = create_connection('canvas.db')
+    cur = conn.cursor()
+    cmd = "UPDATE grades SET grade=? WHERE (student_username=? and assignment_id=?)"
+    cur.execute(cmd, (student, assignment_id, grade))
+    conn.commit()

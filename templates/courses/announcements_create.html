@@ -14,7 +14,7 @@
 <div id="courses_header_and_right_of_header">
   <div id="courses_header">
     <div id="courses_hamburger" style="cursor:pointer" onclick="toggleNav()"> &#9776; </div>
-    <a href="/{{ course_id }}/home"> {{ course_name }}</a>  <div id="courses_breadcrumbs"></div> <a href="/{{ course_id }}/announcements">Announcements</a> <div id="courses_breadcrumbs"></div> Announcement Title</span>
+    <a href="/{{ course_id }}/home"> {{ course_name }}</a>  <div id="courses_breadcrumbs"></div> <a href="/{{ course_id }}/announcements">Announcements</a> <div id="courses_breadcrumbs"></div> Create Announcement</span>
   </div>
   <!-- <div id = "right_of_header"></div> -->
 </div>
@@ -30,16 +30,16 @@
     <div class="announcement_content_header"><h4>Create Announcement for Class Name</h4></div>
 
     <!-- Textarea without sizing class -->
-<form>
+<form method="post">
   <!-- Announcement Title -->
   <div class="form-outline mb-4">
     <label class="form-label" for="form6Example3">Title</label>
-    <input type="text" id="form6Example3" class="form-control" />
+    <input type="text" id="form6Example3" class="form-control" name="title" />
   </div>
   <!-- Message input -->
   <div class="form-outline mb-4">
     <label class="form-label" for="form6Example7">Message</label>
-    <textarea class="form-control" id="form6Example7" rows="4"></textarea>
+    <textarea class="form-control" id="form6Example7" rows="4" name="content"></textarea>
   </div>
   <!-- Submit button -->
   <div class="form_button">

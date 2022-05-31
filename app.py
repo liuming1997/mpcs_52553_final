@@ -8,6 +8,8 @@ from datetime import datetime
 app = Flask(__name__)
 app.secret_key = uuid.uuid4().hex
 
+# LINK THAT SHOWS HOW TO USE AJAX w/ flask: https://www.youtube.com/watch?v=UmC26YXExJ4
+
 
 # @app.before_request
 # def before_request_check():
@@ -159,9 +161,16 @@ def view_announcement(course_id, announcement_id):
 
     return render_template("courses/announcements_view.html", course_list=session['course_list'], course_id=course_id, course_name=course_name['course_name'], announcement=single_announcement, instructor=instructor[0])
 
-@app.route('/<course_id>/announcements_create')
+@app.route('/<course_id>/announcements_create', methods=['GET', 'POST'])
 def create_announcement(course_id):
     course_name = get_course_name(course_id)
+    # if request.method == 'POST':
+    #     title = request.form['title']
+    #     content = request.form['content']
+    #     print(title)
+    #     print(content)
+    #     database.db_queries.add_announcement(course_id, title, content)
+
     return render_template("courses/announcements_create.html", course_id=course_id, course_name=course_name['course_name'])
 
 @app.route('/<course_id>/assignments_view/<assignment_id>')
@@ -184,15 +193,16 @@ def view_assignment(course_id, assignment_id):
 @app.route('/<course_id>/assignments')
 def course_assignments(course_id):
     assignments = []
+    print(session['role'])
     if session['role'] ==  'student':
         assignments = json.loads(
                     database.db_queries.get_students_grades_for_course(session['username'], course_id)[0][0])
-        print(assignments)
         updated_assignments = [x for x in assignments if x['date_submitted'] == None]
 
-    elif session['role'] ==  'teacher':
+    elif session['role'] ==  'instructor':
         assignments = json.loads(
                     database.db_queries.get_teachers_assignments_for_course(session['username'], course_id)[0][0])
+        updated_assignments = [x for x in assignments if x['date_submitted'] == None]
     course_name = get_course_name(course_id)
     return render_template("courses/assignments.html", course_list=session['course_list'], course_id=course_id, course_name=course_name['course_name'], assignments=updated_assignments, role=session['role'])
 
@@ -207,9 +217,10 @@ def course_grades(course_id):
         assignments = json.loads(
                     database.db_queries.get_students_grades_for_course(session['username'], course_id)[0][0])
         updated_assignments = [x for x in assignments if x['date_submitted'] != None]
-    elif session['role'] ==  'teacher':
+    elif session['role'] ==  'instructor':
         assignments = json.loads(
                     database.db_queries.get_teachers_assignments_for_course(session['username'], course_id)[0][0])
+        updated_assignments = [x for x in assignments if x['date_submitted'] == None]
     course_name = get_course_name(course_id)
     return render_template("courses/grades.html", course_list=session['course_list'], course_id=course_id, course_name=course_name['course_name'], role=session['role'], assignments=updated_assignments)
 

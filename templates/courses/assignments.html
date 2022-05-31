@@ -16,7 +16,9 @@
     <!-- <div id = "right_of_header"></div> -->
 </div>
 <div id="course_section_content_body">
+    {% if role == 'instructor' %}
         <a href="/{{ course_id }}/assignments_create" style="text-decoration: none; color:white"><button class="btn btn-primary btn-block mb-4 create_post" style="background-color: #0d6efd"> Create Assignment </button></a>
+    {% endif %}
 
     <div class="grey_header_table">
     <div class="dummy_content"> dummy content  </div>
@@ -34,10 +36,10 @@
             </tr>
             </thead>
             <tbody class="assignments_table_body">
-            {% if assignments|length == 0 %}
-            <tr class="assignments_table_body_row">
-                <td class="assignments_table_points_item" colspan="3"> No upcoming assignments </td>
-            </tr>
+            {% if assignments|length < 1 %}
+                <tr class="assignments_table_body_row">
+                    <td class="assignments_table_points_item" colspan="3"> No upcoming assignments </td>
+                </tr>
             {% endif %}
             {% for assignment in assignments %}
             <tr class="assignments_table_body_row">

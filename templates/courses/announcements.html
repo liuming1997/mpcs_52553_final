@@ -20,7 +20,9 @@
 </div>
 
 <div id="course_section_content_body">
+    {% if role == 'instructor' %}
     <a href="/{{ course_id }}/announcements_create" style="text-decoration: none; color:white;"><button class="btn btn-primary btn-block mb-4 create_post" style="background-color: #0d6efd;"> Create Announcement </button></a>
+    {% endif %}
         <table class="announcements_table">
             <thead class="announcements_table_header">
             <tr>
@@ -30,10 +32,10 @@
             </tr>
             </thead>
             <tbody class="announcements_table_body">
-            {% if announcements|length == 0 %}
-            <tr class="assignments_table_body_row">
-                <td class="assignments_table_points_item" colspan="3"> No announcements </td>
-            </tr>
+            {% if course_announcements|length < 1 %}
+                <tr class="assignments_table_body_row">
+                    <td class="assignments_table_points_item" colspan="3"> No announcements </td>
+                </tr>
             {% endif %}
             {% for announcement in course_announcements %}
             <tr class="announcements_table_body_row">
