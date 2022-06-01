@@ -78,8 +78,8 @@ def get_grades():
     rows = cur.fetchall()
     return rows
 
-# todo: get all grades by username
-def get_grades_username():
+# todo: get all assignments + grades for student
+def get_assignments_with_grades_for_student():
     pass
 
 # get assignments
@@ -161,19 +161,19 @@ def get_students_courses(username):
     rows = cur.fetchall()
     return rows
 
-# get all of a student's grades for a particular course id
+# get all of a student's grades + assignments for a particular course id
 def get_students_grades_for_course(username, course_id):
     conn = create_connection('canvas.db')
     cur = conn.cursor()
-    cur.execute("SELECT json_group_array( json_object('assignment_id', assignment_id, 'name', name, 'title', title, 'content', content, 'points_received', grade, 'total_points', points, 'due_date', due_date, 'date_submitted', date_submitted)) FROM assignments join grades using (assignment_id) join users where (username=" + "'" + username + "' and course_id=" + str(course_id) + ")")
+    cur.execute("SELECT json_group_array( json_object('student', student_username, 'assignment_id', assignment_id, 'name', name, 'title', title, 'content', content, 'points_received', grade, 'total_points', points, 'due_date', due_date, 'date_submitted', date_submitted, 'submission', submission)) FROM assignments join grades using (assignment_id) join users where (username=" + "'" + username + "' and course_id=" + str(course_id) + ")")
     rows = cur.fetchall()
     return rows
 
-# get all grades for a course
+# get ALL GRADES  for course
 def get_all_students_grades_for_course(course_id):
     conn = create_connection('canvas.db')
     cur = conn.cursor()
-    cur.execute("SELECT json_group_array( json_object('assignment_id', assignment_id, 'student', student_username, 'title', title, 'content', content, 'points_received', grade, 'total_points', points, 'due_date', due_date, 'date_submitted', date_submitted)) FROM assignments join grades using (assignment_id) where course_id=" + str(course_id))
+    cur.execute("SELECT json_group_array( json_object('assignment_id', assignment_id, 'student', student_username, 'title', title, 'content', content, 'points_received', grade, 'total_points', points, 'due_date', due_date, 'date_submitted', date_submitted, 'submission', submission)) FROM assignments join grades using (assignment_id) where course_id=" + str(course_id))
     rows = cur.fetchall()
     return rows
 
@@ -248,4 +248,18 @@ def add_assignment(course_id, title, content, points, due_date):
     cur.execute("SELECT assignment_id from assignments order by assignment_id desc limit 1")
     print(cur.fetchall())
     return str("Successfully added assignment ")
-    
+
+def submit_assignment(assignment_id, student, submission):
+    print(assignment_id)
+    print(student)
+    print(submission)
+    conn = create_connection('canvas.db')
+    cur = conn.cursor()
+    now = datetime.datetime.now()
+    cmd = "UPDATE grades SET date_submitted=? WHERE (student_username=? and assignment_id=?)"
+    cur.execute(cmd, (now.strftime('%Y-%m-%d %H:%M:%S'), student, assignment_id))
+    conn.commit()
+    cmd = "UPDATE grades SET submission=? WHERE (student_username=? and assignment_id=?)"
+    cur.execute(cmd, (submission, student, assignment_id))
+    conn.commit()
+    return str('Successfully submitted assignment' + assignment_id + "for user " + student)

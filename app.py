@@ -138,7 +138,7 @@ def course_home(course_id):
 
     course_name = get_course_name(course_id)
 
-    return render_template("courses/home.html", course_list=session['course_list'], course_id=course_id, course_name=course_name['course_name'], recent_announcements=recent_announcements, instructor=instructor[0])
+    return render_template("courses/home.html", course_list=session['course_list'], course_id=course_id, course_name=course_name['course_name'], recent_announcements=recent_announcements, instructor=instructor[0], role=session['role'])
 
 @app.route('/<course_id>/announcements')
 def course_announcements(course_id):
@@ -171,7 +171,7 @@ def view_announcement(course_id, announcement_id):
     
     course_name = get_course_name(course_id)
 
-    return render_template("courses/announcements_view.html", course_list=session['course_list'], course_id=course_id, course_name=course_name['course_name'], announcement=single_announcement, instructor=instructor[0])
+    return render_template("courses/announcements_view.html", course_list=session['course_list'], course_id=course_id, course_name=course_name['course_name'], announcement=single_announcement, instructor=instructor[0], role=session['role'])
 
 @app.route('/<course_id>/announcements_create', methods=['GET', 'POST'])
 def create_announcement(course_id):
@@ -184,16 +184,27 @@ def create_announcement(course_id):
         database.db_queries.add_announcement(course_id, title, content)
         return redirect(url_for('course_home', course_id=course_id))
 
-    return render_template("courses/announcements_create.html", course_list=session['course_list'], course_id=course_id, course_name=course_name['course_name'])
+    return render_template("courses/announcements_create.html", course_list=session['course_list'], course_id=course_id, course_name=course_name['course_name'], role=session['role'])
 
-@app.route('/<course_id>/assignments_view/<assignment_id>')
+@app.route('/<course_id>/assignments_view/<assignment_id>', methods=['GET', 'POST'])
 def view_assignment(course_id, assignment_id):
+    print("in the func")
+    if request.method == 'POST':
+        print("in the func2")
+        submission = request.form['submission']
+        student = request.form['student']
+        assignment_id = request.form['id']
+        print('Submission: ' + submission)
+        print('student:  ' +  student)
+        print('assignment_id: ' + assignment_id)
+        database.db_queries.submit_assignment(assignment_id, student, submission)
     assignments = json.loads(
                     database.db_queries.get_students_grades_for_course(session['username'], course_id)[0][0])
     single_assignment = {}
     for assignment in assignments:
         if assignment['assignment_id'] == int(assignment_id):
             single_assignment = assignment
+            print(single_assignment)
             break
     
     # get instructor for announcements
@@ -201,7 +212,7 @@ def view_assignment(course_id, assignment_id):
                     database.db_queries.get_instructor_course_id(course_id)[0][0])
 
     course_name = get_course_name(course_id)
-    return render_template("courses/assignments_view.html", course_list=session['course_list'], course_id=course_id, course_name=course_name['course_name'], assignment=single_assignment, instructor=instructor[0])
+    return render_template("courses/assignments_view.html", course_list=session['course_list'], course_id=course_id, course_name=course_name['course_name'], assignment=single_assignment, instructor=instructor[0], role=session['role'])
 
 @app.route('/<course_id>/assignments')
 def course_assignments(course_id):
@@ -234,7 +245,7 @@ def create_assignment(course_id):
         database.db_queries.add_assignment(course_id, title, content, points, due_date)
 
     course_name = get_course_name(course_id)
-    return render_template("courses/assignments_create.html", course_list=session['course_list'], course_id=course_id, course_name=course_name['course_name'])
+    return render_template("courses/assignments_create.html", role=session['role'], course_list=session['course_list'], course_id=course_id, course_name=course_name['course_name'])
 
 @app.route('/<course_id>/grades', methods=['GET', 'POST'])
 def course_grades(course_id):
