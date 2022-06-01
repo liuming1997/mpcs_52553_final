@@ -240,13 +240,25 @@ def grade_assignment(student, assignment_id, grade):
 
 # add assignment
 def add_assignment(course_id, title, content, points, due_date):
+    print("adding assignment")
     conn = create_connection('canvas.db')
     cur = conn.cursor()
     cmd = "INSERT INTO assignments VALUES(null, ?,?,?,?,?)"
     cur.execute(cmd, (course_id, title, content, points, due_date))
     conn.commit()
     cur.execute("SELECT assignment_id from assignments order by assignment_id desc limit 1")
-    print(cur.fetchall())
+    new_assignment = cur.fetchall()[0][0]
+    print(new_assignment)
+    # for all students in course_id, add new assignment
+    students_in_course = cur.execute("SELECT username from takes_course where course_id=" + course_id).fetchall()
+    # print(str(students_in_course))
+    for row in students_in_course:
+        student = row[0]
+        cmd = "INSERT INTO grades VALUES(?,?, '', '', '' )"
+        cur.execute(cmd, (new_assignment, student))
+        conn.commit()
+    # print(str(get_all_students_grades_for_course(course_id)))
+    # print("\n"+"PRINTING ASSIGNMENTS:" + str(cur.fetchall()))
     return str("Successfully added assignment ")
 
 def submit_assignment(assignment_id, student, submission):
