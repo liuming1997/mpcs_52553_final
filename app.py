@@ -11,6 +11,8 @@ app.secret_key = uuid.uuid4().hex
 # LINK THAT SHOWS HOW TO USE AJAX w/ flask: https://www.youtube.com/watch?v=UmC26YXExJ4
 # or this one: https://joseph-dougal.medium.com/flask-ajax-bootstrap-tables-9036410cbc8
 # HOW TO MAKE OUR APP A SPA if we have time... https://blog.miguelgrinberg.com/post/how-to-deploy-a-react-router-flask-application
+# another one: https://dev.to/nagatodev/how-to-connect-flask-to-reactjs-1k8i
+
 # @app.before_request
 # def before_request_check():
 #     if not session.get('id'):
