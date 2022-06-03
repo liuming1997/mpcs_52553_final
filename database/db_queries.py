@@ -63,6 +63,13 @@ def update_name_by_username(username, new_name):
     cur.execute(cmd, (new_name, username))
     conn.commit()
 
+def update_status_by_username(username, new_status):
+    conn = create_connection('canvas.db')
+    cur = conn.cursor()
+    cmd = "UPDATE users SET status=? WHERE username=?"
+    cur.execute(cmd, (new_status, username))
+    conn.commit()
+
 # update email of user
 def update_email_by_username(username, new_email):
     conn = create_connection('canvas.db')

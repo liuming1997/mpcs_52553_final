@@ -138,8 +138,20 @@ def profile():
     user_data = user_data[0]
     return render_template("profile.html", course_list=session['course_list'], role=session['role'], user=user_data)
 
-@app.route('/settings')
+@app.route('/settings', methods=['GET', 'POST'])
 def settings():
+    if request.method == 'POST':
+        username = request.form['username']
+        status = request.form['status']
+        if status == 'active':
+            database.db_queries.update_status_by_username(username, 'inactive')
+
+        else:
+            database.db_queries.update_status_by_username(username, 'active')
+
+        users = json.loads(database.db_queries.get_users()[0][0])
+        return redirect(url_for("settings"))
+
     users = json.loads(database.db_queries.get_users()[0][0])
     print(users)
     return render_template("settings.html", course_list=session['course_list'], users=users, role=session['role'])
