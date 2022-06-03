@@ -99,7 +99,7 @@ c.executescript('''
           ''')
 # add admin user to db
 c.execute(
-    '''INSERT INTO users VALUES('molly', 'admin', '12345', 'Molly Stoner', 'inactive', 0, 'Yes', 'No', 'One', 'Two', 'Red', 'Blue');''')
+    '''INSERT INTO users VALUES('molly', 'admin', '12345', 'Molly Stoner', 'active', 0, 'Yes', 'No', 'One', 'Two', 'Red', 'Blue');''')
 
 # add courses to db
 conn.executescript('''
