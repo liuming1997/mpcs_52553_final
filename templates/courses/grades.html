@@ -80,7 +80,8 @@
                 <tr class="assignments_table_body_row">
                     <td class="assignments_table_assign_item"><a href="/{{ course_id }}/assignments_view/{{ assignment['assignment_id'] }}/grading" style="text-decoration: none; color:black">{{ assignment['title'] }}</a> </td>
                     <td class="assignments_table_points_item"> {{ assignment['points_received'] }} </td>
-                    <td class="assignments_table_grading_item"><form class="form-inline" method="post" style="display: flex; max-width: 150px;">
+                    <td class="assignments_table_grading_item">
+                        <form class="form-inline" method="post" style="display: flex; max-width: 150px;">
         <label for="email2" class="mb-2 mr-sm-2"></label>
         <input type="text" class="form-control mb-2 mr-sm-2" id="email2" placeholder="" name="grade" style="display: flex; min-width:75px; margin: 5px; margin-left:0px;">
         <input type="hidden" name="id" value="{{ assignment['assignment_id'] }}">
