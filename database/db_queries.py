@@ -217,7 +217,7 @@ def get_all_students_grades_for_course(course_id):
 # print(str(get_all_students_grades_for_course(1)))
 
 # TEST printing
-print('USERS:' + str(get_users()) + '\n')
+# print('USERS:' + str(get_users()) + '\n')
 # print('ANNOUNCEMENTS:' + str(get_announcements()) + '\n')
 # print('COURSES:' + str(get_courses() )+ '\n')
 # print('TAKES COURSE:' + str(get_takes_course()) + '\n')
@@ -310,3 +310,22 @@ def submit_assignment(assignment_id, student, submission):
     cur.execute(cmd, (submission, student, assignment_id))
     conn.commit()
     return str('Successfully submitted assignment' + assignment_id + "for user " + student)
+
+def get_assignment_by_name_student(username):
+    conn = create_connection('canvas.db')
+    cur = conn.cursor()
+    cmd = "SELECT course_name, title, content, points, due_date, date_submitted, grade FROM users JOIN assignments JOIN courses JOIN grades where (username=? and role='student')"
+    cur.execute(cmd, (username,))
+    rows = cur.fetchall()
+    return rows
+
+def get_assignment_by_name_teacher(username):
+    conn = create_connection('canvas.db')
+    cur = conn.cursor()
+    cmd = "SELECT course_name, title, content, points, due_date, student_username, date_submitted, grade FROM users JOIN assignments JOIN courses JOIN grades where (username=? and role='instructor')"
+    cur.execute(cmd, (username,))
+    rows = cur.fetchall()
+    return rows
+
+print("Test getting assignments (teacher):", get_assignment_by_name_teacher('y_terry'))
+print("Test getting assignments (student):", get_assignment_by_name_student('patrick_whalen'))
