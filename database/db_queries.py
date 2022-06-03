@@ -361,5 +361,5 @@ def get_assignment_by_name_teacher(username):
     rows = cur.fetchall()
     return rows
 
-print("Test getting assignments (teacher):", get_assignment_by_name_teacher('y_terry'))
-print("Test getting assignments (student):", get_assignment_by_name_student('patrick_whalen'))
+# print("Test getting assignments (teacher):", get_assignment_by_name_teacher('y_terry'))
+# print("Test getting assignments (student):", get_assignment_by_name_student('patrick_whalen'))
