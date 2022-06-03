@@ -30,6 +30,7 @@
     </thead>
     <tbody>
       {% for user in users %}
+        {% if user['role'] != 'admin' %}
         <tr>
           <td>{{ user['role'] }}</td>
           <td>{{ user['name'] }}</td>
@@ -37,6 +38,7 @@
             <td>{{ user['status']}}</td>
             <td>Change status</td>
         </tr>
+        {% endif %}
       {% endfor %}
     </tbody>
   </table>
