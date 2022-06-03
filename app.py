@@ -104,7 +104,16 @@ def edit_account():
 
 @app.route('/dashboard')
 def dashboard():
-    return render_template("dashboard.html", course_list=session['course_list'], role=session['role'])
+    # get num students
+    num_students = database.db_queries.get_num_students()[0][0]
+
+    # get num courses
+    num_courses = database.db_queries.get_num_courses()[0][0]
+
+    # get num teachers
+    num_teachers = database.db_queries.get_num_instructors()[0][0]
+
+    return render_template("dashboard.html", course_list=session['course_list'], role=session['role'], num_students=num_students, num_courses=num_courses, num_teachers=num_teachers)
 
 @app.route('/profile', methods=['GET', 'POST'])
 def profile():
