@@ -543,7 +543,13 @@ Profile CSS
 }
 
 
+/**
+Settings area css
+ */
 
+#myDIV {
+    display: none;
+}
 
 
 

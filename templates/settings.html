@@ -25,7 +25,8 @@
         <th>Name</th>
         <th>Username</th>
         <th>Status</th>
-          <th>Controls</th>
+          <th>Toggle Status</th>
+          <th>Enroll</th>
       </tr>
     </thead>
     <tbody>
@@ -43,6 +44,14 @@
         <input type="hidden" name="status" value="{{ user['status'] }}">
         <button type="submit" class="btn btn-primary mb-2" style="margin: 5px;">Update</button>
         </form></td>
+            <td>
+
+<button onclick="toggleAddClass('addClassForm')">Click Me</button>
+
+<div id="myDIV">
+  This is my DIV element.
+</div>
+            </td>
         </tr>
         {% endif %}
       {% endfor %}
