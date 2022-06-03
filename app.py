@@ -1,3 +1,4 @@
+from ast import If
 import os
 from flask import Flask, session, request, redirect, render_template, g, flash, url_for, jsonify
 import json
@@ -54,6 +55,7 @@ def signup():
         fullname = request.form['name']
         username = request.form['user']
         password = request.form['pass']
+        passwordconfirm = request.form['passconfirm']
         sq1_q = request.form['sq1_q']
         sq1_a = request.form['sq1_a']
         sq2_q = request.form['sq2_q']
@@ -61,6 +63,16 @@ def signup():
         sq3_q = request.form['sq3_q']
         sq3_a = request.form['sq3_a']
         account_type = request.form['account_type']
+
+        regx = "^(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!#%*?&]{5,}$"
+        passlogic = regx.compile(regx)
+
+        if not regx.search(passlogic, password):
+            flash('Passwords must be 5 chars in length, at least 1 number and 1 symbol)')
+            return(redirect(url_for('signup')))
+        if(password != passwordconfirm):
+            flash('Passwords do not match!')
+            return(redirect(url_for('signup')))
 
         # check if username already exists
         user_grab = database.db_queries.get_users()
@@ -80,14 +92,14 @@ def signup():
 
 @app.route('/reset')
 def reset():
-    username = request.form['user']
 
     # check if username already exists
     user_grab = database.db_queries.get_users()
-    for user in user_grab:
-        if user[0] == username:
-            flash('Username already exists!')
-            return(redirect(url_for('signup')))
+    print(user_grab)
+    # for user in user_grab:
+    #     if user[0] == username:
+    #         flash('Username already exists!')
+    #         return(redirect(url_for('signup')))
     return render_template("reset.html")
 
 @app.route('/')

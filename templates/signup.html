@@ -19,7 +19,7 @@
             {% if messages %}
                 <ul style="color: red; list-style-type:none;">
                 {% for message in messages %}
-                    <li>{{ message }}</li>
+                    <li>{{ messages[0] }}</li>
                 {% endfor %}
                 </ul>
             {% endif %}
@@ -36,6 +36,10 @@
             <div id="password">
                 <label for="pass"><b>Password</b></label>
                 <input type="password" placeholder="Enter Password" name="pass" required> <br>
+            </div>
+            <div id="password">
+                <label for="pass"><b>Confirm Password</b></label>
+                <input type="password" placeholder="Enter Password" name="passconfirm" required> <br>
             </div>
             <div id="type">
                 <input type="radio" id="student" name="account_type" value="Student" required>
