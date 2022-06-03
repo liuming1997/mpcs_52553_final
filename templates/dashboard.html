@@ -57,13 +57,13 @@
             </tr>
             </thead>
             <tbody class="assignments_table_body">
-            {% for assignment in assignments %}
+            {% for assignment in assignment_list %}
             <tr class="assignments_table_body_row">
-                <td class="assignments_table_class_item">Class Name Here</td>
-                <td class="assignments_table_class_item">Student Name Here</td>
-                <td class="assignments_table_assign_item"><a href="/courses/assignments_view" style="text-decoration: none; color:black">Assignment Title</a> </td>
-                <td class="assignments_table_points_item"> Points Here </td>
-                <td class="assignments_table_date_item">Due Date Here</td>
+                <td class="assignments_table_class_item">{{ assignment['course_name'] }}</td>
+                <td class="assignments_table_class_item">{{ assignment['student_username'] }}</td>
+                <td class="assignments_table_assign_item"><a href="/{{ assignment['course_id'] }}/assignments_view/{{ assignment['assignment_id'] }}/ {{ role }}" style="text-decoration: none; color:black">{{ assignment['title'] }}</a> </td>
+                <td class="assignments_table_points_item"> {{ assignment['total_points'] }} </td>
+                <td class="assignments_table_date_item">{{ assignment['due_date'] }}</td>
             </tr>
             {% endfor %}
             </tbody>
@@ -72,7 +72,7 @@
         </div>
     </div>
     {% endif %}
-    
+
     {% if role == 'student'% }
     <div class="collapsible_item">
         <button type="button" class="collapsible_header"><span style="margin-left: 20px; "><b>To Do</b> </span></button>
