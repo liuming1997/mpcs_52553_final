@@ -230,7 +230,8 @@ def course_admin():
     return render_template("course_admin.html", role=session['role'])
 @app.route('/create_course')
 def create_course():
-    return render_template("create_course.html", role=session['role'])
+    instructors = json.loads(database.db_queries.get_all_active_instructors()[0][0])
+    return render_template("create_course.html", role=session['role'], instructors=instructors )
 
 # course routes
 @app.route('/<course_id>/home')
