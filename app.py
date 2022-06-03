@@ -162,8 +162,15 @@ def course_admin():
 
     return render_template("course_admin.html", role=session['role'], courses=courses)
 
-@app.route('/create_course')
+@app.route('/create_course', methods=['POST', 'GET'])
 def create_course():
+    if request.method == 'POST':
+        course_name = request.form['course_name']
+        instructor_username = request.form.get('instructor_username')
+        capacity = request.form.get('capacity')
+        description = request.form['description']
+        database.db_queries.add_course(course_name, instructor_username, description, capacity)
+
     instructors = json.loads(database.db_queries.get_all_active_instructors()[0][0])
     return render_template("create_course.html", role=session['role'], instructors=instructors)
 
