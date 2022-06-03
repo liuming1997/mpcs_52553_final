@@ -206,9 +206,8 @@ def dashboard():
 
     if session['role'] == 'instructor':
         al = json.loads(database.db_queries.get_teachers_assignments(session['username'])[0][0])
-        print(al)
-        old_al = sorted(al, key=lambda d: datetime.strptime(d['due_date'], '%Y-%m-%d'), reverse=True)
-        assignment_list = [d for d in old_al if datetime.strptime(d['due_date'], '%Y-%m-%d') > datetime.now()]
+        old_al = sorted(al, key=lambda d: datetime.strptime(d['due_date'], '%Y-%m-%d %H:%M:%S'), reverse=True)
+        assignment_list = [d for d in old_al if datetime.strptime(d['due_date'], '%Y-%m-%d %H:%M:%S') > datetime.now()]
 
     return render_template("dashboard.html", course_list=session['course_list'], role=session['role'], num_students=num_students, num_courses=num_courses, num_teachers=num_teachers, assignment_list = assignment_list)
 
