@@ -32,7 +32,7 @@ def get_users():
     # return cur.fetchall()
     cur.execute("SELECT json_group_array( json_object( 'username', username, 'role', role, 'password', password, 'name', name, 'status', status ) ) FROM users")
     rows = cur.fetchall()
-    print(rows)
+    # print(rows)
     return rows
 
 def get_all_student_usernames():
@@ -44,7 +44,7 @@ def get_all_student_usernames():
     cur.execute(
         "SELECT json_group_array( json_object( 'username', username ) ) FROM users where role='student'")
     rows = cur.fetchall()
-    print(rows)
+    # print(rows)
     return rows
 
 def get_user_role(username):
@@ -64,7 +64,7 @@ def get_user_by_username(username):
     cur.execute(
         "SELECT json_group_array( json_object( 'username', username, 'role', role, 'password', password, 'name', name, 'status', status,  'user_id', user_id, 'sq1', sq1, 'sq2', sq2, 'sq3', sq3, 'sq1_answer', sq1_answer, 'sq2_answer', sq2_answer, 'sq3_answer', sq3_answer) ) FROM users where username=" + "'" + username + "'")
     rows = cur.fetchall()
-    print(rows)
+    # print(rows)
     return rows
 
 def get_all_active_instructors():
@@ -76,7 +76,7 @@ def get_all_active_instructors():
     cur.execute(
         "SELECT json_group_array( json_object( 'username', username, 'role', role, 'password', password, 'name', name, 'status', status,  'user_id', user_id, 'sq1', sq1, 'sq2', sq2, 'sq3', sq3, 'sq1_answer', sq1_answer, 'sq2_answer', sq2_answer, 'sq3_answer', sq3_answer) ) FROM users where role='instructor' and status='active'")
     rows = cur.fetchall()
-    print(rows)
+    # print(rows)
     return rows
 
 # update name of user
@@ -163,8 +163,12 @@ def get_courses_no_instructor():
     return rows
 
 # update instructor of course by course id
-def update_instructor_by_course_id(instructor_username):
-    pass
+def update_instructor_by_course_id(course_id, new_instructor):
+    conn = create_connection('canvas.db')
+    cur = conn.cursor()
+    cmd = "UPDATE courses SET instructor_username=? WHERE (course_id=?)"
+    cur.execute(cmd, (new_instructor, course_id))
+    conn.commit()
 
 # get courses student is not in
 def get_courses_not_enrolled(username):
@@ -175,18 +179,16 @@ def get_courses_not_enrolled(username):
     # parse rows
     enrolled = "( "
     for row in rows:
-        enrolled += str(row[0]) + ", "
+        if row[0] != '':
+            enrolled += str(row[0]) + ", "
     enrolled = enrolled[:len(enrolled)-2] + ")"
+    # print(enrolled)
     print(enrolled)
 
-    rows2 = cur.execute("SELECT json_group_array( json_object( 'course_id', course_id, 'course_name', course_name, 'instructor_username', instructor_username, 'description', description, 'capacity', capacity)) FROM courses where course_id NOT IN "  + enrolled).fetchall()
+    cur.execute("SELECT json_group_array( json_object( 'course_id', course_id, 'course_name', course_name, 'instructor_username', instructor_username, 'description', description, 'capacity', capacity)) FROM courses where course_id NOT IN " + enrolled)
+    rows2 = cur.fetchall()
     return rows2
 
-
-
-
-get_courses_not_enrolled('patrick_whalen')
-# add course
 
 
 def add_course(course_name, instructor_username, description, capacity):
@@ -270,6 +272,16 @@ def get_takes_course():
     cur.execute("SELECT json_group_array( json_object( 'username', username, 'course_id', course_id ) ) FROM takes_course")
     rows = cur.fetchall()
     return rows
+
+# enroll student in course
+def enroll_in_course(student_username, course_id):
+    conn = create_connection('canvas.db')
+    cur = conn.cursor()
+    cmd = "INSERT INTO takes_course VALUES(?, ?)"
+    cur.execute(cmd, (student_username, course_id))
+    conn.commit()
+    return
+
 
 # get all of a teacher's courses
 def get_teachers_courses(username):

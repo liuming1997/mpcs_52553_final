@@ -37,7 +37,7 @@ def login():
                         database.db_queries.get_teachers_courses(session['username'])[0][0])
                 else:
                     session['course_list'] = json.loads(database.db_queries.get_students_courses(session['username'])[0][0])
-                print(json.loads(database.db_queries.get_teachers_courses(session['username'])[0][0]))
+                # print(json.loads(database.db_queries.get_teachers_courses(session['username'])[0][0]))
 
                 return(redirect(url_for('dashboard')))
             else:
@@ -134,32 +134,54 @@ def profile():
 
     # get all user data with username
     user_data = json.loads(database.db_queries.get_user_by_username(session['username'])[0][0])
-    print(user_data)
+    # print(user_data)
     user_data = user_data[0]
     return render_template("profile.html", course_list=session['course_list'], role=session['role'], user=user_data)
 
 @app.route('/settings', methods=['GET', 'POST'])
 def settings():
     if request.method == 'POST':
+        print("IN POST")
         if 'name' in request.form:
+            print("NAME in request form")
             new_name = request.form['name']
             database.db_queries.update_name_by_username(session['username'], new_name)
         if 'status' in request.form:
+            print("STATUS in request form")
             username = request.form['username']
             status = request.form['status']
             if status == 'active':
                 database.db_queries.update_status_by_username(username, 'inactive')
             else:
                 database.db_queries.update_status_by_username(username, 'active')
+
         # assign teacher to course
+        if 'teacher_username' in request.form:
+            print("teacher username in form")
+            teacher_username = request.form['teacher_username']
+            course_ids = request.form.getlist('course_id')
+            print("PRINTING OCURSE IDS:" + str(course_ids))
+            print("PRINTING teacher username:" + str(teacher_username))
+            for id in course_ids:
+                database.db_queries.update_instructor_by_course_id(id, teacher_username)
 
         # assign student to course
+        if 'student_username' in request.form:
+            print("student username in form")
+            student_username = request.form['student_username']
+            course_ids = request.form.getlist('course_id')
+            print("PRINTING OCURSE IDS:" + str(course_ids))
+            print("PRINTING student username:" + str(student_username))
+            for id in course_ids:
+                if id != '' and student_username != '':
+                    database.db_queries.enroll_in_course(student_username, id)
 
         users = json.loads(database.db_queries.get_users()[0][0])
         return redirect(url_for("settings"))
 
     users = json.loads(database.db_queries.get_users()[0][0])
     courses_instructor = json.loads(database.db_queries.get_courses_no_instructor()[0][0])
+    print("PRINTING instructor courses:" + str(courses_instructor))
     all_students = json.loads(database.db_queries.get_all_student_usernames()[0][0])
     courses_student = {}
     for student in all_students:
@@ -253,15 +275,15 @@ def create_announcement(course_id):
 
 @app.route('/<course_id>/assignments_view/<assignment_id>/<view_type>', methods=['GET', 'POST'])
 def view_assignment(course_id, assignment_id, view_type):
-    print("in the func")
+    # print("in the func")
     if request.method == 'POST':
-        print("in the func2")
+       #  print("in the func2")
         submission = request.form['submission']
         student = request.form['student']
         assignment_id = request.form['id']
-        print('Submission: ' + submission)
-        print('student:  ' +  student)
-        print('assignment_id: ' + assignment_id)
+       #  print('Submission: ' + submission)
+       #  print('student:  ' +  student)
+      #   print('assignment_id: ' + assignment_id)
         database.db_queries.submit_assignment(assignment_id, student, submission)
     assignments = json.loads(
                     database.db_queries.get_students_grades_for_course(session['username'], course_id)[0][0])
@@ -269,7 +291,7 @@ def view_assignment(course_id, assignment_id, view_type):
     for assignment in assignments:
         if assignment['assignment_id'] == int(assignment_id):
             single_assignment = assignment
-            print(single_assignment)
+            # print(single_assignment)
             break
     
     # get instructor for announcements
@@ -282,7 +304,7 @@ def view_assignment(course_id, assignment_id, view_type):
 @app.route('/<course_id>/assignments')
 def course_assignments(course_id):
     assignments = []
-    print(session['role'])
+    # print(session['role'])
     if session['role'] ==  'student':
         assignments = json.loads(
                     database.db_queries.get_students_grades_for_course(session['username'], course_id)[0][0])
@@ -295,8 +317,8 @@ def course_assignments(course_id):
         # updated_assignments = [x for x in assignments if x['date_submitted'] == None]
         updated_assignments = assignments
 
-        print(assignments)
-        print(updated_assignments)
+        # print(assignments)
+        # print(updated_assignments)
     course_name = get_course_name(course_id)
     return render_template("courses/assignments.html", course_list=session['course_list'], course_id=course_id, course_name=course_name['course_name'], assignments=updated_assignments, role=session['role'])
 
