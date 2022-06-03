@@ -98,6 +98,14 @@ def update_id_by_username(username, new_id):
     cur.execute(cmd, (username, new_id))
     conn.commit()
 
+# update password of user
+def update_password_by_username(username, new_password):
+    conn = create_connection('canvas.db')
+    cur = conn.cursor()
+    cmd = "UPDATE users SET password=? WHERE username=?"
+    cur.execute(cmd, (username, new_password))
+    conn.commit()
+
 # get num students
 def get_num_students():
     conn = create_connection('canvas.db')
@@ -287,11 +295,11 @@ def get_all_students_grades_for_course(course_id):
 
 
 # INSERTING DATA
-def add_user(username, role, password, name, sq1, sq1_answer, sq2, sq2_answer, sq3, sq3_answer):
+def add_user(username, role, password, name, status, user_id, sq1, sq1_answer, sq2, sq2_answer, sq3, sq3_answer):
     conn = create_connection('canvas.db')
     cur = conn.cursor()
-    cmd = "INSERT INTO users VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
-    cur.execute(cmd, (username, role, password, name, sq1, sq1_answer, sq2, sq2_answer, sq3, sq3_answer))
+    cmd = "INSERT INTO users VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+    cur.execute(cmd, (username, role, password, name, status, user_id, sq1, sq1_answer, sq2, sq2_answer, sq3, sq3_answer))
     conn.commit()
     return str("Successfully added user " + username)
 

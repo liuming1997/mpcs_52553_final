@@ -4,6 +4,7 @@ from flask import Flask, session, request, redirect, render_template, g, flash, 
 import json
 import database.db_queries
 import uuid
+import re
 from datetime import datetime
 
 app = Flask(__name__)
@@ -22,6 +23,7 @@ app.secret_key = uuid.uuid4().hex
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+
     if request.method == 'POST':
         username = request.form['user']
         password = request.form['pass']
@@ -31,18 +33,25 @@ def login():
         # check that username and password are correct
         for user in user_list:
             if user['username'] == username and user['password'] == password:
+                if user['status'] == "inactive" and user['role'] != 'admin':
+                    flash('Account not activated. Contact an admin.')
+                    return(redirect(url_for('login')))
+
                 session['username'] = username;
                 session['role'] = database.db_queries.get_user_role(username)[0][0]
+                database.db_queries.update_status_by_username(username, 'active')
+                print(json.loads(database.db_queries.get_user_by_username(session['username'])[0][0])[0])
                 if session['role'] == 'instructor':
                     session['course_list'] = json.loads(
                         database.db_queries.get_teachers_courses(session['username'])[0][0])
                 else:
                     session['course_list'] = json.loads(database.db_queries.get_students_courses(session['username'])[0][0])
-                print(json.loads(database.db_queries.get_teachers_courses(session['username'])[0][0]))
+                    print(json.loads(database.db_queries.get_teachers_courses(session['username'])[0][0]))
 
                 return(redirect(url_for('dashboard')))
-            else:
-                flash('Incorrect username or password')
+
+        flash('Incorrect username or password')
+        return(redirect(url_for('login')))
     return render_template("login.html")
 
 @app.route('/logout')
@@ -56,6 +65,7 @@ def signup():
     if request.method == 'POST':
         fullname = request.form['name']
         username = request.form['user']
+        user_id = request.form['user_id']
         password = request.form['pass']
         passwordconfirm = request.form['passconfirm']
         sq1_q = request.form['sq1_q']
@@ -65,12 +75,22 @@ def signup():
         sq3_q = request.form['sq3_q']
         sq3_a = request.form['sq3_a']
         account_type = request.form['account_type']
+        
+        emailreg = re.compile(r'([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+')
+        if not re.search(emailreg, username):
+            flash('Username must be an email address!')
+            return(redirect(url_for('signup')))
+        
+        idreg = re.compile(r'(^[0-9]+$)')
+        if not re.search(idreg, user_id):
+            flash('User ID must be number')
+            return(redirect(url_for('signup')))
 
         regx = "^(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!#%*?&]{5,}$"
-        passlogic = regx.compile(regx)
+        passlogic = re.compile(regx)
 
-        if not regx.search(passlogic, password):
-            flash('Passwords must be 5 chars in length, at least 1 number and 1 symbol)')
+        if not re.search(passlogic, password):
+            flash('Passwords must be 5 chars in length, at least 1 number and 1 symbol')
             return(redirect(url_for('signup')))
         if(password != passwordconfirm):
             flash('Passwords do not match!')
@@ -84,12 +104,12 @@ def signup():
                 return(redirect(url_for('signup')))
 
         # add user
-        database.db_queries.add_user(username, account_type, password, fullname, sq1_q, sq1_a, sq2_q, sq2_a, sq3_q, sq3_a)
+        database.db_queries.add_user(username, account_type, password, fullname, 'inactive', user_id, sq1_q, sq1_a, sq2_q, sq2_a, sq3_q, sq3_a)
         session['username'] = username
-        session['role'] = json.load(database.db_queries.get_user_role(username)[0][0])
-        print(session['role'])
+        session['role'] = database.db_queries.get_user_role(username)[0][0]
         session['course_list'] = json.loads(database.db_queries.get_students_courses(session['username'])[0][0])
-        return(redirect(url_for('dashboard')))
+        flash('Account created!')
+        return(redirect(url_for('login')))
 
     return render_template("signup.html")
 
@@ -97,11 +117,9 @@ def signup():
 def reset():
     if request.method == 'POST':
         username = request.form['user']
-        print(username)
         # check if username already exists
         user_grab = json.loads(database.db_queries.get_users()[0][0])
         for user in user_grab:
-            print(user['username'])
             if user['username'] == username:
                 session['username'] = username;
                 return(redirect(url_for('reset2')))
@@ -139,15 +157,18 @@ def reset3():
         passwordconfirm = request.form['passconfirm']
 
         regx = "^(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!#%*?&]{5,}$"
-        passlogic = regx.compile(regx)
+        passlogic = re.compile(regx)
 
-        if not regx.search(passlogic, password):
+        if not re.search(passlogic, password):
             flash('Passwords must be 5 chars in length, at least 1 number and 1 symbol)')
             return(redirect(url_for('reset3')))
         if(password != passwordconfirm):
             flash('Passwords do not match!')
             return(redirect(url_for('reset3')))
     
+        database.db_queries.update_password_by_username(password, session['username'])
+        print(json.loads(database.db_queries.get_users()[0][0]))
+        [session.pop(key) for key in list(session.keys())]
         flash('Password updated!')
         return(redirect(url_for('login')))
     
@@ -173,6 +194,7 @@ def edit_account():
 
 @app.route('/dashboard')
 def dashboard():
+
     # get num students
     num_students = database.db_queries.get_num_students()[0][0]
 
@@ -182,7 +204,10 @@ def dashboard():
     # get num teachers
     num_teachers = database.db_queries.get_num_instructors()[0][0]
 
-    return render_template("dashboard.html", course_list=session['course_list'], role=session['role'], num_students=num_students, num_courses=num_courses, num_teachers=num_teachers)
+    if session['role'] == 'student':
+        
+
+    return render_template("dashboard.html", course_list=session['course_list'], role=session['role'], num_students=num_students, num_courses=num_courses, num_teachers=num_teachers, assignment_list = assignment_list)
 
 @app.route('/profile', methods=['GET', 'POST'])
 def profile():
