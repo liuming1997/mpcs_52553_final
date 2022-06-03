@@ -51,11 +51,9 @@
       <label class="form-label" for="form6Example3">Instructor</label>
       <select id="inputState" class="form-control">
         <option selected>Choose...</option>
-        <option>teacher 1</option>
-          <option>teacher 2</option>
-          <option>teacher 3</option>
-          <option>teacher 4</option>
-          <option>teacher 5</option>
+        {% for instructor in instructors: %}
+        <option value="{{ instructor['username'] }}">{{ instructor['name'] }}</option>
+        {% endfor %}
       </select>
     </div>
     <!-- Description -->
