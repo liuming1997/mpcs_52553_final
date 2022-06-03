@@ -141,20 +141,30 @@ def profile():
 @app.route('/settings', methods=['GET', 'POST'])
 def settings():
     if request.method == 'POST':
-        username = request.form['username']
-        status = request.form['status']
-        if status == 'active':
-            database.db_queries.update_status_by_username(username, 'inactive')
+        if 'name' in request.form:
+            new_name = request.form['name']
+            database.db_queries.update_name_by_username(session['username'], new_name)
+        if 'status' in request.form:
+            username = request.form['username']
+            status = request.form['status']
+            if status == 'active':
+                database.db_queries.update_status_by_username(username, 'inactive')
+            else:
+                database.db_queries.update_status_by_username(username, 'active')
+        # assign teacher to course
 
-        else:
-            database.db_queries.update_status_by_username(username, 'active')
+        # assign student to course
 
         users = json.loads(database.db_queries.get_users()[0][0])
         return redirect(url_for("settings"))
 
     users = json.loads(database.db_queries.get_users()[0][0])
-    print(users)
-    return render_template("settings.html", course_list=session['course_list'], users=users, role=session['role'])
+    courses_instructor = json.loads(database.db_queries.get_courses_no_instructor()[0][0])
+    all_students = json.loads(database.db_queries.get_all_student_usernames()[0][0])
+    courses_student = {}
+    for student in all_students:
+        courses_student[student['username']] = json.loads(database.db_queries.get_courses_not_enrolled(student['username'])[0][0])
+    return render_template("settings.html", course_list=session['course_list'], users=users, role=session['role'], courses_instructor=courses_instructor, courses_student=courses_student)
 
 @app.route('/course_admin')
 def course_admin():
@@ -167,6 +177,8 @@ def create_course():
     if request.method == 'POST':
         course_name = request.form['course_name']
         instructor_username = request.form.get('instructor_username')
+        if instructor_username == None:
+            instructor_username = ''
         capacity = request.form.get('capacity')
         description = request.form['description']
         database.db_queries.add_course(course_name, instructor_username, description, capacity)

@@ -26,7 +26,7 @@
         <th>Username</th>
         <th>Status</th>
           <th>Toggle Status</th>
-          <th>Enroll</th>
+          <th>Add Course</th>
       </tr>
     </thead>
     <tbody>
@@ -46,20 +46,35 @@
         </form></td>
             <td>
 
-<button onclick="toggleAddClass('myDIV {{ user['username'] }}')">Click Me</button>
+
+<button onclick="toggleAddClass('myDIV {{ user['username'] }}')" class="btn btn-primary mb-2" style="margin: 5px;">Courses Available</button>
 <div id="myDIV {{ user['username'] }}" style="display: none">
-  <div class="form-check">
-  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-  <label class="form-check-label" for="flexCheckDefault">
-    Default checkbox
-  </label>
-</div>
-<div class="form-check">
-  <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
-  <label class="form-check-label" for="flexCheckChecked">
-    Checked checkbox
-  </label>
-</div>
+    <form>
+        {% if user['role'] == 'instructor': %}
+        {% for course in courses_instructor:  %}
+        <div class="form-check">
+  <input class="form-check-input" type="checkbox" value="{{ user['username'] }}" id="flexCheckDefault" name="teacher_to_assign">
+    <input class="form-check-input" type="checkbox" value="course['course_id']" id="flexCheckDefault" name="new_course_for_teacher_{{ course['course_id'] }}">
+  <label class="form-check-label" for="flexCheckDefault"></label>
+    {{ course['course_name'] }}
+            </div>
+            {% endfor %}
+
+      {% endif %}
+    {% if user['role'] == 'student': %}
+        {% for course in courses_student[user['username']]: %}
+        <div class="form-check">
+  <input class="form-check-input" type="checkbox" value="{{ user['username'] }}" id="flexCheckDefault" name="teacher_to_assign">
+    <input class="form-check-input" type="checkbox" value="course['course_id']" id="flexCheckDefault" name="new_course_for_teacher_{{ course['course_id'] }}">
+  <label class="form-check-label" for="flexCheckDefault"></label>
+    {{ course['course_name'] }}
+            </div>
+            {% endfor %}
+      {% endif %}
+
+<button type="submit" class="btn btn-primary mb-2" style="margin: 5px;">Add</button>
+
+    </form>
 </div>
             </td>
         </tr>
