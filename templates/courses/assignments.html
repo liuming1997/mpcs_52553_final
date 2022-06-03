@@ -43,7 +43,7 @@
             {% endif %}
             {% for assignment in assignments %}
             <tr class="assignments_table_body_row">
-                <td class="assignments_table_assign_item"><a href="/{{ course_id }}/assignments_view/{{ assignment['assignment_id'] }}/ {{ role }}" style="text-decoration: none; color:black">{{ assignment['title'] }}</a> </td>
+                <td class="assignments_table_assign_item"><a href="/{{ course_id }}/assignments_view/{{ assignment['assignment_id'] }}/{{ role }}" style="text-decoration: none; color:black">{{ assignment['title'] }}</a> </td>
                 <td class="assignments_table_points_item"> {{ assignment['total_points'] }} </td>
                 <td class="assignments_table_date_item">{{ assignment['due_date'] }}</td>
             </tr>

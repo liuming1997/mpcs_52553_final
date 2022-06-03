@@ -6,6 +6,7 @@ import database.db_queries
 import uuid
 import re
 from datetime import datetime
+from datetime import timedelta
 
 app = Flask(__name__)
 app.secret_key = uuid.uuid4().hex
@@ -40,13 +41,13 @@ def login():
                 session['username'] = username;
                 session['role'] = database.db_queries.get_user_role(username)[0][0]
                 database.db_queries.update_status_by_username(username, 'active')
-                print(json.loads(database.db_queries.get_user_by_username(session['username'])[0][0])[0])
+                # print(json.loads(database.db_queries.get_user_by_username(session['username'])[0][0])[0])
                 if session['role'] == 'instructor':
                     session['course_list'] = json.loads(
                         database.db_queries.get_teachers_courses(session['username'])[0][0])
                 else:
                     session['course_list'] = json.loads(database.db_queries.get_students_courses(session['username'])[0][0])
-                    print(json.loads(database.db_queries.get_teachers_courses(session['username'])[0][0]))
+                    # print(json.loads(database.db_queries.get_teachers_courses(session['username'])[0][0]))
 
                 return(redirect(url_for('dashboard')))
 
@@ -144,7 +145,6 @@ def reset2():
         return(redirect(url_for('reset2')))
 
     user = json.loads(database.db_queries.get_user_by_username(session['username'])[0][0])[0]
-    print(user)
     sq1_q = user['sq1']
     sq2_q = user['sq2']
     sq3_q = user['sq3']
@@ -167,7 +167,6 @@ def reset3():
             return(redirect(url_for('reset3')))
     
         database.db_queries.update_password_by_username(password, session['username'])
-        print(json.loads(database.db_queries.get_users()[0][0]))
         [session.pop(key) for key in list(session.keys())]
         flash('Password updated!')
         return(redirect(url_for('login')))
@@ -204,12 +203,28 @@ def dashboard():
     # get num teachers
     num_teachers = database.db_queries.get_num_instructors()[0][0]
 
+    to_do = []
+    upcoming = []
+    past = []
+
     if session['role'] == 'instructor':
-        al = json.loads(database.db_queries.get_teachers_assignments(session['username'])[0][0])
+        al = json.loads(database.db_queries.get_assignment_by_name_teacher(session['username'])[0][0])
         old_al = sorted(al, key=lambda d: datetime.strptime(d['due_date'], '%Y-%m-%d %H:%M:%S'), reverse=True)
         assignment_list = [d for d in old_al if datetime.strptime(d['due_date'], '%Y-%m-%d %H:%M:%S') > datetime.now()]
 
-    return render_template("dashboard.html", course_list=session['course_list'], role=session['role'], num_students=num_students, num_courses=num_courses, num_teachers=num_teachers, assignment_list = assignment_list)
+    
+    if session['role'] == 'student':
+        al = json.loads(database.db_queries.get_assignment_by_name_student(session['username'])[0][0])
+        no_dup = []
+        for i in range(len(al)):
+            if al[i] not in al[i + 1:]:
+                no_dup.append(al[i])
+        assignment_list = sorted(no_dup, key=lambda d: datetime.strptime(d['due_date'], '%Y-%m-%d %H:%M:%S'), reverse=True)
+        to_do = [d for d in assignment_list if datetime.strptime(d['due_date'], '%Y-%m-%d %H:%M:%S') < datetime.now() + timedelta(days=3) and datetime.strptime(d['due_date'], '%Y-%m-%d %H:%M:%S') > datetime.now()]
+        upcoming = [d for d in assignment_list if datetime.strptime(d['due_date'], '%Y-%m-%d %H:%M:%S') > datetime.now() + timedelta(days=3)]
+        past = [d for d in assignment_list if datetime.strptime(d['due_date'], '%Y-%m-%d %H:%M:%S') < datetime.now()]
+
+    return render_template("dashboard.html", course_list=session['course_list'], role=session['role'], num_students=num_students, num_courses=num_courses, num_teachers=num_teachers, assignment_list = assignment_list, to_do=to_do, upcoming=upcoming, past=past)
 
 @app.route('/profile', methods=['GET', 'POST'])
 def profile():
@@ -217,16 +232,72 @@ def profile():
         if 'name' in request.form:
             new_name = request.form['name']
             database.db_queries.update_name_by_username(session['username'], new_name)
-        if 'id' in request.form:
-            new_id = request.form['id']
-            database.db_queries.update_id_by_username(session['username'], new_id)
         if 'email' in request.form:
+            print("EMAIL CHANGE")
             new_email = request.form['email']
+            emailreg = re.compile(r'([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+')
+            if not re.search(emailreg, new_email):
+                flash('Username must be an email address!')
+                return(redirect(url_for('profile')))
             database.db_queries.update_email_by_username(session['username'], new_email)
+            flash('Username updated')
+            return(redirect(url_for('profile')))
+        if 'id' in request.form:
+            print("ID CHANGE")
+            new_id = request.form['id']
+            idreg = re.compile(r'(^[0-9]+$)')
+            if not re.search(idreg, new_id):
+                flash('User ID must be number')
+                return(redirect(url_for('profile')))
+            database.db_queries.update_id_by_username(session['username'], new_id)
+            flash('User ID updated')
+            return(redirect(url_for('profile')))
+        
+        if 'current' in request.form:
+            user = json.loads(database.db_queries.get_user_by_username(session['username'])[0][0])[0]
+            print(user)
+            if request.form['current'] == user['password']:
+                new_pass = request.form['new']
+                regx = "^(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!#%*?&]{5,}$"
+                passlogic = re.compile(regx)
+
+                if not re.search(passlogic, new_pass):
+                    flash('Passwords must be 5 chars in length, at least 1 number and 1 symbol)')
+                    return(redirect(url_for('profile')))
+
+                confirm_pass = request.form['confirm']
+                if(new_pass != confirm_pass):
+                    flash('Passwords do not match!')
+                    return(redirect(url_for('profile')))
+
+                database.db_queries.update_password_by_username(session['username'], new_pass)
+                print(" SHOULD BE UPDATED")
+                # print(database.db_queries.get_user_by_username(session['username']))
+                flash('Password updated!')
+                return(redirect(url_for('profile')))
+            
+            flash('Incorrect current password!')
+            return(redirect(url_for('profile')))
+        
+        if 'sq1_q' in request.form:
+            if 'sq1_a' not in request.form:
+                flash('Must provide answer to new question!')
+                return(redirect(url_for('profile')))
+            sq1_q = request.form['sq1_q']
+        if 'sq2_q' in request.form:
+            if 'sq2_a' not in request.form:
+                flash('Must provide answer to new question!')
+                return(redirect(url_for('profile')))
+            sq2_q = request.form['sq2_q']
+        if 'sq3_q' in request.form:
+            if 'sq3_a' not in request.form:
+                flash('Must provide answer to new question!')
+                return(redirect(url_for('profile')))
+            sq3_q = request.form['sq3_q']
+
+
 
         return redirect(url_for('profile'))
-
-
 
     # get all user data with username
     user_data = json.loads(database.db_queries.get_user_by_username(session['username'])[0][0])
@@ -255,6 +326,7 @@ def settings():
 @app.route('/course_admin')
 def course_admin():
     return render_template("course_admin.html", role=session['role'])
+
 @app.route('/create_course')
 def create_course():
     instructors = json.loads(database.db_queries.get_all_active_instructors()[0][0])
