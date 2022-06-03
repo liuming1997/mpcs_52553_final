@@ -79,6 +79,40 @@ def update_id_by_username(username, new_id):
     cur.execute(cmd, (username, new_id))
     conn.commit()
 
+# get num students
+def get_num_students():
+    conn = create_connection('canvas.db')
+    role = 'student'
+    cur = conn.cursor()
+    cur.execute(
+        "SELECT COUNT(*) as num_students FROM users where role=" + "'" + role + "'")
+    # cur.execute("SELECT json_group_array( json_object( 'num_students', num_students, 'course_name', course_name, 'instructor_username', instructor_username)) FROM users where role=" + "'" + role + "'")
+
+    rows = cur.fetchall()
+    return rows
+
+# get num instructors
+def get_num_instructors():
+    conn = create_connection('canvas.db')
+    role = 'instructor'
+    cur = conn.cursor()
+    cur.execute(
+        "SELECT COUNT(*) FROM users where role=" + "'" + role + "'")
+    cur.execute("SELECT json_group_array( json_object( 'course_id', course_id, 'course_name', course_name, 'instructor_username', instructor_username)) FROM courses")
+
+    rows = cur.fetchall()
+    return rows
+
+# get num courses
+def get_num_courses():
+    conn = create_connection('canvas.db')
+    cur = conn.cursor()
+    cur.execute(
+        "SELECT COUNT(*) FROM courses")
+    cur.execute("SELECT json_group_array( json_object( 'course_id', course_id, 'course_name', course_name, 'instructor_username', instructor_username)) FROM courses")
+
+    rows = cur.fetchall()
+    return rows
 
 # get all courses
 def get_courses():
