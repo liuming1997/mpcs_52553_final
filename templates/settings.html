@@ -46,10 +46,20 @@
         </form></td>
             <td>
 
-<button onclick="toggleAddClass('addClassForm')">Click Me</button>
-
-<div id="myDIV">
-  This is my DIV element.
+<button onclick="toggleAddClass('myDIV {{ user['username'] }}')">Click Me</button>
+<div id="myDIV {{ user['username'] }}" style="display: none">
+  <div class="form-check">
+  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+  <label class="form-check-label" for="flexCheckDefault">
+    Default checkbox
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+  <label class="form-check-label" for="flexCheckChecked">
+    Checked checkbox
+  </label>
+</div>
 </div>
             </td>
         </tr>

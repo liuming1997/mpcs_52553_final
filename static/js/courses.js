@@ -112,7 +112,7 @@ function ValidateEmail(inputText)
  */
 
 function toggleAddClass(buttonName) {
-  var x = document.getElementById("myDIV");
+  var x = document.getElementById(buttonName);
   console.log(x)
   if (x.style.display === "none") {
     x.style.display = "block";
