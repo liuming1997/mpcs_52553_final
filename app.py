@@ -415,5 +415,7 @@ def get_course_name(course_id):
 
 # TODO: edit account
 # @app.route("/edit_account.html", methods=['GET', 'POST'])
-# def get_username():
+# def update_username():
 #     username = json.loads(database.db_queries.get_user_by_username(session['username']))
+# def update_security_question():
+#     pass
