@@ -188,8 +188,8 @@ def create_announcement(course_id):
 
     return render_template("courses/announcements_create.html", course_list=session['course_list'], course_id=course_id, course_name=course_name['course_name'], role=session['role'])
 
-@app.route('/<course_id>/assignments_view/<assignment_id>', methods=['GET', 'POST'])
-def view_assignment(course_id, assignment_id):
+@app.route('/<course_id>/assignments_view/<assignment_id>/<view_type>', methods=['GET', 'POST'])
+def view_assignment(course_id, assignment_id, view_type):
     print("in the func")
     if request.method == 'POST':
         print("in the func2")
@@ -214,7 +214,7 @@ def view_assignment(course_id, assignment_id):
                     database.db_queries.get_instructor_course_id(course_id)[0][0])
 
     course_name = get_course_name(course_id)
-    return render_template("courses/assignments_view.html", course_list=session['course_list'], course_id=course_id, course_name=course_name['course_name'], assignment=single_assignment, instructor=instructor[0], role=session['role'])
+    return render_template("courses/assignments_view.html", course_list=session['course_list'], course_id=course_id, course_name=course_name['course_name'], assignment=single_assignment, instructor=instructor[0], role=session['role'], view_type=view_type)
 
 @app.route('/<course_id>/assignments')
 def course_assignments(course_id):
@@ -228,7 +228,7 @@ def course_assignments(course_id):
     elif session['role'] ==  'instructor':
         assignments = json.loads(
                     # this query loads the appropriate data w/ new assignments
-                    database.db_queries.get_assignments_course_id(course_id)[0][0])
+                    database.db_queries.get_teachers_assignments_for_course(session['username'], course_id)[0][0])
         # updated_assignments = [x for x in assignments if x['date_submitted'] == None]
         updated_assignments = assignments
 

@@ -45,7 +45,7 @@
   </div>
   <div class="announcement_content">
 
-    {% if assignment['submission'] == '':  %}
+    {% if assignment['submission'] == '' and view_type != 'instructor' and view_type != 'grading':  %}
     <div class="announcement_content_header"><h4>Submit Assignment</h4></div>
 
     <!-- Textarea without sizing class -->
@@ -66,17 +66,22 @@
 
 </form>
   {% endif  %}
-
-
     {% if assignment['submission'] != '': %}
     <div class="announcement_content_header">
-      <h4> <em>Assignment submitted on {{ assignment['date_submitted'] }}</em> </h4>
+      <h4> <em>Assignment submitted on {{ assignment['date_submitted'] }} by {{ assignment['student'] }}</em> </h4>
     </div>
     <div class="announcement_content_header">
       <h6> View submission below:</h6>
     </div>
     <div class="announcement_content_header">
        <p>{{ assignment['submission'] }}  </p>
+    </div>
+
+  {% endif  %}
+    {% if assignment['submission'] == '': %}
+    <div class="announcement_content_header">
+      <h4> <em>Assignment not yet submitted by by {{ assignment['student'] }}</em> </h4>
+    </div>
     </div>
 
   {% endif  %}
