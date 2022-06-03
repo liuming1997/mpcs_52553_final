@@ -19,6 +19,27 @@
 </div>
 <div id="course_section_content_body">
     <h3>My Account</h3>
+    <table class="announcements_table">
+
+
+        <tbody class="announcements_table_body">
+            <tr><td></td></tr>
+            <tr class="announcements_table_body_row">
+                <td class="announcements_table_poster_item"><b>Name:</b> </td>
+                <td class="announcements_table_details_item">{{ user['name'] }} </td>
+            </tr>
+            <tr class="announcements_table_body_row">
+                <td class="announcements_table_poster_item"><b>Email:</b> </td>
+                <td class="announcements_table_details_item">{{ user['username'] }}</td>
+            </tr>
+
+        <tr class="announcements_table_body_row">
+                <td class="announcements_table_poster_item"><b>User ID:</b> </td>
+                <td class="announcements_table_details_item">{{ user['user_id'] }}</td>
+            </tr>
+            <tr><td></td></tr>
+        </tbody>
+    </table>
     <div class="collapsible_item">
         <button type="button" class="collapsible_header"><span style="margin-left: 20px; "><b>Edit Profile</b> </span>
         </button>
@@ -32,48 +53,44 @@
                         <tbody class="assignments_table_body">
                         <tr class="assignments_table_body_row">
                             <td style="padding: 30px !important; margin: 0px;"><b>Name:</b></td>
-                            <td style="padding: 30px !important; margin: 0px;">Your Name HERE</td>
+                            <td style="padding: 30px !important; margin: 0px;">{{ user['name'] }}</td>
                             <td class="assignments_table_grading_item">
-                                <form class="form-inline" method="post" style="display: flex; max-width: 150px;">
+                                <form class="form-inline" method="post" style="display: flex; max-width: 150px;" name="update_name_form" method="POST">
                                     <label for="email2" class="mb-2 mr-sm-2"></label>
                                     <input type="text" class="form-control mb-2 mr-sm-2" id="email2" placeholder=""
-                                           name="grade"
+                                           name="name"
                                            style="display: flex; min-width:75px; margin: 5px; margin-left:0px;">
-                                    <input type="hidden" name="id" value="">
-                                    <input type="hidden" name="student" value="">
-                                    <button type="submit" class="btn btn-primary mb-2" style="margin: 5px;">Update
+                                    <button type="submit" class="btn btn-primary mb-2" style="margin: 5px;" name="change_name">Update
                                     </button>
                                 </form>
                             </td>
                         </tr>
                         <tr class="assignments_table_body_row">
                             <td style="padding: 30px !important; margin: 0px;"><b>Email:</b></td>
-                            <td style="padding: 30px !important; margin: 0px;">Your Email HERE</td>
+                            <td style="padding: 30px !important; margin: 0px;">{{ user['username'] }}</td>
                             <td class="assignments_table_grading_item">
-                                <form class="form-inline" method="post" style="display: flex; max-width: 150px;">
+                                <form class="form-inline" method="post" style="display: flex; max-width: 150px;" name="update_email_form" method="POST">
                                     <label for="email2" class="mb-2 mr-sm-2"></label>
                                     <input type="text" class="form-control mb-2 mr-sm-2" id="email2" placeholder=""
-                                           name="grade"
-                                           style="display: flex; min-width:75px; margin: 5px; margin-left:0px;">
+                                           name="email"
+                                           style="display: flex; min-width:200px; margin: 5px; margin-left:0px;">
                                     <input type="hidden" name="id" value="">
                                     <input type="hidden" name="student" value="">
-                                    <button type="submit" class="btn btn-primary mb-2" style="margin: 5px;">Update
+                                    <button type="submit" class="btn btn-primary mb-2" style="margin: 5px;" onclick="ValidateEmail(document.update_email_form.name)" name="change_email" >Update
                                     </button>
                                 </form>
                             </td>
                         </tr>
                         <tr class="assignments_table_body_row">
                             <td style="padding: 30px !important; margin: 0px;"><b>ID:</b></td>
-                            <td style="padding: 30px !important; margin: 0px;">Your ID HERE</td>
+                            <td style="padding: 30px !important; margin: 0px;">{{ user['user_id'] }}</td>
                             <td class="assignments_table_grading_item">
-                                <form class="form-inline" method="post" style="display: flex; max-width: 150px;">
+                                <form class="form-inline" method="post" style="display: flex; max-width: 150px;" name="id_form" method="POST">
                                     <label for="email2" class="mb-2 mr-sm-2"></label>
                                     <input type="text" class="form-control mb-2 mr-sm-2" id="email2" placeholder=""
-                                           name="grade"
+                                           name="id"
                                            style="display: flex; min-width:75px; margin: 5px; margin-left:0px;">
-                                    <input type="hidden" name="id" value="">
-                                    <input type="hidden" name="student" value="">
-                                    <button type="submit" class="btn btn-primary mb-2" style="margin: 5px;">Update
+                                    <button type="submit" class="btn btn-primary mb-2" style="margin: 5px;" name="change_id">Update
                                     </button>
                                 </form>
                             </td>

@@ -21,26 +21,23 @@
     {% if role == 'admin' %}
     <h3 style="padding-bottom: 6px;">System Overview</h3>
     <table class="announcements_table">
-        <thead class="announcements_table_header">
-        <tr>
-            <th class="announcements_table_poster_header">Entity</th>
-            <th class="announcements_table_details_header">Number in System</th>
-        </tr>
-        </thead>
+
         <tbody class="announcements_table_body">
+            <tr><td></td></tr>
             <tr class="announcements_table_body_row">
-                <td class="announcements_table_poster_item">Students </td>
-                <td class="announcements_table_details_item">Num Students </td>
+                <td class="announcements_table_poster_item"><b>Students:</b> </td>
+                <td class="announcements_table_details_item">num students </td>
             </tr>
             <tr class="announcements_table_body_row">
-                <td class="announcements_table_poster_item">Teachers</td>
-                <td class="announcements_table_details_item">Num Teachers </td>
-            </tr>
-        <tr class="announcements_table_body_row">
-                <td class="announcements_table_poster_item">Courses </td>
-                <td class="announcements_table_details_item">Num Courses </td>
+                <td class="announcements_table_poster_item"><b>Teachers:</b> </td>
+                <td class="announcements_table_details_item">num teachers </td>
             </tr>
 
+        <tr class="announcements_table_body_row">
+                <td class="announcements_table_poster_item"><b>Courses:</b> </td>
+                <td class="announcements_table_details_item">num courses </td>
+            </tr>
+            <tr><td></td></tr>
         </tbody>
     </table>
     {% endif %}

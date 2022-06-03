@@ -106,9 +106,28 @@ def edit_account():
 def dashboard():
     return render_template("dashboard.html", course_list=session['course_list'], role=session['role'])
 
-@app.route('/profile')
+@app.route('/profile', methods=['GET', 'POST'])
 def profile():
-    return render_template("profile.html", course_list=session['course_list'], role=session['role'])
+    if request.method == 'POST':
+        if 'name' in request.form:
+            new_name = request.form['name']
+            database.db_queries.update_name_by_username(session['username'], new_name)
+        if 'id' in request.form:
+            new_id = request.form['id']
+            database.db_queries.update_id_by_username(session['username'], new_id)
+        if 'email' in request.form:
+            new_email = request.form['email']
+            database.db_queries.update_email_by_username(session['username'], new_email)
+
+        return redirect(url_for('profile'))
+
+
+
+    # get all user data with username
+    user_data = json.loads(database.db_queries.get_user_by_username(session['username'])[0][0])
+    print(user_data)
+    user_data = user_data[0]
+    return render_template("profile.html", course_list=session['course_list'], role=session['role'], user=user_data)
 
 @app.route('/settings')
 def settings():

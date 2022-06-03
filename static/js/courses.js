@@ -88,3 +88,21 @@ var docWidth = document.documentElement.offsetWidth;
       }, false)
     })
 })()
+
+
+function ValidateEmail(inputText)
+{
+    var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    if(inputText.value.match(mailformat))
+{
+    alert("Valid email address!");
+    document.update_email_form.name.focus();
+    return true;
+}
+    else
+    {
+    alert("You have entered an invalid email address!");
+    document.update_email_form.name.focus();
+    return false;
+}
+}

@@ -43,6 +43,42 @@ def get_user_role(username):
     rows = cur.fetchall()
     return rows
 
+def get_user_by_username(username):
+    conn = create_connection('canvas.db')
+    cur = conn.cursor()
+    # test user data
+    # cur.execute("SELECT * from users;")
+    # return cur.fetchall()
+    cur.execute(
+        "SELECT json_group_array( json_object( 'username', username, 'role', role, 'password', password, 'name', name, 'status', status,  'user_id', user_id, 'sq1', sq1, 'sq2', sq2, 'sq3', sq3, 'sq1_answer', sq1_answer, 'sq2_answer', sq2_answer, 'sq3_answer', sq3_answer) ) FROM users where username=" + "'" + username + "'")
+    rows = cur.fetchall()
+    print(rows)
+    return rows
+
+# update name of user
+def update_name_by_username(username, new_name):
+    conn = create_connection('canvas.db')
+    cur = conn.cursor()
+    cmd = "UPDATE users SET name=? WHERE username=?"
+    cur.execute(cmd, (new_name, username))
+    conn.commit()
+
+# update email of user
+def update_email_by_username(username, new_email):
+    conn = create_connection('canvas.db')
+    cur = conn.cursor()
+    cmd = "UPDATE users SET username=? WHERE username=?"
+    cur.execute(cmd, (username, new_email))
+    conn.commit()
+
+# update id of user
+def update_id_by_username(username, new_id):
+    conn = create_connection('canvas.db')
+    cur = conn.cursor()
+    cmd = "UPDATE users SET user_id=? WHERE username=?"
+    cur.execute(cmd, (username, new_id))
+    conn.commit()
+
 
 # get all courses
 def get_courses():
@@ -228,7 +264,6 @@ def add_announcement(course_id, title, content):
 # print("Dropping user for debug: " + str(drop_user('vmisham')))
 # print("Test annoucement: ", add_announcement(1, "test", "lorem_ipsum"))
 
-# UPDATE DATA
 
 # assign a student a grade
 def grade_assignment(student, assignment_id, grade):
