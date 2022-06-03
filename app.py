@@ -295,3 +295,7 @@ def get_course_name(course_id):
                     database.db_queries.get_coursename_course_id(course_id)[0][0])
     return course_name[0]
 
+# TODO: edit account
+# @app.route("/edit_account.html", methods=['GET', 'POST'])
+# def get_username():
+#     username = json.loads(database.db_queries.get_user_by_username(session['username']))
