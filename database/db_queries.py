@@ -86,7 +86,7 @@ def get_num_students():
     cur = conn.cursor()
     cur.execute(
         "SELECT COUNT(*) as num_students FROM users where role=" + "'" + role + "'")
-    # cur.execute("SELECT json_group_array( json_object( 'num_students', num_students, 'course_name', course_name, 'instructor_username', instructor_username)) FROM users where role=" + "'" + role + "'")
+    # cur.execute("SELECT json_group_array( json_object( 'num_students', num_students)) FROM (SELECT COUNT(*) as num_students FROM users where role=" + "'" + role +  "'")))
 
     rows = cur.fetchall()
     return rows
@@ -98,7 +98,7 @@ def get_num_instructors():
     cur = conn.cursor()
     cur.execute(
         "SELECT COUNT(*) FROM users where role=" + "'" + role + "'")
-    cur.execute("SELECT json_group_array( json_object( 'course_id', course_id, 'course_name', course_name, 'instructor_username', instructor_username)) FROM courses")
+    # cur.execute("SELECT json_group_array( json_object( 'course_id', course_id, 'course_name', course_name, 'instructor_username', instructor_username)) FROM courses")
 
     rows = cur.fetchall()
     return rows
@@ -109,7 +109,7 @@ def get_num_courses():
     cur = conn.cursor()
     cur.execute(
         "SELECT COUNT(*) FROM courses")
-    cur.execute("SELECT json_group_array( json_object( 'course_id', course_id, 'course_name', course_name, 'instructor_username', instructor_username)) FROM courses")
+    # cur.execute("SELECT json_group_array( json_object( 'course_id', course_id, 'course_name', course_name, 'instructor_username', instructor_username)) FROM courses")
 
     rows = cur.fetchall()
     return rows
