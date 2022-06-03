@@ -54,6 +54,12 @@ def signup():
         fullname = request.form['name']
         username = request.form['user']
         password = request.form['pass']
+        sq1_q = request.form['sq1_q']
+        sq1_a = request.form['sq1_a']
+        sq2_q = request.form['sq2_q']
+        sq2_a = request.form['sq2_a']
+        sq3_q = request.form['sq3_q']
+        sq3_a = request.form['sq3_a']
         account_type = request.form['account_type']
 
         # check if username already exists
@@ -64,8 +70,10 @@ def signup():
                 return(redirect(url_for('signup')))
 
         # add user
-        database.db_queries.insert_new_user(fullname, username, password, account_type)
+        database.db_queries.add_user(username, account_type, password, fullname, sq1_q, sq1_a, sq2_q, sq2_a, sq3_q, sq3_a)
         session['username'] = username
+        session['role'] = database.db_queries.get_user_role(username)[0][0]
+        session['course_list'] = json.loads(database.db_queries.get_students_courses(session['username'])[0][0])
         return(redirect(url_for('dashboard')))
 
     return render_template("signup.html")
