@@ -1,3 +1,4 @@
+from ast import If
 import os
 from flask import Flask, session, request, redirect, render_template, g, flash, url_for, jsonify
 import json
@@ -56,7 +57,24 @@ def signup():
         fullname = request.form['name']
         username = request.form['user']
         password = request.form['pass']
+        passwordconfirm = request.form['passconfirm']
+        sq1_q = request.form['sq1_q']
+        sq1_a = request.form['sq1_a']
+        sq2_q = request.form['sq2_q']
+        sq2_a = request.form['sq2_a']
+        sq3_q = request.form['sq3_q']
+        sq3_a = request.form['sq3_a']
         account_type = request.form['account_type']
+
+        regx = "^(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!#%*?&]{5,}$"
+        passlogic = regx.compile(regx)
+
+        if not regx.search(passlogic, password):
+            flash('Passwords must be 5 chars in length, at least 1 number and 1 symbol)')
+            return(redirect(url_for('signup')))
+        if(password != passwordconfirm):
+            flash('Passwords do not match!')
+            return(redirect(url_for('signup')))
 
         # check if username already exists
         user_grab = database.db_queries.get_users()
@@ -66,23 +84,47 @@ def signup():
                 return(redirect(url_for('signup')))
 
         # add user
-        database.db_queries.insert_new_user(fullname, username, password, account_type)
+        database.db_queries.add_user(username, account_type, password, fullname, sq1_q, sq1_a, sq2_q, sq2_a, sq3_q, sq3_a)
         session['username'] = username
+        session['role'] = database.db_queries.get_user_role(username)[0][0]
+        session['course_list'] = json.loads(database.db_queries.get_students_courses(session['username'])[0][0])
         return(redirect(url_for('dashboard')))
 
     return render_template("signup.html")
 
-@app.route('/reset')
+@app.route('/reset', methods=['GET', 'POST'])
 def reset():
-    username = request.form['user']
+    if request.method == 'POST':
+        username = request.form('user')
+        # check if username already exists
+        user_grab = database.db_queries.get_users()
+        for user in user_grab:
+            if user[0] == username:
+                session['username'] = username;
+                return(redirect(url_for('reset2')))
+        
+        flash('Username not found!')
+        return(redirect(url_for('reset')))
 
-    # check if username already exists
-    user_grab = database.db_queries.get_users()
-    for user in user_grab:
-        if user[0] == username:
-            flash('Username already exists!')
-            return(redirect(url_for('signup')))
     return render_template("reset.html")
+
+@app.route('/reset2', methods=['GET', 'POST'])
+def reset():
+    if request.method == 'POST':
+        sq1_a = request.form('sq1_a')
+        sq2_a = request.form('sq2_a')
+        sq3_a = request.form('sq3_a')
+        # check if username already exists
+        user_grab = database.db_queries.get_users()
+        for user in user_grab:
+            if user[0] == username:
+                session['username'] = username;
+                return(redirect(url_for('reset3')))
+        
+        flash('Username not found!')
+        return(redirect(url_for('reset')))
+
+    return render_template("reset2.html")
 
 @app.route('/')
 def index():

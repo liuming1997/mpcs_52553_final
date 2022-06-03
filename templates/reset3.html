@@ -57,11 +57,15 @@
             {% endif %}
             {% endwith %}
             <div class="container">
-                <div id="username">
-                    <label for="user"><b>Username</b></label>
-                    <input type="text" placeholder="Enter Username" name="user" required> <br>
+                <div id="password">
+                    <label for="pass"><b>Password</b></label>
+                    <input type="password" placeholder="Enter Password" name="pass" required> <br>
                 </div>
-                <button type="submit">Get security questions</button>
+                <div id="password">
+                    <label for="pass"><b>Confirm Password</b></label>
+                    <input type="password" placeholder="Enter Password" name="passconfirm" required> <br>
+                </div>
+                <button type="submit">Update password</button>
                 <br>
             </div>
         </div>
@@ -79,8 +83,4 @@
 <script src="/static/js/courses.js"></script>
 </body>
 </html>
-
-
-
-
 

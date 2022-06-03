@@ -57,11 +57,19 @@
             {% endif %}
             {% endwith %}
             <div class="container">
-                <div id="username">
-                    <label for="user"><b>Username</b></label>
-                    <input type="text" placeholder="Enter Username" name="user" required> <br>
+                <div id="sq">
+                    <label for="user"><b>{{ sq1 }}</b></label>
+                    <input type="text" placeholder="Enter Username" name="sq1_a" required> <br>
                 </div>
-                <button type="submit">Get security questions</button>
+                <div id="sq">
+                    <label for="user"><b>{{ sq2 }}</b></label>
+                    <input type="text" placeholder="Enter Username" name="sq2_a" required> <br>
+                </div>
+                <div id="sq">
+                    <label for="user"><b>{{ sq3 }}</b></label>
+                    <input type="text" placeholder="Enter Username" name="sq3_a" required> <br>
+                </div>
+                <button type="submit">Update password</button>
                 <br>
             </div>
         </div>
@@ -79,8 +87,4 @@
 <script src="/static/js/courses.js"></script>
 </body>
 </html>
-
-
-
-
 
