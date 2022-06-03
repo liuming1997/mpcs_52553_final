@@ -23,21 +23,21 @@
     <table id="data" class="table table-striped">
     <thead>
       <tr>
-        <th>Role</th>
-        <th>Name</th>
-        <th>Username</th>
-        <th>Status</th>
-          <th>Controls</th>
+        <th>Course ID</th>
+        <th>Course Name</th>
+        <th>Instructor</th>
+        <th>Description</th>
+          <th>Capacity</th>
       </tr>
     </thead>
     <tbody>
-      {% for user in users %}
+      {% for course in courses %}
         <tr>
-          <td>{{ user['role'] }}</td>
-          <td>{{ user['name'] }}</td>
-          <td>{{ user['username'] }}</td>
-            <td>N/A</td>
-            <td>Change status</td>
+          <td>{{ course['course_id'] }}</td>
+          <td>{{ course['course_name'] }}</td>
+          <td>{{ course['instructor_username'] }}</td>
+            <td>{{ course['description'] }}</td>
+            <td>{{ course['capacity'] }}</td>
         </tr>
       {% endfor %}
     </tbody>

@@ -55,6 +55,18 @@ def get_user_by_username(username):
     print(rows)
     return rows
 
+def get_all_active_instructors():
+    conn = create_connection('canvas.db')
+    cur = conn.cursor()
+    # test user data
+    # cur.execute("SELECT * from users;")
+    # return cur.fetchall()
+    cur.execute(
+        "SELECT json_group_array( json_object( 'username', username, 'role', role, 'password', password, 'name', name, 'status', status,  'user_id', user_id, 'sq1', sq1, 'sq2', sq2, 'sq3', sq3, 'sq1_answer', sq1_answer, 'sq2_answer', sq2_answer, 'sq3_answer', sq3_answer) ) FROM users where role='instructor' and status='active'")
+    rows = cur.fetchall()
+    print(rows)
+    return rows
+
 # update name of user
 def update_name_by_username(username, new_name):
     conn = create_connection('canvas.db')
@@ -125,9 +137,18 @@ def get_num_courses():
 def get_courses():
     conn = create_connection('canvas.db')
     cur = conn.cursor()
-    cur.execute("SELECT json_group_array( json_object( 'course_id', course_id, 'course_name', course_name, 'instructor_username', instructor_username)) FROM courses")
+    cur.execute("SELECT json_group_array( json_object( 'course_id', course_id, 'course_name', course_name, 'instructor_username', instructor_username, 'description', description, 'capacity', capacity)) FROM courses")
     rows = cur.fetchall()
     return rows
+
+# add course
+def add_course(course_name, instructor_username, description, capacity):
+    conn = create_connection('canvas.db')
+    cur = conn.cursor()
+    cmd = "INSERT INTO courses VALUES(null, ?, ?, ?, ?)"
+    cur.execute(cmd, (course_name, instructor_username, description, capacity))
+    conn.commit()
+    return str("Successfully added a course")
 
 # get all announcements
 def get_announcements():
