@@ -86,7 +86,8 @@ def signup():
         # add user
         database.db_queries.add_user(username, account_type, password, fullname, sq1_q, sq1_a, sq2_q, sq2_a, sq3_q, sq3_a)
         session['username'] = username
-        session['role'] = database.db_queries.get_user_role(username)[0][0]
+        session['role'] = json.load(database.db_queries.get_user_role(username)[0][0])
+        print(session['role'])
         session['course_list'] = json.loads(database.db_queries.get_students_courses(session['username'])[0][0])
         return(redirect(url_for('dashboard')))
 
@@ -95,11 +96,13 @@ def signup():
 @app.route('/reset', methods=['GET', 'POST'])
 def reset():
     if request.method == 'POST':
-        username = request.form('user')
+        username = request.form['user']
+        print(username)
         # check if username already exists
-        user_grab = database.db_queries.get_users()
+        user_grab = json.loads(database.db_queries.get_users()[0][0])
         for user in user_grab:
-            if user[0] == username:
+            print(user['username'])
+            if user['username'] == username:
                 session['username'] = username;
                 return(redirect(url_for('reset2')))
         
@@ -109,22 +112,46 @@ def reset():
     return render_template("reset.html")
 
 @app.route('/reset2', methods=['GET', 'POST'])
-def reset():
+def reset2():
     if request.method == 'POST':
-        sq1_a = request.form('sq1_a')
-        sq2_a = request.form('sq2_a')
-        sq3_a = request.form('sq3_a')
+        sq1_a = request.form['sq1_a']
+        sq2_a = request.form['sq2_a']
+        sq3_a = request.form['sq3_a']
         # check if username already exists
-        user_grab = database.db_queries.get_users()
-        for user in user_grab:
-            if user[0] == username:
-                session['username'] = username;
-                return(redirect(url_for('reset3')))
-        
-        flash('Username not found!')
-        return(redirect(url_for('reset')))
+        user = json.loads(database.db_queries.get_user_by_username(session['username'])[0][0])[0]
+        if sq1_a == user['sq1_answer'] and sq2_a == user['sq2_answer'] and sq3_a == user['sq3_answer']:
+            return(redirect(url_for('reset3')))
 
-    return render_template("reset2.html")
+        flash('Incorrect answers to security questions!')
+        return(redirect(url_for('reset2')))
+
+    user = json.loads(database.db_queries.get_user_by_username(session['username'])[0][0])[0]
+    print(user)
+    sq1_q = user['sq1']
+    sq2_q = user['sq2']
+    sq3_q = user['sq3']
+    return render_template("reset2.html", sq1_q=sq1_q, sq2_q=sq2_q, sq3_q=sq3_q)
+
+@app.route('/reset3', methods=['GET', 'POST'])
+def reset3():
+    if request.method == 'POST':
+        password = request.form['pass']
+        passwordconfirm = request.form['passconfirm']
+
+        regx = "^(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!#%*?&]{5,}$"
+        passlogic = regx.compile(regx)
+
+        if not regx.search(passlogic, password):
+            flash('Passwords must be 5 chars in length, at least 1 number and 1 symbol)')
+            return(redirect(url_for('reset3')))
+        if(password != passwordconfirm):
+            flash('Passwords do not match!')
+            return(redirect(url_for('reset3')))
+    
+        flash('Password updated!')
+        return(redirect(url_for('login')))
+    
+    return render_template("reset3.html")
 
 @app.route('/')
 def index():
