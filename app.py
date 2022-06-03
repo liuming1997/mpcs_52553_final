@@ -90,17 +90,39 @@ def signup():
 
     return render_template("signup.html")
 
-@app.route('/reset')
+@app.route('/reset', methods=['GET', 'POST'])
 def reset():
+    if request.method == 'POST':
+        username = request.form('user')
+        # check if username already exists
+        user_grab = database.db_queries.get_users()
+        for user in user_grab:
+            if user[0] == username:
+                session['username'] = username;
+                return(redirect(url_for('reset2')))
+        
+        flash('Username not found!')
+        return(redirect(url_for('reset')))
 
-    # check if username already exists
-    user_grab = database.db_queries.get_users()
-    print(user_grab)
-    # for user in user_grab:
-    #     if user[0] == username:
-    #         flash('Username already exists!')
-    #         return(redirect(url_for('signup')))
     return render_template("reset.html")
+
+@app.route('/reset2', methods=['GET', 'POST'])
+def reset():
+    if request.method == 'POST':
+        sq1_a = request.form('sq1_a')
+        sq2_a = request.form('sq2_a')
+        sq3_a = request.form('sq3_a')
+        # check if username already exists
+        user_grab = database.db_queries.get_users()
+        for user in user_grab:
+            if user[0] == username:
+                session['username'] = username;
+                return(redirect(url_for('reset3')))
+        
+        flash('Username not found!')
+        return(redirect(url_for('reset')))
+
+    return render_template("reset2.html")
 
 @app.route('/')
 def index():
