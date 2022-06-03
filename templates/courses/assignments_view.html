@@ -26,11 +26,18 @@
     <div class="dummy_content"> dummy content  </div>
   </div>
   <div class="announcement_content">
+    <div class="announcement_content_header">
+      <h4> {{ assignment['title'] }}</h4>
+    </div>
+    <div class="announcement_content_header">
+      <h6> Posted by: {{ instructor['instructor_username'] }}</h6>
+    </div>
+    <div class="announcement_content_header">
+       <p>{{ assignment['content'] }}  </p>
+    </div>
 
-    <div class="announcement_content_header"><h4>{{ assignment['title'] }}</h4>
-      <h7>{{ instructor['instructor_username'] }}</h7></div>
 
-    <p>{{ assignment['content'] }}  </p>
+
   </div>
 
 <div class="grey_center">
@@ -38,15 +45,18 @@
   </div>
   <div class="announcement_content">
 
+    {% if assignment['submission'] == '' and view_type != 'instructor' and view_type != 'grading':  %}
     <div class="announcement_content_header"><h4>Submit Assignment</h4></div>
 
     <!-- Textarea without sizing class -->
-<form>
+<form method="POST">
   <!-- Assignment input -->
   <div class="form-outline mb-4">
-    <label class="form-label" for="form6Example7">Message</label>
-    <textarea class="form-control" id="form6Example7" rows="4"></textarea>
+    <label class="form-label" for="form6Example7">Enter your submission below:</label>
+    <textarea class="form-control" id="form6Example7" rows="4" name="submission"></textarea>
   </div>
+  <input type="hidden" name="id" value="{{ assignment['assignment_id'] }}">
+  <input type="hidden" name="student" value="{{ assignment['student'] }}">
   <!-- Submit button -->
   <div class="form_button">
     <button type="submit" class="btn btn-primary btn-block mb-4 create_post" style="background-color: #0d6efd">
@@ -55,13 +65,32 @@
   </div>
 
 </form>
-
+  {% endif  %}
+    {% if assignment['submission'] != '': %}
+    <div class="announcement_content_header">
+      <h4> <em>Assignment submitted on {{ assignment['date_submitted'] }} by {{ assignment['student'] }}</em> </h4>
+    </div>
+    <div class="announcement_content_header">
+      <h6> View submission below:</h6>
+    </div>
+    <div class="announcement_content_header">
+       <p>{{ assignment['submission'] }}  </p>
     </div>
 
-<div class="grey_footer">
+  {% endif  %}
+    {% if assignment['submission'] == '': %}
+    <div class="announcement_content_header">
+      <h4> <em>Assignment not yet submitted by by {{ assignment['student'] }}</em> </h4>
+    </div>
+    </div>
+
+  {% endif  %}
+
+  </div>
+    <div class="grey_footer">
     <div class="dummy_content"> dummy content  </div>
   </div>
-
+    </div>
 </div>
 
 </div>

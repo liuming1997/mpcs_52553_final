@@ -1379,78 +1379,90 @@
       <Position>3</Position>
       <DataType>character|0s</DataType>
     </column>
-    <key id="499" parent="166">
+    <column id="499" parent="166" name="description">
+      <Position>4</Position>
+      <DataType>character|0s</DataType>
+    </column>
+    <column id="500" parent="166" name="capacity">
+      <Position>5</Position>
+      <DataType>INTEGER|0s</DataType>
+    </column>
+    <key id="501" parent="166">
       <ColNames>course_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="500" parent="166">
+    <foreign-key id="502" parent="166">
       <ColNames>instructor_username</ColNames>
       <RefTableName>users</RefTableName>
       <RefColNames>username</RefColNames>
     </foreign-key>
-    <column id="501" parent="167" name="assignment_id">
+    <column id="503" parent="167" name="assignment_id">
       <Position>1</Position>
       <DataType>INTEGER|0s</DataType>
     </column>
-    <column id="502" parent="167" name="student_username">
+    <column id="504" parent="167" name="student_username">
       <Position>2</Position>
       <DataType>character|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="503" parent="167" name="grade">
+    <column id="505" parent="167" name="grade">
       <Position>3</Position>
       <DataType>character|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="504" parent="167" name="date_submitted">
+    <column id="506" parent="167" name="date_submitted">
       <Position>4</Position>
       <DataType>DATETIME|0s</DataType>
     </column>
-    <foreign-key id="505" parent="167">
+    <column id="507" parent="167" name="submission">
+      <Position>5</Position>
+      <DataType>character|0s</DataType>
+    </column>
+    <foreign-key id="508" parent="167">
       <ColNames>assignment_id</ColNames>
       <RefTableName>assignments</RefTableName>
       <RefColNames>assignment_id</RefColNames>
     </foreign-key>
-    <foreign-key id="506" parent="167">
+    <foreign-key id="509" parent="167">
       <ColNames>student_username</ColNames>
       <RefTableName>users</RefTableName>
       <RefColNames>username</RefColNames>
     </foreign-key>
-    <column id="507" parent="168" name="type">
+    <column id="510" parent="168" name="type">
       <Position>1</Position>
       <DataType>text|0s</DataType>
     </column>
-    <column id="508" parent="168" name="name">
+    <column id="511" parent="168" name="name">
       <Position>2</Position>
       <DataType>text|0s</DataType>
     </column>
-    <column id="509" parent="168" name="tbl_name">
+    <column id="512" parent="168" name="tbl_name">
       <Position>3</Position>
       <DataType>text|0s</DataType>
     </column>
-    <column id="510" parent="168" name="rootpage">
+    <column id="513" parent="168" name="rootpage">
       <Position>4</Position>
       <DataType>int|0s</DataType>
     </column>
-    <column id="511" parent="168" name="sql">
+    <column id="514" parent="168" name="sql">
       <Position>5</Position>
       <DataType>text|0s</DataType>
     </column>
-    <column id="512" parent="169" name="name">
+    <column id="515" parent="169" name="name">
       <Position>1</Position>
     </column>
-    <column id="513" parent="169" name="seq">
+    <column id="516" parent="169" name="seq">
       <Position>2</Position>
     </column>
-    <column id="514" parent="170" name="username">
+    <column id="517" parent="170" name="username">
       <Position>1</Position>
       <DataType>character|0s</DataType>
     </column>
-    <column id="515" parent="170" name="course_id">
+    <column id="518" parent="170" name="course_id">
       <Position>2</Position>
       <DataType>INTEGER|0s</DataType>
     </column>
-    <index id="516" parent="170" name="sqlite_autoindex_takes_course_1">
+    <index id="519" parent="170" name="sqlite_autoindex_takes_course_1">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>username
 course_id</ColNames>
@@ -1458,79 +1470,89 @@ course_id</ColNames>
 </ColumnCollations>
       <Unique>1</Unique>
     </index>
-    <key id="517" parent="170">
+    <key id="520" parent="170">
       <ColNames>username
 course_id</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>sqlite_autoindex_takes_course_1</UnderlyingIndexName>
     </key>
-    <foreign-key id="518" parent="170">
+    <foreign-key id="521" parent="170">
       <ColNames>username</ColNames>
       <RefTableName>users</RefTableName>
       <RefColNames>username</RefColNames>
     </foreign-key>
-    <foreign-key id="519" parent="170">
+    <foreign-key id="522" parent="170">
       <ColNames>course_id</ColNames>
       <RefTableName>courses</RefTableName>
       <RefColNames>course_id</RefColNames>
     </foreign-key>
-    <column id="520" parent="171" name="username">
+    <column id="523" parent="171" name="username">
       <Position>1</Position>
       <DataType>character varying(50)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="521" parent="171" name="role">
+    <column id="524" parent="171" name="role">
       <Position>2</Position>
       <DataType>character|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="522" parent="171" name="password">
+    <column id="525" parent="171" name="password">
       <Position>3</Position>
       <DataType>TEXT|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="523" parent="171" name="name">
+    <column id="526" parent="171" name="name">
       <Position>4</Position>
       <DataType>character|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="524" parent="171" name="sq1">
+    <column id="527" parent="171" name="status">
       <Position>5</Position>
-      <DataType>character varying(50)|0s</DataType>
+      <DataType>character|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="525" parent="171" name="sq1_answer">
+    <column id="528" parent="171" name="user_id">
       <Position>6</Position>
-      <DataType>character varying(50)|0s</DataType>
+      <DataType>INTEGER|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="526" parent="171" name="sq2">
+    <column id="529" parent="171" name="sq1">
       <Position>7</Position>
       <DataType>character varying(50)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="527" parent="171" name="sq2_answer">
+    <column id="530" parent="171" name="sq1_answer">
       <Position>8</Position>
       <DataType>character varying(50)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="528" parent="171" name="sq3">
+    <column id="531" parent="171" name="sq2">
       <Position>9</Position>
       <DataType>character varying(50)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="529" parent="171" name="sq3_answer">
+    <column id="532" parent="171" name="sq2_answer">
       <Position>10</Position>
       <DataType>character varying(50)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="530" parent="171" name="sqlite_autoindex_users_1">
+    <column id="533" parent="171" name="sq3">
+      <Position>11</Position>
+      <DataType>character varying(50)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="534" parent="171" name="sq3_answer">
+      <Position>12</Position>
+      <DataType>character varying(50)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="535" parent="171" name="sqlite_autoindex_users_1">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>username</ColNames>
       <ColumnCollations></ColumnCollations>
       <Unique>1</Unique>
     </index>
-    <key id="531" parent="171">
+    <key id="536" parent="171">
       <ColNames>username</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>sqlite_autoindex_users_1</UnderlyingIndexName>

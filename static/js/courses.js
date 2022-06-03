@@ -63,3 +63,46 @@ var docWidth = document.documentElement.offsetWidth;
         }
     }
 );
+
+
+// FORM VALIDATION: CHANGE PASSWORD VALIDATION
+// SITE https://getbootstrap.com/docs/5.0/forms/validation/
+// Example starter JavaScript for disabling form submissions if there are invalid fields
+(function () {
+  'use strict'
+
+  // Fetch all the forms we want to apply custom Bootstrap validation styles to
+  var forms = document.querySelectorAll('.needs-validation')
+
+
+  // Loop over them and prevent submission
+  Array.prototype.slice.call(forms)
+    .forEach(function (form) {
+      form.addEventListener('submit', function (event) {
+        if (!form.checkValidity()) {
+          event.preventDefault()
+          event.stopPropagation()
+        }
+
+        form.classList.add('was-validated')
+      }, false)
+    })
+})()
+
+
+function ValidateEmail(inputText)
+{
+    var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    if(inputText.value.match(mailformat))
+{
+    alert("Valid email address!");
+    document.update_email_form.name.focus();
+    return true;
+}
+    else
+    {
+    alert("You have entered an invalid email address!");
+    document.update_email_form.name.focus();
+    return false;
+}
+}
