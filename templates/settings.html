@@ -36,7 +36,12 @@
           <td>{{ user['name'] }}</td>
           <td>{{ user['username'] }}</td>
             <td>{{ user['status']}}</td>
-            <td>Change status</td>
+            <td><td class="assignments_table_grading_item">
+                        <form class="form-inline" method="post" style="display: flex; max-width: 150px;">
+        <label for="email2" class="mb-2 mr-sm-2"></label>
+        <input type="hidden" name="username" value="{{ user['username'] }}">
+        <button type="submit" class="btn btn-primary mb-2" style="margin: 5px;">Update</button>
+        </form></td></td>
         </tr>
         {% endif %}
       {% endfor %}
