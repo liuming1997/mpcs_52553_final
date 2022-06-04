@@ -313,20 +313,52 @@ def profile():
 @app.route('/settings', methods=['GET', 'POST'])
 def settings():
     if request.method == 'POST':
-        username = request.form['username']
-        status = request.form['status']
-        if status == 'active':
-            database.db_queries.update_status_by_username(username, 'inactive')
+        print("IN POST")
+        if 'name' in request.form:
+            print("NAME in request form")
+            new_name = request.form['name']
+            database.db_queries.update_name_by_username(session['username'], new_name)
+        if 'status' in request.form:
+            print("STATUS in request form")
+            username = request.form['username']
+            status = request.form['status']
+            if status == 'active':
+                database.db_queries.update_status_by_username(username, 'inactive')
+            else:
+                database.db_queries.update_status_by_username(username, 'active')
 
-        else:
-            database.db_queries.update_status_by_username(username, 'active')
+        # assign teacher to course
+        if 'teacher_username' in request.form:
+            print("teacher username in form")
+            teacher_username = request.form['teacher_username']
+            course_ids = request.form.getlist('course_id')
+            print("PRINTING OCURSE IDS:" + str(course_ids))
+            print("PRINTING teacher username:" + str(teacher_username))
+            for id in course_ids:
+                database.db_queries.update_instructor_by_course_id(id, teacher_username)
+
+        # assign student to course
+        if 'student_username' in request.form:
+            print("student username in form")
+            student_username = request.form['student_username']
+            course_ids = request.form.getlist('course_id')
+            print("PRINTING OCURSE IDS:" + str(course_ids))
+            print("PRINTING student username:" + str(student_username))
+            for id in course_ids:
+                if id != '' and student_username != '':
+                    database.db_queries.enroll_in_course(student_username, id)
 
         users = json.loads(database.db_queries.get_users()[0][0])
         return redirect(url_for("settings"))
 
     users = json.loads(database.db_queries.get_users()[0][0])
-    print(users)
-    return render_template("settings.html", course_list=session['course_list'], users=users, role=session['role'])
+    courses_instructor = json.loads(database.db_queries.get_courses_no_instructor()[0][0])
+    print("PRINTING instructor courses:" + str(courses_instructor))
+    all_students = json.loads(database.db_queries.get_all_student_usernames()[0][0])
+    courses_student = {}
+    for student in all_students:
+        courses_student[student['username']] = json.loads(database.db_queries.get_courses_not_enrolled(student['username'])[0][0])
+    return render_template("settings.html", course_list=session['course_list'], users=users, role=session['role'], courses_instructor=courses_instructor, courses_student=courses_student)
 
 @app.route('/course_admin')
 def course_admin():
