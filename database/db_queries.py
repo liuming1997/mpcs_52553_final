@@ -35,6 +35,51 @@ def get_users():
     print(rows)
     return rows
 
+# get courses without instructor
+def get_courses_no_instructor():
+    conn = create_connection('canvas.db')
+    cur = conn.cursor()
+    cur.execute(
+        "SELECT json_group_array( json_object( 'course_id', course_id, 'course_name', course_name, 'instructor_username', instructor_username, 'description', description, 'capacity', capacity)) FROM courses where instructor_username='Choose...'")
+    rows = cur.fetchall()
+    return rows
+
+# update instructor of course by course id
+def update_instructor_by_course_id(course_id, new_instructor):
+    conn = create_connection('canvas.db')
+    cur = conn.cursor()
+    cmd = "UPDATE courses SET instructor_username=? WHERE (course_id=?)"
+    cur.execute(cmd, (new_instructor, course_id))
+    conn.commit()
+
+# get courses student is not in
+def get_courses_not_enrolled(username):
+    # get courses student in already in list
+    conn = create_connection('canvas.db')
+    cur = conn.cursor()
+    rows = cur.execute("SELECT course_id from takes_course where username=" + "'" + username + "'").fetchall()
+    # parse rows
+    enrolled = "( "
+    for row in rows:
+        if row[0] != '':
+            enrolled += str(row[0]) + ", "
+    enrolled = enrolled[:len(enrolled)-2] + ")"
+    # print(enrolled)
+    print(enrolled)
+
+    cur.execute("SELECT json_group_array( json_object( 'course_id', course_id, 'course_name', course_name, 'instructor_username', instructor_username, 'description', description, 'capacity', capacity)) FROM courses where course_id NOT IN " + enrolled)
+    rows2 = cur.fetchall()
+    return rows2
+
+
+def add_course(course_name, instructor_username, description, capacity):
+    conn = create_connection('canvas.db')
+    cur = conn.cursor()
+    cmd = "INSERT INTO courses VALUES(null, ?, ?, ?, ?)"
+    cur.execute(cmd, (course_name, instructor_username, description, capacity))
+    conn.commit()
+    return str("Successfully added a course")
+
 def get_user_role(username):
     conn = create_connection('canvas.db')
     cur = conn.cursor()
