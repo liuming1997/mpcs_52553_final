@@ -106,3 +106,17 @@ function ValidateEmail(inputText)
     return false;
 }
 }
+
+/**
+ * settings area
+ */
+
+function toggleAddClass(buttonName) {
+  var x = document.getElementById(buttonName);
+  console.log(x)
+  if (x.style.display === "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
+}
