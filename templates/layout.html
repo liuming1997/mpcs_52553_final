@@ -13,6 +13,7 @@
 
 
     <!-- Bootstrap core CSS -->
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap5.css">
     <!-- CSS only -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
 
@@ -100,13 +101,12 @@
 </svg>
 
 <main>
-
   <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 175px;">
     <ul class="nav nav-pills flex-column mb-auto">
       <li>
         <a href="/profile" class="nav-link text-white">
           <svg class="bi me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
-          <span class="sidenav_text">Profile </span>
+          <span class="sidenav_text">Account </span>
         </a>
       </li>
       <li>
@@ -115,19 +115,33 @@
           <span class="sidenav_text">Dashboard </span>
         </a>
       </li>
+
+      {% if role == 'instructor' or role == 'student' %}
       <li>
         <button class="btn btn-toggle align-items-center rounded collapsed text-white" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false">
           <span class="sidenav_text">  Courses</span>
         </button>
         <div class="collapse" id="dashboard-collapse">
           <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-            <li><a href="/courses/home" class="link-dark rounded text-white">C++</a></li>
-            <li><a href="/courses/home" class="link-dark rounded text-white">Web Development</a></li>
-            <li><a href="/courses/home" class="link-dark rounded text-white">Mobile Development</a></li>
-            <li><a href="/courses/home" class="link-dark rounded text-white">Algorithms</a></li>
+            {% for course in course_list %}
+                <li><a class="link-dark rounded text-white" href="/{{ course['course_id'] }}/home">{{ course['course_name'] }}</a></li>
+            {% endfor %}
           </ul>
         </div>
       </li>
+      {% endif %}
+
+      {% if role == 'admin' %}
+      <li>
+        <a href="/course_admin" class="nav-link text-white">
+          <svg class="bi me-2" width="16" height="16"><use xlink:href="#speedometer2"/></svg>
+          <span class="sidenav_text"> Courses </span>
+        </a>
+      </li>
+
+
+
+
       <li>
         <a href="/settings" class="nav-link text-white">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gear me-2" viewBox="0 0 16 16">
@@ -137,6 +151,7 @@
           <span class="sidenav_text">Settings</span>
         </a>
       </li>
+      {% endif %}
     </ul>
     <hr>
     <div class="dropdown">
@@ -152,16 +167,27 @@
 
   <div class="b-example-divider"></div>
 
-  <div id="content">{% block content %}{% endblock %}</div>
+<div id="content">{% block content %}{% endblock %}</div>
   
   
 </main>
-
 
     <!-- JavaScript Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
 
       <script src="/static/js/sidebars.js"></script>
 <script src="/static/js/courses.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+     <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap5.js"></script>
+{% block scripts %}
+<script>
+    $(document).ready(function () {
+      $('#data').DataTable();
+    });
+  </script>
+{% endblock %}
   </body>
 </html>

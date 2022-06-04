@@ -1,0 +1,83 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div id="courses_sidenav" class="sidenav">
+    <!-- <a> Date published </a>  may not use this -->
+    <a href="//announcements">Announcements</a>
+    <a href="//assignments">Assignments</a>
+    <a href="//grades">Grades</a>
+</div>
+
+<div id="courses_header_and_right_of_header">
+    <div id="courses_header">
+
+        <a href="//home"> </a>  <div id="courses_breadcrumbs"></div> Create Course </span>
+    </div>
+    <!-- <div id = "right_of_header"></div> -->
+</div>
+
+<div id="course_section_content_body">
+  <div class="announcement_container">
+
+  <div class="grey_header">
+    <div class="dummy_content"> dummy content  </div>
+  </div>
+  <div class="announcement_content">
+
+    <div class="announcement_content_header"><h4>Create Course</h4></div>
+
+    <!-- Textarea without sizing class -->
+<form method="post">
+  <!-- Course Name -->
+  <div class="form-outline mb-4">
+    <label class="form-label" for="form6Example3">Course Name</label>
+    <input type="text" id="form6Example3" class="form-control" name="course_name" />
+  </div>
+    <!-- Capacity -->
+    <div class="form-outline mb-4">
+      <label class="form-label" for="form6Example3">Capacity</label>
+      <select id="inputState" class="form-control" name="capacity">
+        <option selected>Choose...</option>
+        <option>5</option>
+          <option>10</option>
+          <option>15</option>
+          <option>20</option>
+          <option>25</option>
+          <option>30</option>
+      </select>
+    </div>
+    <!-- Teacher -->
+    <div class="form-outline mb-4">
+      <label class="form-label" for="form6Example3">Instructor</label>
+      <select id="inputState" class="form-control" name="instructor_username">
+        <option selected>Choose...</option>
+        {% for instructor in instructors: %}
+        <option value="{{ instructor['username'] }}">{{ instructor['name'] }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <!-- Description -->
+  <div class="form-outline mb-4">
+    <label class="form-label" for="form6Example3">Description</label>
+    <textarea class="form-control" id="form6Example7" rows="4" name="description"></textarea>
+  </div>
+
+  <!-- Submit button -->
+  <div class="form_button" ">
+    <button type="submit" class="btn btn-primary btn-block mb-4 create_post" style="background-color: #0d6efd">
+    Post
+  </button>
+
+
+</form>
+
+    </div>
+
+</div>
+<div class="grey_footer">
+    <div class="dummy_content"> dummy content  </div>
+  </div>
+</div>
+<div onload="navOpen()"></div>
+
+{% endblock %}

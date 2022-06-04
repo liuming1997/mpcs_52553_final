@@ -1,9 +1,170 @@
 {% extends "layout.html" %}
 
-{% block title %}
-    User Profile
-{% endblock %}
-
 {% block content %}
-<p>THIS IS YOUR PROFILE</p>
+<div id="courses_sidenav" class="sidenav">
+    <!-- <a> Date published </a>  may not use this -->
+    <a href="/{{ course }}/announcements">Announcements</a>
+    <a href="/{{ course }}/assignments">Assignments</a>
+    <a href="/{{ course }}/grades">Grades</a>
+</div>
+
+<div id="courses_header_and_right_of_header">
+    <div id="courses_header">
+
+        <a href="/{{ course }}/home"> {{ course }}</a>
+        <div id="courses_breadcrumbs"></div>
+        Profile </span>
+    </div>
+    <!-- <div id = "right_of_header"></div> -->
+</div>
+<div id="course_section_content_body">
+    <h3>My Account</h3>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <ul style="color: red; list-style-type:none;">
+        <li>{{ messages[0] }}</li>
+    </ul>
+    {% endif %}
+    {% endwith %}
+    <table class="announcements_table">
+
+
+        <tbody class="announcements_table_body">
+            <tr><td></td></tr>
+            <tr class="announcements_table_body_row">
+                <td class="announcements_table_poster_item"><b>Name:</b> </td>
+                <td class="announcements_table_details_item">{{ user['name'] }} </td>
+            </tr>
+            <tr class="announcements_table_body_row">
+                <td class="announcements_table_poster_item"><b>Email:</b> </td>
+                <td class="announcements_table_details_item">{{ user['username'] }}</td>
+            </tr>
+
+        <tr class="announcements_table_body_row">
+                <td class="announcements_table_poster_item"><b>User ID:</b> </td>
+                <td class="announcements_table_details_item">{{ user['user_id'] }}</td>
+            </tr>
+            <tr><td></td></tr>
+        </tbody>
+    </table>
+    <div class="collapsible_item">
+        <button type="button" class="collapsible_header"><span style="margin-left: 20px; "><b>Edit Profile</b> </span>
+        </button>
+        <div class="collapsible_content_all">
+            <div class="collapsible_content_profile">
+
+                <div class="collapsible_content_assign">
+
+
+                    <table class="assignments_table" style="margin-bottom: 10px;">
+                        <tbody class="assignments_table_body">
+                        <tr class="assignments_table_body_row">
+                            <td style="padding: 30px !important; margin: 0px;"><b>Name:</b></td>
+                            <td style="padding: 30px !important; margin: 0px;">{{ user['name'] }}</td>
+                            <td class="assignments_table_grading_item">
+                                <form class="form-inline" method="post" style="display: flex;" name="update_name_form" method="POST">
+                                    <input type="text" class="form-control mb-2 mr-sm-2" placeholder=""
+                                           name="name"
+                                           style="display: flex; margin: 5px; margin-left:0px;">
+                                    <button type="submit" class="btn btn-primary mb-2" style="margin: 5px;" name="change_name">Update
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                        <tr class="assignments_table_body_row">
+                            <td style="padding: 30px !important; margin: 0px;"><b>Email:</b></td>
+                            <td style="padding: 30px !important; margin: 0px;">{{ user['username'] }}</td>
+                            <td class="assignments_table_grading_item">
+                                <form class="form-inline" style="display: flex;" method="POST">
+                                    <input type="text" class="form-control mb-2 mr-sm-2" placeholder=""
+                                           name="email"
+                                           style="display: flex; margin: 5px; margin-left:0px;">
+                                    <button type="submit" class="btn btn-primary mb-2" style="margin: 5px;">Update
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                        <tr class="assignments_table_body_row">
+                            <td style="padding: 30px !important; margin: 0px;"><b>ID:</b></td>
+                            <td style="padding: 30px !important; margin: 0px;">{{ user['user_id'] }}</td>
+                            <td class="assignments_table_grading_item">
+                                <form class="form-inline" style="display: flex;"method="POST">
+                                    <input type="text" class="form-control mb-2 mr-sm-2" id="id" placeholder=""
+                                           name="id"
+                                           style="display: flex; margin: 5px; margin-left:0px;">
+                                    <button type="submit" class="btn btn-primary mb-2" style="margin: 5px;">Update
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="collapsible_item">
+        <button type="button" class="collapsible_header"><span
+                style="margin-left: 20px; "><b>Change Password</b> </span></button>
+        <div class="collapsible_content_all">
+            <div class="collapsible_content_profile">
+  <div class="col-md-4">
+    <form method="post" style="width: min-content; padding: 20px;">
+      <div class="container">
+        <div id="password">
+          <label for="pass"><b>Current Password</b></label>
+            <input type="password" placeholder="Enter current password" name="current" required> <br>
+        </div>
+          <div id="password">
+              <label for="pass"><b>New Password</b></label>
+              <input type="password" placeholder="Enter Password" name="new" required> <br>
+          </div>
+          <div id="password">
+              <label for="pass"><b>Confirm New Password</b></label>
+              <input type="password" placeholder="Enter Password" name="confirm" required> <br>
+          </div>
+          <button type="submit" class="btn btn-primary mb-2" style="margin: 5px;" name="change_id">Update password
+          </button>
+          <br>
+</form>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <div class="collapsible_item">
+        <button type="button" class="collapsible_header"><span
+                style="margin-left: 20px; "><b>Change Security Question</b> </span></button>
+        <div class="collapsible_content_all">
+            <div class="collapsible_content_profile">
+
+              <form method="post">
+                <div class="container">
+
+                    <div id="sq1">
+                        <label for="sq1"><b>First security question</b></label> <br>
+                        <input type="text" placeholder="Question" name="sq1_q"> <br>
+                        <input type="text" placeholder="Answer" name="sq1_a"> <br>
+                    </div>
+                    <div id="sq2">
+                        <label for="sq2"><b>Second security question</b></label> <br>
+                        <input type="text" placeholder="Question" name="sq2_q"> <br>
+                        <input type="text" placeholder="Answer" name="sq2_a"> <br>
+                    </div>
+                    <div id="sq3">
+                        <label for="sq3"><b>Third security question</b></label> <br>
+                        <input type="text" placeholder="Question" name="sq3_q"> <br>
+                        <input type="text" placeholder="Answer" name="sq3_a"> <br>
+  <div class="col-12">
+    <button class="btn btn-primary" type="submit">Submit form</button>
+  </div>
+</form>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
 {% endblock %}

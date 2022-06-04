@@ -1,9 +1,168 @@
 {% extends "layout.html" %}
 
-{% block title %}
-    Dashboard
-{% endblock %}
-
 {% block content %}
-<h1>THIS IS THE DASHBOARD</h1>
+<div>
+    <div id="courses_sidenav" class="sidenav">
+    <!-- <a> Date published </a>  may not use this -->
+    <a href="/{{ course }}/announcements">Announcements</a>
+    <a href="/{{ course }}/assignments">Assignments</a>
+    <a href="/{{ course }}/grades">Grades</a>
+</div>
+
+<div id="courses_header_and_right_of_header">
+    <div id="courses_header">
+
+        <a href="/{{ course }}/home"> {{ course }}</a>  <div id="courses_breadcrumbs"></div> Dashboard </span>
+    </div>
+    <!-- <div id = "right_of_header"></div> -->
+</div>
+</div>
+<div id="course_section_content_body">
+    {% if role == 'admin' %}
+    <h3 style="padding-bottom: 6px;">System Overview</h3>
+    <table class="announcements_table">
+
+        <tbody class="announcements_table_body">
+            <tr><td></td></tr>
+            <tr class="announcements_table_body_row">
+                <td class="announcements_table_poster_item"><b>Students:</b> </td>
+                <td class="announcements_table_details_item"> {{ num_students }} </td>
+            </tr>
+            <tr class="announcements_table_body_row">
+                <td class="announcements_table_poster_item"><b>Teachers:</b> </td>
+                <td class="announcements_table_details_item">{{ num_teachers }} </td>
+            </tr>
+
+        <tr class="announcements_table_body_row">
+                <td class="announcements_table_poster_item"><b>Courses:</b> </td>
+                <td class="announcements_table_details_item">{{ num_courses }} </td>
+            </tr>
+            <tr><td></td></tr>
+        </tbody>
+    </table>
+    {% endif %}
+    {% if role == 'instructor'%}
+    <div class="collapsible_item">
+        <button type="button" class="collapsible_header"><span style="margin-left: 20px; "><b>Assignments to grade</b> </span></button>
+        <div class="collapsible_content_all">
+            <div class="collapsible_content_assign">
+
+                <table class="assignments_table">
+            <thead class="assignments_table_header">
+            <tr>
+                <th class="assignments_table_class_header">Class</th>
+                <th class="assignments_table_assign_header">Student</th>
+                <th class="assignments_table_points_header">Assignment</th>
+                <th class="assignments_table_date_header">Points </th>
+                <th class="assignments_table_date_header">Due </th>
+            </tr>
+            </thead>
+            <tbody class="assignments_table_body">
+            {% for assignment in assignment_list %}
+            <tr class="assignments_table_body_row">
+                <td class="assignments_table_class_item">{{ assignment['course_name'] }}</td>
+                <td class="assignments_table_class_item">{{ assignment['student_username'] }}</td>
+                <td class="assignments_table_assign_item"><a href="/{{ assignment['course_id'] }}/assignments_view/{{ assignment['assignment_id'] }}/{{ role }}" style="text-decoration: none; color:black">{{ assignment['title'] }}</a> </td>
+                <td class="assignments_table_points_item"> {{ assignment['points'] }} </td>
+                <td class="assignments_table_date_item">{{ assignment['due_date'] }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+
+        </table></div>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if role == 'student' %}
+    <div class="collapsible_item">
+        <button type="button" class="collapsible_header"><span style="margin-left: 20px; "><b>To Do</b> </span></button>
+        <div class="collapsible_content_all">
+            <div class="collapsible_content_assign">
+
+                <table class="assignments_table">
+            <thead class="assignments_table_header">
+            <tr>
+                <th class="assignments_table_class_header">Class</th>
+                <th class="assignments_table_assign_header">Assignment</th>
+                <th class="assignments_table_points_header">Points</th>
+                <th class="assignments_table_date_header">Due </th>
+            </tr>
+            </thead>
+            <tbody class="assignments_table_body">
+            {% for assignment in to_do %}
+            <tr class="assignments_table_body_row">
+                <td class="assignments_table_class_item">{{ assignment['course_name'] }}</td>
+                <td class="assignments_table_assign_item"><a href="/{{ assignment['course_id'] }}/assignments_view/{{ assignment['assignment_id'] }}/{{ role }}" style="text-decoration: none; color:black">{{ assignment['title'] }}</a> </td>
+                <td class="assignments_table_points_item"> {{ assignment['points'] }} </td>
+                <td class="assignments_table_date_item">{{ assignment['due_date'] }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+
+        </table></div>
+        </div>
+    </div>
+
+    <div class="collapsible_item">
+        <button type="button" class="collapsible_header"><span style="margin-left: 20px; "><b>Upcoming</b> </span></button>
+        <div class="collapsible_content_all">
+            <div class="collapsible_content_assign">
+
+                <table class="assignments_table">
+            <thead class="assignments_table_header">
+            <tr>
+                <th class="assignments_table_class_header">Class</th>
+                <th class="assignments_table_assign_header">Assignment</th>
+                <th class="assignments_table_points_header">Points</th>
+                <th class="assignments_table_date_header">Due </th>
+            </tr>
+            </thead>
+            <tbody class="assignments_table_body">
+            {% for assignment in upcoming %}
+            <tr class="assignments_table_body_row">
+                <td class="assignments_table_class_item">{{ assignment['course_name'] }}</td>
+                <td class="assignments_table_assign_item"><a href="/{{ assignment['course_id'] }}/assignments_view/{{ assignment['assignment_id'] }}/{{ role }}" style="text-decoration: none; color:black">{{ assignment['title'] }}</a> </td>
+                <td class="assignments_table_points_item"> {{ assignment['points'] }} </td>
+                <td class="assignments_table_date_item">{{ assignment['due_date'] }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+
+        </table></div>
+        </div>
+    </div>
+
+    <div class="collapsible_item">
+        <button type="button" class="collapsible_header"><span style="margin-left: 20px; "><b>Past</b> </span></button>
+        <div class="collapsible_content_all">
+            <div class="collapsible_content_assign">
+
+                <table class="assignments_table">
+            <thead class="assignments_table_header">
+            <tr>
+                <th class="assignments_table_class_header">Class</th>
+                <th class="assignments_table_assign_header">Assignment</th>
+                <th class="assignments_table_points_header">Points</th>
+                <th class="assignments_table_date_header">Due </th>
+            </tr>
+            </thead>
+            <tbody class="assignments_table_body">
+            {% for assignment in past %}
+            <tr class="assignments_table_body_row">
+                <td class="assignments_table_class_item">{{ assignment['course_name'] }}</td>
+                <td class="assignments_table_assign_item"><a href="/{{ assignment['course_id'] }}/assignments_view/{{ assignment['assignment_id'] }}/{{ role }}" style="text-decoration: none; color:black">{{ assignment['title'] }}</a> </td>
+                <td class="assignments_table_points_item"> {{ assignment['points'] }} </td>
+                <td class="assignments_table_date_item">{{ assignment['due_date'] }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+
+        </table></div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+
 {% endblock %}

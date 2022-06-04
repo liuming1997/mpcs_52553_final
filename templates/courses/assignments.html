@@ -3,52 +3,58 @@
 {% block content %}
 <div id="courses_sidenav" class="sidenav">
     <!-- <a> Date published </a>  may not use this -->
-    <a href="/courses/home">Home</a>
-    <a href="/courses/announcements">Announcements</a>
-    <a href="/courses/syllabus">Syllabus</a>
-    <a href="/courses/modules">Modules</a>
-    <a href="/courses/assignments">Assignments</a>
-    <a href="/courses/grades">Grades</a>
+    <a href="/{{ course_id }}/announcements">Announcements</a>
+    <a href="/{{ course_id }}/assignments">Assignments</a>
+    <a href="/{{ course_id }}/grades">Grades</a>
 </div>
 
 <div id="courses_header_and_right_of_header">
     <div id="courses_header">
         <div id="courses_hamburger" style="cursor:pointer" onclick="toggleNav()"> &#9776; </div>
-        <a href="/courses/home"> My Course</a>  <div id="courses_breadcrumbs"></div> Assignments </span>
+        <a href="/{{ course_id }}/home"> {{ course_name }}</a>  <div id="courses_breadcrumbs"></div> Assignments </span>
     </div>
     <!-- <div id = "right_of_header"></div> -->
 </div>
 <div id="course_section_content_body">
-    <div class="collapsible_item">
-        <button type="button" class="collapsible_header">Upcoming Assignments</button>
-        <div class="collapsible_content_all">
-            <div class="collapsible_content">
-                <p>item 1</p> </div>
-            <div class="collapsible_content">
-                <p>item 2</p>
-            </div>
-        </div>
-    </div>
-    <div class="collapsible_item">
-        <button type="button" class="collapsible_header">Undated Assignments</button>
-        <div class="collapsible_content_all">
-            <div class="collapsible_content">
-                <p>item 1</p> </div>
-            <div class="collapsible_content">
-                <p>item 2</p>
-            </div>
-        </div>
-    </div>
-    <div class="collapsible_item">
-        <button type="button" class="collapsible_header">Past Assignments</button>
-        <div class="collapsible_content_all">
-            <div class="collapsible_content">
-                <p>item 1</p> </div>
-            <div class="collapsible_content">
-                <p>item 2</p>
-            </div>
-        </div>
-    </div>
+    {% if role == 'instructor' %}
+        <a href="/{{ course_id }}/assignments_create" style="text-decoration: none; color:white"><button class="btn btn-primary btn-block mb-4 create_post" style="background-color: #0d6efd"> Create Assignment </button></a>
+    {% endif %}
+
+    <div class="grey_header_table">
+    <div class="dummy_content"> dummy content  </div>
+  </div>
+
+            <div class="collapsible_content_assign">
+
+
+                <table class="assignments_table">
+            <thead class="assignments_table_header">
+            <tr>
+                <th class="assignments_table_assign_header">Assignment</th>
+                <th class="assignments_table_points_header">Total Points</th>
+                <th class="assignments_table_date_header">Due Date </th>
+            </tr>
+            </thead>
+            <tbody class="assignments_table_body">
+            {% if assignments|length < 1 %}
+                <tr class="assignments_table_body_row">
+                    <td class="assignments_table_points_item" colspan="3"> No upcoming assignments </td>
+                </tr>
+            {% endif %}
+            {% for assignment in assignments %}
+            <tr class="assignments_table_body_row">
+                <td class="assignments_table_assign_item"><a href="/{{ course_id }}/assignments_view/{{ assignment['assignment_id'] }}/{{ role }}" style="text-decoration: none; color:black">{{ assignment['title'] }}</a> </td>
+                <td class="assignments_table_points_item"> {{ assignment['total_points'] }} </td>
+                <td class="assignments_table_date_item">{{ assignment['due_date'] }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+
+        </table></div>
+
+<div class="grey_footer_table">
+    <div class="dummy_content"> dummy content  </div>
+  </div>
 </div>
 
 

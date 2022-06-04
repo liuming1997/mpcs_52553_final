@@ -1,11 +1,76 @@
-<!-- Signup page -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<script>
 
-{% extends "layout.html" %}
-
-{% block title %}
-    Signup
-{% endblock %}
-
-{% block content %}
-
-{% endblock %}
+</script>     
+<div class="flex-container" id="login">
+    <form method="post">
+        <div class="imgcontainer">
+            <img src="https://www.w3schools.com/howto/img_avatar2.png">
+        </div>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul style="color: red; list-style-type:none;">
+                {% for message in messages %}
+                    <li>{{ messages[0] }}</li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+        <div class="container">
+            <div id="name">
+                <label for="name"><b>First and last name</b></label>
+                <input type="text" placeholder="Enter first and last name" name="name" required> <br>
+            </div>
+            <div id="username">
+                <label for="user"><b>Username</b></label>
+                <input type="text" placeholder="Enter Username" name="user" required> <br>
+            </div>
+            <div id="user_id">
+                <label for="user"><b>User ID</b></label>
+                <input type="text" placeholder="Enter User ID" name="user_id" required> <br>
+            </div>
+            <div id="password">
+                <label for="pass"><b>Password</b></label>
+                <input type="password" placeholder="Enter Password" name="pass" required> <br>
+            </div>
+            <div id="password">
+                <label for="pass"><b>Confirm Password</b></label>
+                <input type="password" placeholder="Enter Password" name="passconfirm" required> <br>
+            </div>
+            <div id="type">
+                <input type="radio" id="student" name="account_type" value="Student" required>
+                <label for="html">Student</label><br>
+                <input type="radio" id="teacher" name="account_type" value="Teacher">
+                <label for="css">Teacher</label><br>
+                <input type="radio" id="admin" name="account_type" value="Admin">
+                <label for="javascript">Admin</label>
+            </div>
+            <div id="sq1">
+                <label for="sq1"><b>First security question</b></label> <br>
+                <input type="text" placeholder="Question" name="sq1_q" required> <br>
+                <input type="text" placeholder="Answer" name="sq1_a" required> <br>
+            </div>
+            <div id="sq2">
+                <label for="sq2"><b>Second security question</b></label> <br>
+                <input type="text" placeholder="Question" name="sq2_q" required> <br>
+                <input type="text" placeholder="Answer" name="sq2_a" required> <br>
+            </div>
+            <div id="sq3">
+                <label for="sq3"><b>Third security question</b></label> <br>
+                <input type="text" placeholder="Question" name="sq3_q" required> <br>
+                <input type="text" placeholder="Answer" name="sq3_a" required> <br>
+            </div>
+            <button type="submit">Create account</button><br>
+        </div>
+    </form>
+</div>
+</body>
+</html>

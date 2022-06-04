@@ -4,17 +4,29 @@ body {
 }
 
 html {
-  height: -webkit-fill-available;
+  height: -webkit-fill-available !important;
 }
 
 main {
   display: flex;
   flex-wrap: nowrap;
-  height: 100vh;
-  height: -webkit-fill-available;
+  height: 100vh !important;
+  height: -webkit-fill-available!important;
   max-height: 100vh;
   overflow-x: auto;
   overflow-y: hidden;
+}
+
+
+
+.dashboard {
+  display: flex;
+  flex-direction: column;
+}
+
+.flash {
+  color: red;
+  list-style-type:none;
 }
 
 .b-example-divider {
@@ -87,8 +99,6 @@ main {
 .btn-toggle-nav a:focus {
   color: black;
 }
-
-
 
 .scrollarea {
   overflow-y: auto;

@@ -48,7 +48,7 @@
                 <img src="https://www.w3schools.com/howto/img_avatar2.png"
                      style="border-radius: 50%; width: 30%; padding: 20px; text-align: center;">
 
-        <form method="post" style="width: min-content; padding: 20px;">
+                <form method="post" style="width: min-content; padding: 20px;">
             {% with messages = get_flashed_messages() %}
             {% if messages %}
             <ul style="color: red; list-style-type:none;">
@@ -61,8 +61,18 @@
                     <label for="user"><b>Username</b></label>
                     <input type="text" placeholder="Enter Username" name="user" required> <br>
                 </div>
-                <button type="submit">Get security questions</button>
+                <div id="password">
+                    <label for="pass"><b>Password</b></label>
+                    <input type="password" placeholder="Enter Password" name="pass" required> <br>
+                </div>
+                <button type="submit">Login</button>
                 <br>
+                <label>
+                    <input type="checkbox" checked="checked" name="remember"> Remember me
+                </label><br>
+                <span class="pass"><a href="/reset">Forgot password</a></span>
+                <span class="pass"><a href="/signup">Create account</a></span>
+                <p>{{error}}</p>
             </div>
         </div>
     </form>

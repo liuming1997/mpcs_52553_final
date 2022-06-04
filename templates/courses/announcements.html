@@ -6,24 +6,23 @@
 </script>
 <div id="courses_sidenav" class="sidenav">
     <!-- <a> Date published </a>  may not use this -->
-    <a href="/courses/home">Home</a>
-    <a href="/courses/announcements">Announcements</a>
-    <a href="/courses/syllabus">Syllabus</a>
-    <a href="/courses/modules">Modules</a>
-    <a href="/courses/assignments">Assignments</a>
-    <a href="/courses/grades">Grades</a>
+    <a href="/{{ course_id }}/announcements">Announcements</a>
+    <a href="/{{ course_id }}/assignments">Assignments</a>
+    <a href="/{{ course_id }}/grades">Grades</a>
 </div>
 
 <div id="courses_header_and_right_of_header">
     <div id="courses_header">
         <div id="courses_hamburger" style="cursor:pointer" onclick="toggleNav()"> &#9776; </div>
-        <a href="/courses/home"> My Course</a>  <div id="courses_breadcrumbs"></div> Announcements</span>
+        <a href="/{{ course_id }}/home"> {{ course_name }}</a>  <div id="courses_breadcrumbs"></div> Announcements</span>
     </div>
     <!-- <div id = "right_of_header"></div> -->
 </div>
 
 <div id="course_section_content_body">
-    <h3>Announcements</h3>
+    {% if role == 'instructor' %}
+    <a href="/{{ course_id }}/announcements_create" style="text-decoration: none; color:white;"><button class="btn btn-primary btn-block mb-4 create_post" style="background-color: #0d6efd;"> Create Announcement </button></a>
+    {% endif %}
         <table class="announcements_table">
             <thead class="announcements_table_header">
             <tr>
@@ -33,27 +32,19 @@
             </tr>
             </thead>
             <tbody class="announcements_table_body">
+            {% if course_announcements|length < 1 %}
+                <tr class="assignments_table_body_row">
+                    <td class="assignments_table_points_item" colspan="3"> No announcements </td>
+                </tr>
+            {% endif %}
+            {% for announcement in course_announcements %}
             <tr class="announcements_table_body_row">
-                <td class="announcements_table_poster_item">Instructor Name Here</td>
-                <td class="announcements_table_details_item"><a href="/courses/announcements_view" style="text-decoration: none; color:black"><b>Announcement Title</b> </a>
-                    <div id="announcement_details">Some announcement details here. OMG we have so much Work, work, work, work, work, work
-                        left to do on this project He said me haffi work, work, work, work, work, work
-                        He see me do mi dirt, dirt, dirt, dirt, dirt, dirt
-                        So me put in work, work, work, work, work, work
-                        When you ah gon' learn, learn, learn, learn, learn?
-                        Me nuh care if him hurt, hurt, hurt, hurt, hurting</div></td>
-                <td class="announcements_table_date_item"><b>Posted on:</b> <div id="announcement_date_posted">Date Posted</div></td>
+                <td class="announcements_table_poster_item">{{ instructor['instructor_username'] }}</td>
+                <td class="announcements_table_details_item"><a href="/{{ course_id }}/announcements_view/{{ announcement['announcement_id'] }}" style="text-decoration: none; color:black"><b>{{ announcement['title'] }}</b> </a>
+                    <div id="announcement_details">{{ announcement['content'] }}</div></td>
+                <td class="announcements_table_date_item"><b>Posted on:</b> <div id="announcement_date_posted">{{ announcement['date_posted'] }}</div></td>
             </tr>
-            <tr class="announcements_table_body_row">
-                <td class="announcements_table_poster_item">Instructor Name Here</td>
-                <td class="announcements_table_details_item"><a href="/courses/announcements_view" style="text-decoration: none; color: black"><b>Announcement Title</b> </a>
-                    <div id="announcement_details">Some announcement details here.You don't gotta go to work, work, work, work
-                        Work, work, work But you gotta put in work, work, work, work  Work, work, work  You don't gotta go to work, work, work, work  Work, work, work Let my body do the work, work, work, work
-                        Work, work, work
-                        We can work from home, oh, oh, oh-oh
-                        We can work from home, oh, oh, oh-oh</div></td>
-                <td class="announcements_table_date_item"><b>Posted on:</b> <div id="announcement_date_posted">Date Posted</div></td>
-            </tr>
+            {% endfor %}
             </tbody>
         </table>
 
