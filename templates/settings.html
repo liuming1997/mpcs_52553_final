@@ -11,7 +11,9 @@
 <div id="courses_header_and_right_of_header">
     <div id="courses_header">
 
-        <a href="/{{ course }}/home"> {{ course }}</a>  <div id="courses_breadcrumbs"></div> Settings </span>
+        <a href="/{{ course }}/home"> {{ course }}</a>
+        <div id="courses_breadcrumbs"></div>
+        Settings </span>
     </div>
     <!-- <div id = "right_of_header"></div> -->
 </div>
@@ -19,35 +21,93 @@
 <div id="course_section_content_body">
     <h3 style="padding-bottom: 6px;">User Management</h3>
     <table id="data" class="table table-striped">
-    <thead>
-      <tr>
-        <th>Role</th>
-        <th>Name</th>
-        <th>Username</th>
-        <th>Status</th>
-          <th>Controls</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for user in users %}
+        <thead>
+        <tr>
+            <th>Role</th>
+            <th>Name</th>
+            <th>Username</th>
+            <th>Status</th>
+            <th>Toggle Status</th>
+            <th>Add Course</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
         {% if user['role'] != 'admin' %}
         <tr>
-          <td>{{ user['role'] }}</td>
-          <td>{{ user['name'] }}</td>
-          <td>{{ user['username'] }}</td>
+            <td>{{ user['role'] }}</td>
+            <td>{{ user['name'] }}</td>
+            <td>{{ user['username'] }}</td>
             <td>{{ user['status']}}</td>
             <td class="assignments_table_grading_item">
-                        <form class="form-inline" method="post" style="display: flex; max-width: 150px;">
-        <label for="email2" class="mb-2 mr-sm-2"></label>
-        <input type="hidden" name="username" value="{{ user['username'] }}">
-        <input type="hidden" name="status" value="{{ user['status'] }}">
-        <button type="submit" class="btn btn-primary mb-2" style="margin: 5px;">Update</button>
-        </form></td>
+                <form class="form-inline" method="post" style="display: flex; max-width: 150px;">
+                    <label for="email2" class="mb-2 mr-sm-2"></label>
+                    <input type="hidden" name="username" value="{{ user['username'] }}">
+                    <input type="hidden" name="status" value="{{ user['status'] }}">
+                    <button type="submit" class="btn btn-primary mb-2" style="margin: 5px;">Update</button>
+                </form>
+            </td>
+            <td>
+
+
+                <button onclick="toggleAddClass('myDIV {{ user['username'] }}')" class="btn btn-primary mb-2"
+                        style="margin: 5px;">Courses Available
+                </button>
+                <div id="myDIV {{ user['username'] }}" style="display: none">
+                    <form method="post">
+                        {% if user['role'] == 'instructor': %}
+                        {% if courses_instructor != []: %}
+
+                        <input type="hidden" value="{{ user['username'] }}" name="teacher_username">
+                        {% for course in courses_instructor: %}
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="{{ course['course_id'] }}"
+                                   name="course_id">
+                            <label class="form-check-label" for="flexCheckDefault"></label>
+                            {{ course['course_name'] }}
+                        </div>
+                        {% endfor %}
+               <button type="submit" class="btn btn-primary mb-2" style="margin: 5px;">Add</button>
+                        {% endif %}
+
+
+                        {% if courses_instructor == []: %}
+                        All courses have been assigned to instructors.
+                        {% endif %}
+
+
+                        {% endif %}
+
+
+                        {% if user['role'] == 'student': %}
+                        {% if courses_student[user['username']] != []: %}
+
+                        <input type="hidden" value="{{ user['username'] }}" name="student_username">
+                        {% for course in courses_student[user['username']]: %}
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="{{ course['course_id'] }}"
+                                   name="course_id">
+                            <label class="form-check-label" for="flexCheckDefault"></label>
+                            {{ course['course_name'] }}
+                        </div>
+                        {% endfor %}
+                        <button type="submit" class="btn btn-primary mb-2" style="margin: 5px;">Add</button>
+
+                        {% endif %}
+
+                        {% if courses_student[user['username']] == []: %}
+                        Student enrolled in all available courses.
+                        {% endif %}
+
+                        {% endif %}
+                    </form>
+                </div>
+            </td>
         </tr>
         {% endif %}
-      {% endfor %}
-    </tbody>
-  </table>
-    </div>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
 
 {% endblock %}

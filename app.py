@@ -224,6 +224,11 @@ def dashboard():
         upcoming = [d for d in assignment_list if datetime.strptime(d['due_date'], '%Y-%m-%d %H:%M:%S') > datetime.now() + timedelta(days=3)]
         past = [d for d in assignment_list if datetime.strptime(d['due_date'], '%Y-%m-%d %H:%M:%S') < datetime.now()]
 
+    if session['role'] == 'admin':
+        return render_template("dashboard.html", course_list=session['course_list'], role=session['role'],
+                               num_students=num_students, num_courses=num_courses, num_teachers=num_teachers,
+                               assignment_list='', to_do='', upcoming='', past='')
+
     return render_template("dashboard.html", course_list=session['course_list'], role=session['role'], num_students=num_students, num_courses=num_courses, num_teachers=num_teachers, assignment_list = assignment_list, to_do=to_do, upcoming=upcoming, past=past)
 
 @app.route('/profile', methods=['GET', 'POST'])
@@ -317,29 +322,78 @@ def profile():
 @app.route('/settings', methods=['GET', 'POST'])
 def settings():
     if request.method == 'POST':
-        username = request.form['username']
-        status = request.form['status']
-        if status == 'active':
-            database.db_queries.update_status_by_username(username, 'inactive')
+        print("IN POST")
+        if 'name' in request.form:
+            print("NAME in request form")
+            new_name = request.form['name']
+            database.db_queries.update_name_by_username(session['username'], new_name)
+        if 'status' in request.form:
+            print("STATUS in request form")
+            username = request.form['username']
+            status = request.form['status']
+            if status == 'active':
+                database.db_queries.update_status_by_username(username, 'inactive')
+            else:
+                database.db_queries.update_status_by_username(username, 'active')
 
-        else:
-            database.db_queries.update_status_by_username(username, 'active')
+        # assign teacher to course
+        if 'teacher_username' in request.form:
+            print("teacher username in form")
+            teacher_username = request.form['teacher_username']
+            course_ids = request.form.getlist('course_id')
+            print("PRINTING OCURSE IDS:" + str(course_ids))
+            print("PRINTING teacher username:" + str(teacher_username))
+            for id in course_ids:
+                database.db_queries.update_instructor_by_course_id(id, teacher_username)
+
+        # assign student to course
+        if 'student_username' in request.form:
+            print("student username in form")
+            student_username = request.form['student_username']
+            course_ids = request.form.getlist('course_id')
+            print("PRINTING OCURSE IDS:" + str(course_ids))
+            print("PRINTING student username:" + str(student_username))
+            for id in course_ids:
+                if id != '' and student_username != '':
+                    database.db_queries.enroll_in_course(student_username, id)
 
         users = json.loads(database.db_queries.get_users()[0][0])
         return redirect(url_for("settings"))
 
     users = json.loads(database.db_queries.get_users()[0][0])
-    print(users)
-    return render_template("settings.html", course_list=session['course_list'], users=users, role=session['role'])
+    courses_instructor = json.loads(database.db_queries.get_courses_no_instructor()[0][0])
+    print("PRINTING instructor courses:" + str(courses_instructor))
+    all_students = json.loads(database.db_queries.get_all_student_usernames()[0][0])
+    courses_student = {}
+    for student in all_students:
+        courses_student[student['username']] = json.loads(database.db_queries.get_courses_not_enrolled(student['username'])[0][0])
+    return render_template("settings.html", course_list=session['course_list'], users=users, role=session['role'], courses_instructor=courses_instructor, courses_student=courses_student)
 
 @app.route('/course_admin')
 def course_admin():
-    return render_template("course_admin.html", role=session['role'])
+    courses = json.loads(database.db_queries.get_courses()[0][0])
 
-@app.route('/create_course')
+    return render_template("course_admin.html", role=session['role'], courses=courses)
+
+@app.route('/course_info/<course_id>')
+def course_info(course_id):
+    courses = json.loads(database.db_queries.get_courses()[0][0])
+
+    return render_template("course_info.html", role=session['role'], courses=course_id)
+
+@app.route('/create_course', methods=['POST', 'GET'])
 def create_course():
+    if request.method == 'POST':
+        course_name = request.form['course_name']
+        instructor_username = request.form.get('instructor_username')
+        if instructor_username == None:
+            instructor_username = ''
+        capacity = request.form.get('capacity')
+        description = request.form['description']
+        database.db_queries.add_course(course_name, instructor_username, description, capacity)
+
     instructors = json.loads(database.db_queries.get_all_active_instructors()[0][0])
-    return render_template("create_course.html", role=session['role'], instructors=instructors )
+    return render_template("create_course.html", role=session['role'], instructors=instructors)
 
 # course routes
 @app.route('/<course_id>/home')
