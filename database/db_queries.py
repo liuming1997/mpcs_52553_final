@@ -391,3 +391,26 @@ def get_assignment_by_name_teacher(username):
 
 # print("Test getting assignments (teacher):", get_assignment_by_name_teacher('gerry1954'))
 # print("Test getting assignments (student):", get_assignment_by_name_student('patrick_whalen'))
+
+def update_security_question(username, question_index, new_question, new_answer):
+    if question_index == "1":
+        cmd = 'UPDATE users SET sq1=?, sq1_answer=? WHERE username=?'
+        conn = create_connection('canvas.db')
+        cur = conn.cursor()
+        cur.execute(cmd, (new_question, new_answer, username))
+        conn.commit()
+    elif question_index == "2":
+        cmd = 'UPDATE users SET sq2=?, sq2_answer=? WHERE username=?'
+        conn = create_connection('canvas.db')
+        cur = conn.cursor()
+        cur.execute(cmd, (new_question, new_answer, username))
+        conn.commit()
+    elif question_index == "3":
+        cmd = 'UPDATE users SET sq3=?, sq3_answer=? WHERE username=?'
+        conn = create_connection('canvas.db')
+        cur = conn.cursor()
+        cur.execute(cmd, (new_question, new_answer, username))
+        conn.commit()
+    else:
+        # fail gracefully
+        pass
