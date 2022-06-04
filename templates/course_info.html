@@ -11,37 +11,92 @@
 <div id="courses_header_and_right_of_header">
     <div id="courses_header">
 
-        <a href="//home"> </a>  <div id="courses_breadcrumbs"></div> Course Management </span>
+        <a href="//home"> </a>  <div id="courses_breadcrumbs"></div> Course Details </span>
     </div>
     <!-- <div id = "right_of_header"></div> -->
 </div>
 
 <div id="course_section_content_body">
-    <h3 style="padding-bottom: 6px;">Course Management</h3>
-            <a href="/create_course" style="text-decoration: none; color:white"><button class="btn btn-primary btn-block mb-4 create_post" style="background-color: #0d6efd"> Create Course </button></a>
 
-    <table id="data" class="table table-striped">
+    <h3 style="padding-bottom: 6px;">Course Announcements</h3>
+
+    <table class="table table-striped">
     <thead>
       <tr>
-        <th>Course ID</th>
-        <th>Course Name</th>
-        <th>Instructor</th>
-        <th>Description</th>
-          <th>Capacity</th>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Content</th>
+        <th>Date Posted</th>
       </tr>
     </thead>
     <tbody>
-      {% for course in courses %}
+      {% for announcement in announcements %}
         <tr>
-          <td>{{ course['course_id'] }}</td>
-          <td>{{ course['course_name'] }}</td>
-          <td>{{ course['instructor_username'] }}</td>
-            <td>{{ course['description'] }}</td>
-            <td>{{ course['capacity'] }}</td>
+          <td>{{ announcement['announcement_id'] }}</td>
+          <td>{{ announcement['title'] }}</td>
+          <td>{{ announcement['content'] }}</td>
+            <td>{{ announcement['date_posted'] }}</td>
         </tr>
       {% endfor %}
     </tbody>
   </table>
+
+
+    <h3 style="padding-bottom: 6px;">Course Assignments</h3>
+
+    <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Content</th>
+        <th>Points</th>
+          <th>Due Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for assign in assignments %}
+        <tr>
+          <td>{{ assign['assignment_id'] }}</td>
+          <td>{{ assign['title'] }}</td>
+          <td>{{ assign['content'] }}</td>
+            <td>{{ assign['total_points'] }}</td>
+            <td>{{ assign['due_date'] }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+
+
+    <h3 style="padding-bottom: 6px;">Course Grades</h3>
+
+    <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Assignment ID</th>
+        <th>Student Username</th>
+        <th>Points Received</th>
+        <th>Point Total</th>
+        <th>Date Submitted</th>
+          <th>Submission</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for grade in grades %}
+        <tr>
+          <td>{{ grade['assignment_id'] }}</td>
+          <td>{{ grade['student'] }}</td>
+          <td>{{ grade['points_received'] }}</td>
+            <td>{{ grade['total_points'] }}</td>
+            <td>{{ grade['date_submitted'] }}</td>
+          <td>{{ grade['submission'] }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+
     </div>
 
 {% endblock %}
