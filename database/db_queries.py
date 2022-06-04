@@ -88,7 +88,7 @@ def update_email_by_username(username, new_email):
     conn = create_connection('canvas.db')
     cur = conn.cursor()
     cmd = "UPDATE users SET username=? WHERE username=?"
-    cur.execute(cmd, (username, new_email))
+    cur.execute(cmd, (new_email, username))
     conn.commit()
 
 # update id of user
@@ -393,6 +393,10 @@ def get_assignment_by_name_teacher(username):
 # print("Test getting assignments (student):", get_assignment_by_name_student('patrick_whalen'))
 
 def update_security_question(username, question_index, new_question, new_answer):
+    print(username)
+    print(question_index)
+    print(new_question)
+    print(new_answer)
     if question_index == "1":
         cmd = 'UPDATE users SET sq1=?, sq1_answer=? WHERE username=?'
         conn = create_connection('canvas.db')

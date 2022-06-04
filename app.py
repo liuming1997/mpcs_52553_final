@@ -240,6 +240,9 @@ def profile():
                 flash('Username must be an email address!')
                 return(redirect(url_for('profile')))
             database.db_queries.update_email_by_username(session['username'], new_email)
+            session['username'] = new_email
+            session['role'] = database.db_queries.get_user_role(new_email)[0][0]
+            session['course_list'] = json.loads(database.db_queries.get_students_courses(session['new_email'])[0][0])
             flash('Username updated')
             return(redirect(url_for('profile')))
         if 'id' in request.form:
@@ -249,7 +252,7 @@ def profile():
             if not re.search(idreg, new_id):
                 flash('User ID must be number')
                 return(redirect(url_for('profile')))
-            database.db_queries.update_id_by_username(session['username'], new_id)
+            database.db_queries.update_id_by_username(new_id, session['username'])
             flash('User ID updated')
             return(redirect(url_for('profile')))
         
@@ -270,7 +273,7 @@ def profile():
                     flash('Passwords do not match!')
                     return(redirect(url_for('profile')))
 
-                database.db_queries.update_password_by_username(session['username'], new_pass)
+                database.db_queries.update_password_by_username(new_pass, session['username'])
                 print(" SHOULD BE UPDATED")
                 # print(database.db_queries.get_user_by_username(session['username']))
                 flash('Password updated!')
@@ -279,23 +282,29 @@ def profile():
             flash('Incorrect current password!')
             return(redirect(url_for('profile')))
         
-        if 'sq1_q' in request.form:
-            if 'sq1_a' not in request.form:
+        if 'sq1_q' in request.form and len(request.form['sq1_q']) > 0:
+            if 'sq1_a' not in request.form or len(request.form['sq1_a']) == 0:
                 flash('Must provide answer to new question!')
                 return(redirect(url_for('profile')))
             sq1_q = request.form['sq1_q']
-        if 'sq2_q' in request.form:
-            if 'sq2_a' not in request.form:
+            sq1_a = request.form['sq1_a']
+            database.db_queries.update_security_question(session['username'], '1', sq1_q, sq1_a)
+
+        if 'sq2_q' in request.form and len(request.form['sq2_q']) > 0:
+            if 'sq2_a' not in request.form or len(request.form['sq2_a']) == 0:
                 flash('Must provide answer to new question!')
                 return(redirect(url_for('profile')))
             sq2_q = request.form['sq2_q']
-        if 'sq3_q' in request.form:
-            if 'sq3_a' not in request.form:
+            sq2_a = request.form['sq2_a']
+            database.db_queries.update_security_question(session['username'], '2', sq2_q, sq2_a)
+        if 'sq3_q' in request.form and len(request.form['sq3_q']) > 0:
+            if 'sq3_a' not in request.form or len(request.form['sq3_a']) == 0:
                 flash('Must provide answer to new question!')
                 return(redirect(url_for('profile')))
             sq3_q = request.form['sq3_q']
-
-
+            sq3_a = request.form['sq3_a']
+            database.db_queries.update_security_question(session['username'], '3', sq3_q, sq3_a)
+            flash('Question(s) updated')
 
         return redirect(url_for('profile'))
 
