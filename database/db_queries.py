@@ -205,7 +205,7 @@ def get_num_courses():
 def get_courses():
     conn = create_connection('canvas.db')
     cur = conn.cursor()
-    cur.execute("SELECT json_group_array( json_object( 'course_id', course_id, 'course_name', course_name, 'instructor_username', instructor_username)) FROM courses")
+    cur.execute("SELECT json_group_array( json_object( 'course_id', course_id, 'course_name', course_name, 'instructor_username', instructor_username, 'description', description, 'capacity', capacity)) FROM courses")
     rows = cur.fetchall()
     return rows
 

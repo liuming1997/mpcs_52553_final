@@ -1,0 +1,47 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div id="courses_sidenav" class="sidenav">
+    <!-- <a> Date published </a>  may not use this -->
+    <a href="//announcements">Announcements</a>
+    <a href="//assignments">Assignments</a>
+    <a href="//grades">Grades</a>
+</div>
+
+<div id="courses_header_and_right_of_header">
+    <div id="courses_header">
+
+        <a href="//home"> </a>  <div id="courses_breadcrumbs"></div> Course Management </span>
+    </div>
+    <!-- <div id = "right_of_header"></div> -->
+</div>
+
+<div id="course_section_content_body">
+    <h3 style="padding-bottom: 6px;">Course Management</h3>
+            <a href="/create_course" style="text-decoration: none; color:white"><button class="btn btn-primary btn-block mb-4 create_post" style="background-color: #0d6efd"> Create Course </button></a>
+
+    <table id="data" class="table table-striped">
+    <thead>
+      <tr>
+        <th>Course ID</th>
+        <th>Course Name</th>
+        <th>Instructor</th>
+        <th>Description</th>
+          <th>Capacity</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for course in courses %}
+        <tr>
+          <td>{{ course['course_id'] }}</td>
+          <td>{{ course['course_name'] }}</td>
+          <td>{{ course['instructor_username'] }}</td>
+            <td>{{ course['description'] }}</td>
+            <td>{{ course['capacity'] }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+    </div>
+
+{% endblock %}

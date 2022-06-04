@@ -366,6 +366,12 @@ def course_admin():
 
     return render_template("course_admin.html", role=session['role'], courses=courses)
 
+@app.route('/course_info/<course_id>')
+def course_info(course_id):
+    courses = json.loads(database.db_queries.get_courses()[0][0])
+
+    return render_template("course_info.html", role=session['role'], courses=course_id)
+
 @app.route('/create_course', methods=['POST', 'GET'])
 def create_course():
     if request.method == 'POST':
