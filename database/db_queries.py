@@ -275,6 +275,15 @@ def get_instructor_course_id(course_id):
     rows = cur.fetchall()
     return rows
 
+# enroll student in course
+def enroll_in_course(student_username, course_id):
+    conn = create_connection('canvas.db')
+    cur = conn.cursor()
+    cmd = "INSERT INTO takes_course VALUES(?, ?)"
+    cur.execute(cmd, (student_username, course_id))
+    conn.commit()
+    return
+
 # get all takes_course
 def get_takes_course():
     conn = create_connection('canvas.db')
