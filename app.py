@@ -270,7 +270,7 @@ def profile():
                 passlogic = re.compile(regx)
 
                 if not re.search(passlogic, new_pass):
-                    flash('Passwords must be 5 chars in length, at least 1 number and 1 symbol)')
+                    flash('Passwords must be 5 chars in length, at least 1 number and 1 symbol')
                     return(redirect(url_for('profile')))
 
                 confirm_pass = request.form['confirm']
