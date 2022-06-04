@@ -35,6 +35,18 @@ def get_users():
     print(rows)
     return rows
 
+def get_all_student_usernames():
+    conn = create_connection('canvas.db')
+    cur = conn.cursor()
+    # test user data
+    # cur.execute("SELECT * from users;")
+    # return cur.fetchall()
+    cur.execute(
+        "SELECT json_group_array( json_object( 'username', username ) ) FROM users where role='student'")
+    rows = cur.fetchall()
+    # print(rows)
+    return rows
+
 # get courses without instructor
 def get_courses_no_instructor():
     conn = create_connection('canvas.db')
